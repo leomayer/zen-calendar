@@ -1,10 +1,10 @@
 {
   "name": "zen-calendar",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4741",
-    "build": "ng build",
+    "build": "node src/app/build.js",
     "watch": "ng build --watch --configuration development",
     "prettier": "prettier --write \"./{src,e2e}/**/*.{ts,js,html,scss}\"",
     "prettier-watch": "onchange \"./{src,e2e}/**/*.{ts,js,html,scss}\" -- prettier --write  --ignore-unknown {{changed}}",

@@ -1,8 +1,14 @@
 :host{
 	display: flex;
-	background-color: aquamarine;;
 }
-::ng-deep .example-custom-date-class {
+.highlight-date-class {
   background: orange!important;
   border-radius: 100%;
 }
+ .mat-calendar-body-label:not(:last-of-type) {
+        visibility: hidden;
+    }
+
+    .mat-calendar-body-label:last-of-type {
+        display: none;
+    }
