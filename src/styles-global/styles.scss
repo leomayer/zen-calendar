@@ -1,0 +1,250 @@
+/*
+ * Default styles 
+*/
+
+@use '@angular/material' as mat;
+
+@import 'styles_angular_material_mdc_adapt.scss';
+
+body {
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+}
+.text-center {
+	text-align: center;
+}
+
+.mat-horizontal-margin {
+	margin: 0 7px;
+}
+
+@media screen and (max-width: 1399px) {
+	.container-xxl {
+		padding-right: 0;
+		padding-left: 0;
+	}
+}
+
+/* Alignment of the icons in Material 12 not properly */
+/*
+ TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. 
+*/
+::ng-deep .mat-mdc-mini-fab .mat-button-wrapper > * {
+	vertical-align: top;
+}
+
+.alert {
+	margin: 12px;
+	border: 1px solid rgba(black, 0.2);
+	border-radius: 5px;
+	background: rgba(black, 0.067);
+	padding: 15px;
+}
+
+.alert.alert-info {
+	border: 1px solid mat.get-color-from-palette($lightIndigo, 500);
+	max-width: unset;
+}
+
+.alert.alert-primary {
+	border: 1px solid mat.get-color-from-palette($redPalette, 900);
+}
+// tinymce: background for trashbin (otherwise default red)
+.tox .tox-swatch--remove svg path {
+	stroke: mat.get-color-from-palette($orangePalette, 100) !important;
+}
+div .tox-swatches__row {
+	background: mat.get-color-from-palette($greenPalette, 50) !important;
+}
+
+.invalid {
+	text-decoration: line-through;
+}
+
+/**
+  * Platz zwischen linken und rechten Buttons in der Fußzeile
+  * Wird für Statustext benutzt
+  */
+.spacer {
+	flex: 1 1 auto;
+}
+
+/* for debugging: encapsulate the JSON into a <pre> tag and the make sure it overflows */
+pre {
+	overflow: auto;
+}
+/**
+ * Page's main mat-card
+ **/
+.main-mat-card {
+	margin: 7px 7px 14px 7px;
+}
+
+/*
+ TODO(mdc-migration): Done 2023-02-03 
+*/
+.mat-mdc-tab-body-wrapper {
+	// full height of body - at least for Coversheet
+	flex: 1 1 100%;
+}
+
+.mat-mdc-snack-bar-container {
+	&.snackbar-pnl-basic {
+		@each $level, $name in map-get($documat-theme, snack-container) {
+			&.#{$level} {
+				--mdc-snackbar-container-color: #{map-get($name, 'backColor')};
+				--mdc-snackbar-supporting-text-color: #{map-get($name, 'foreColor')};
+			}
+		}
+	}
+}
+
+.toolbar-bottom {
+	margin: 0 3%;
+	padding: 15px 0;
+	text-align: right;
+}
+
+.toolbar-bottom button {
+	margin-left: 7px;
+}
+
+/* Width and height of autocomplete selection panel */
+.auto-complete-halfheight {
+	max-width: 50vw !important;
+	max-height: 50vh !important;
+}
+
+/**
+ * Mat-card definitionf for editor
+ **/
+@media screen and (min-width: 700px) {
+	/*
+ TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. 
+*/
+	.editor-tab-group .mat-tab-body-wrapper {
+		height: 35em;
+	}
+}
+
+@media screen and (max-width: 699px) {
+	/*
+ TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. 
+*/
+	.editor-tab-group .mat-tab-body-wrapper {
+		height: 40em;
+	}
+}
+
+/* Start: Transition effects for the Material Tab */
+.mat-mdc-tab-body {
+	opacity: 0;
+	animation: fade-out 0.5s;
+}
+/*
+ TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. 
+*/
+.mat-mdc-tab-body.mat-mdc-tab-body-active {
+	opacity: 1;
+	animation: fade-in 1.5s;
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-out {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* End Transition effects */
+
+/* autocomplete ==> mark text which is found */
+mat-option .search-highlight {
+	font-weight: bold;
+}
+
+.sticky-col {
+	position: sticky;
+	top: 0px;
+}
+
+.content-group {
+	padding-right: 14px;
+	padding-left: 14px;
+}
+/* Class for matTooltipClass needs to be defined in the global style (otherwise it won't be used)*/
+.red-tooltip {
+	background-color: red !important;
+	font-size: larger !important;
+}
+.title-tooltip {
+	background-color: mat.get-color-from-palette($greyPalette, 600, 30) !important;
+	font-size: 14px !important;
+}
+
+.tox .tox-tbtn--disabled path.footnote-purple {
+	fill: mat.get-color-from-palette($purpleLightPalette, 100);
+}
+path.footnote-purple {
+	fill: mat.get-color-from-palette($purpleLightPalette, 600);
+}
+path.crossref,
+circle.crossref {
+	stroke: mat.get-color-from-palette($greyPalette, 900);
+	fill: mat.get-color-from-palette($bluePalette, 600);
+	stroke-width: 2px;
+}
+.tox .tox-tbtn--disabled circle.crossref,
+.tox .tox-tbtn--disabled path.crossref {
+	stroke: mat.get-color-from-palette($greyPalette, 300);
+	fill: mat.get-color-from-palette($bluePalette, 100);
+	stroke-width: 2px;
+}
+path.crossref-connect {
+	stroke: mat.get-color-from-palette($greyPalette, 900);
+	stroke-width: 4px;
+}
+.tox .tox-tbtn--disabled path.crossref-connect {
+	stroke: mat.get-color-from-palette($greyPalette, 500);
+	stroke-width: 4px;
+}
+
+/* mat-icons to disable */
+.icon-disabled:hover {
+	cursor: not-allowed;
+	background: unset;
+}
+
+.icon-disabled:active {
+	pointer-events: none;
+}
+
+.icon-disabled {
+	filter: opacity(0.5);
+}
+
+.search-result-list-item-headline {
+	color: mat.get-color-from-palette($greyPalette, 700);
+}

@@ -3,12 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MaterialDesignModule } from './material-design/material-design.module';
+import { CalBasicComponent } from './cal-basic/cal-basic.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CalBasicComponent
   ],
   imports: [
+		MaterialDesignModule,
     BrowserModule,
     AppRoutingModule
   ],

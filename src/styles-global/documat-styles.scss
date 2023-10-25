@@ -1,0 +1,8 @@
+// first the theme - since all the rest depends on it
+@import 'theme.scss';
+// import the rest of the different styles
+@import 'styles_angular_material.scss';
+@import 'styles_angular_material_mdc_adapt.scss';
+@import 'styles-responsiveness.scss';
+@import 'styles.scss';
+@import 'styles_for_table.scss';

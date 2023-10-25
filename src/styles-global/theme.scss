@@ -1,0 +1,39 @@
+// copied from https://stackoverflow.com/a/48159346/325868
+
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+
+/*
+ * Include Angular Material colors https://stackoverflow.com/a/50034890/325868
+*/
+$primaryPalette: mat.define-palette(mat.$indigo-palette);
+$accentPalette: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$purplePalette: mat-palette($mat-deep-purple);
+$purpleLightPalette: mat-palette($mat-purple);
+$lightIndigo: mat-palette($mat-indigo-palette);
+$greyPalette: mat-palette($mat-grey);
+$limePalette: mat-palette($mat-lime);
+$tealPalette: mat-palette($mat-teal-palette);
+$cyanPalette: mat-palette($mat-cyan-palette);
+$pinkPalette: mat-palette($mat-pink-palette);
+$redPalette: mat-palette($mat-red-palette);
+$lightBluePalette: mat-palette($mat-light-blue-palette);
+$yellowPalette: mat-palette($mat-yellow-palette);
+$bluePalette: mat-palette($mat-blue-palette);
+$greenPalette: mat-palette($mat-green-palette);
+$amberPalette: mat-palette($mat-amber-palette);
+$orangePalette: mat-palette($mat-orange-palette);
+$bluegrayPalette: mat-palette($mat-blue-gray);
+
+$app-typography: mat.define-typography-config();
+// following https://stackoverflow.com/a/75411680/325868 and https://material.angular.io/guide/theming#applying-a-theme-to-components
+$app-theme: mat.define-light-theme(
+	(
+		color: (
+			primary: $primaryPalette,
+			accent: $accentPalette,
+		),
+		typography: $app-typography,
+		density: -1,
+	)
+);
