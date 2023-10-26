@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:         Zen calendar
- * Plugin URI:          https://yourdomain/wherever-you-keep-the-app-readme-file
- * Description:         A calendar app to the void
+ * Plugin URI:          https://github.com/leomayer/zen-calendar
+ * Description:         A calendar app to the void - written in Angular
  * Version:             1.0.0
  * Author:              Leo Mayer
  * Author URI:          https://nowhere.gv
