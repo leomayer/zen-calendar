@@ -9,7 +9,7 @@
     "prettier": "prettier --write \"./{src,e2e}/**/*.{ts,js,html,scss}\"",
     "prettier-watch": "onchange \"./{src,e2e}/**/*.{ts,js,html,scss}\" -- prettier --write  --ignore-unknown {{changed}}",
     "test": "ng test",
-    "start-zenCal": "npm run start-de & npm run prettier-watch",
+    "start-zenCal": "npm run start & npm run prettier-watch",
     "github-pages": "ng deploy --base-href=/zen-calendar/"
   },
   "private": true,
