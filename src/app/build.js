@@ -1,5 +1,5 @@
 // From https://dev.to/stephenwhitmore/take-your-wordpress-site-farther-with-angular-3o6p
-console.log('Current dir:', process.cwd());
+console.log('Dir of build process:', process.cwd());
 const { execSync } = require('child_process');
 const fs = require('fs');
 const pluginName = 'zen-calendar';
@@ -13,18 +13,22 @@ fs.rmSync(`${destination}/dist`, { recursive: true, force: true });
 // Run the build command
 execSync('ng build --configuration production', { encoding: 'utf-8', stdio: 'inherit' });
 
-// Move the bundle from the `/app` folder to the plugin's folder
-execSync(`mv ./dist ${destination}`)
+// Move the bundle from the `/dist` folder to the plugin's folder
+execSync(`mv ./dist ${destination}`);
+// Move the built bundle one dir level up
+execSync(`mv ${destination}/dist/${pluginName}/* ${destination}/dist`);
+// remove the obsolete dir bundle
+execSync(`rmdir ${destination}/dist/${pluginName}`);
 
 // copy the js and css file names to an array
-distFilenames = fs.readdirSync(`${destination}/dist/${pluginName}`);
+//distFilenames = fs.readdirSync(`${destination}/dist/${pluginName}`);
+distFilenames = fs.readdirSync(`${destination}`);
 scriptsAndStyleFiles = distFilenames.filter(file => file.endsWith('.js') || file.endsWith('.css'));
 
 // replace the js and css file names in the php file contents
 const pluginFileContents = fs.readFileSync(`${pluginFilePath}`, 'utf8');
 
 const updateLine = (line, name) => {
-console.log('check: ', line, name);
     const matchedLinePart = line.match(/(?<=dist\/).*?(?=\')/gs).toString();
     const matchedFileName = scriptsAndStyleFiles.find(file => file.includes(name));
     return line.replace(matchedLinePart, matchedFileName);
@@ -48,4 +52,6 @@ const updatedFileContents = updatedFileContentArray.join('\n');
 
 // write the new names to the php file
 fs.writeFileSync(`${pluginFilePath}`, updatedFileContents);
-console.log(`*************** ${pluginFileName} updated! ***************`)
+console.log(`*************** All files are now in folder: "${process.cwd()}/${destination}"`)
+console.log(`*************** Copy the whole folder to the Wordpress plugin folder ***************`)
+console.log(`*************** ${pluginFileName} updated! ******************************`)
