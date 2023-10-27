@@ -11,9 +11,9 @@
 
 function load_ng_scripts() {
     wp_enqueue_style( 'ng_styles', plugin_dir_url( __FILE__ ) . 'dist/styles.463c5bcc279f9804.css' );
-    wp_register_script( 'ng_main', plugin_dir_url( __FILE__ ) . 'dist/main.6732f4e85205f300.js', true );
+    wp_register_script( 'ng_main', plugin_dir_url( __FILE__ ) . 'dist/main.3b6284dd5f5cc38e.js', true );
     wp_register_script( 'ng_polyfills', plugin_dir_url( __FILE__ ) . 'dist/polyfills.7ef82dbfc6acbeb8.js', true );
-    wp_register_script( 'ng_runtime', plugin_dir_url( __FILE__ ) . 'dist/runtime.d9da186ee1ccfe4f.js', true );
+    wp_register_script( 'ng_runtime', plugin_dir_url( __FILE__ ) . 'dist/runtime.d828c3a65864714d.js', true );
 }
 
 add_action( 'wp_enqueue_scripts', 'load_ng_scripts' );
@@ -23,7 +23,7 @@ function attach_zen_cal() {
     wp_enqueue_script( 'ng_polyfills' );
     wp_enqueue_script( 'ng_runtime' );
 
-    return "<app-root useConfigInterface=\"false\"></app-root>";
+    return "<app-root useConfigInterface=\"true\"></app-root>";
 }
 
 add_shortcode( 'zen_cal', 'attach_zen_cal' );

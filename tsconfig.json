@@ -3,6 +3,12 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+	  	"@calendar/*": ["src/app/calendar-container/*"],
+	  	"@calConfig/*": ["src/app/calendar-config/*"],
+  		"@app/*": ["src/app/*"]
+		}, 
+
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -10,6 +16,13 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+
+    
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -19,6 +32,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "useUnknownInCatchVariables": true,
     "lib": [
       "ES2022",
       "dom"

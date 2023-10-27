@@ -1,0 +1,144 @@
+/* DE */
+.footer_color5 .mat-calendar tr{
+	background: inherit;
+}
+.footer_color .mat-calendar tr{
+	border-color: unset;
+}
+.footer_color .mat-calendar td{
+	border: unset;
+}
+.footer_color .mat-calendar span{
+	border: unset;
+}
+
+.footer_color .mat-calendar thead tr{
+	background: #666666;
+}
+.footer_color .mat-calendar thead tr:nth-child(2){
+	display: none;
+}
+
+.entry-title {
+ pointer-events: none;
+}
+
+/* Heading  */
+body .av-special-heading .av-special-heading-tag {
+font-weight: 700!important;
+font-size: xx-large!important;
+color: #df8020;
+}
+
+/* second option: header style for AJAX-loaded items */
+body  .grid-entry-title, .entry-title {
+font-weight: 700!important;
+font-size: xx-large!important;
+color: #df8020!important;
+}
+/* anchor headlines */
+body  .toggler {
+font-family: Caveat!important;
+font-weight: 500!important;
+font-size: x-large!important;
+color: #eaa262!important;
+}
+/* menu items... */
+.av-hamburger-inner, .av-hamburger-inner::after, .av-hamburger-inner::before {
+    background: #a53434!important;
+}
+span.av-hamburger:after {
+    content: 'Menu ';
+    font-size:xx-large;
+    float: left;
+    margin-right: 10px;
+  font-family: Caveat!important;
+   color: #df8020!important;
+}
+/* menu-resize for different screen sizes */
+#av-burger-menu-ul .avia-menu-text {
+font-size:18px!important;
+font-family:Verdana!important;
+color: #df8020!important; 
+}
+/* required for menu text (desktop and mobile)  START */
+.avia-menu-text:hover{
+    color: #eee!important;
+}
+.main_menu ul li ul a .avia-menu-text {
+    color: #333!important;
+}
+.main_menu ul li ul a:hover .avia-menu-text {
+    color: #eee!important;
+}
+#av-burger-menu-ul a:hover .avia-menu-text {
+    color: #eee!important;
+}
+/* required for menu text (desktop and mobile)  END */
+
+
+/* end menu-resize */
+/* end menu */
+.menu li > a:after { 
+   content: ' ▾'; 
+   color: #e0791f !important;
+} 
+.menu li > a:only-child:after { content: ''; }
+
+/* excerpt sub-titles  */
+.grid-entry-excerpt {
+    min-height: 46px!important; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+div.portfolio_preview_container{
+   margin-bottom:10px;
+}
+.portfolio_preview_container.open_container {
+    margin-top: 10px;
+}
+/* LOGO + Text next to the logo .... */
+.logo img{float: left}
+#top .logo,  .logo a {overflow: visible }
+#top .subtext {float: left; position: relative}
+
+#top .logo-title {
+transition: opacity 0.4s ease-out 0s;
+-moz-transition: opacity 0.4s ease-out;
+-webkit-transition: opacity 0.4s ease-out;
+-o-transition: opacity 0.4s ease-out;
+    color: #333333;
+    font-size: 40px;
+    font-family: "Caveat" !important;
+    font-weight: bold !important;
+    opacity: 1;
+    position: absolute;
+    white-space: nowrap;
+}
+
+@media only screen and (min-width: 990px) and (max-width: 1070px)  {
+  #top .logo-title {
+/* Größe der Schrift in dem Bereich ändern, sodaß diese nicht mit dem Menü überlappt */
+	font-size: calc((100vw - 989px)/80 * 12 + 28px);
+  }
+}
+
+@media only screen and (max-width: 520px){
+#top .logo-title {opacity: 0; filter: alpha(opacity=0)}
+}
+h1, h2{
+text-transform: none !important;
+}
+/* Headers - if created by template */
+.template-page .entry-content-wrapper h2 {
+  color: #ca6c19;
+}
+
+#footer .widget{
+  margin: unset;
+}
+section p{
+ margin: unset;
+}

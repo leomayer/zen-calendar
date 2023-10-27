@@ -21,6 +21,9 @@ export class CalBasicComponent {
       if (cellDate.getDay() === 0) {
         retClass += ' date-sunday';
       }
+      if (date === 15) {
+        retClass += ' date-bottom';
+      }
       // Highlight the 1st and 20th day of each month.
       if (date === 1 || date === 20) {
         retClass += ' highlight-date-class';

@@ -1,8 +1,6 @@
 import {
   Component,
   ElementRef,
-  Input,
-  OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -12,10 +10,10 @@ import {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'zen-calendar';
 
-  useConfigInterface: boolean = false;
+  protected useConfigInterface: boolean = false;
   @ViewChild('configComponent', { read: ViewContainerRef })
   configComponent!: ViewContainerRef;
 
@@ -25,19 +23,10 @@ export class AppComponent implements OnInit {
     );
   }
 
-  async ngOnInit(): Promise<void> {
-    console.log('configSetting: ', this.useConfigInterface);
-    if (this.useConfigInterface) {
-      console.log('loading configSettings');
-      const { CalConfigComponent } = await import(
-        './calender-config/cal-config/cal-config.component'
-      );
-      this.configComponent.clear();
-      this.configComponent.createComponent(CalConfigComponent);
-    }
-  }
-
   stringToBoolean(value: unknown) {
-    return String(value) === '1' || String(value).toLowerCase() === 'true';
+    return (
+      !!value &&
+      (String(value) === '1' || String(value).toLowerCase() === 'true')
+    );
   }
 }

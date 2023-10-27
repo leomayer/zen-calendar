@@ -18,3 +18,12 @@
     background-color: navajowhite;
   }
 }
+.date-bottom {
+  background: linear-gradient(
+      to left,
+      rgba(92, 7, 52, 1) 0%,
+      rgba(255, 93, 177, 1) 100%
+    )
+    right bottom no-repeat !important;
+  background-size: 40% 5px !important;
+}
