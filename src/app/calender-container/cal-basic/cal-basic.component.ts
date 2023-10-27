@@ -18,12 +18,12 @@ export class CalBasicComponent {
     // Only highligh dates inside the month view.
     if (view === 'month') {
       const date = cellDate.getDate();
+      if (cellDate.getDay() === 0) {
+        retClass += ' date-sunday';
+      }
       // Highlight the 1st and 20th day of each month.
       if (date === 1 || date === 20) {
         retClass += ' highlight-date-class';
-      }
-      if (cellDate.getDay() === 0) {
-        retClass += ' date-sunday';
       }
     }
 

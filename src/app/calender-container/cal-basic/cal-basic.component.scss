@@ -9,7 +9,12 @@
 .mat-calendar-body-label:last-of-type {
   display: none;
 }
-.date-sunday > * {
-  color: darkred !important;
-  background-color: navajowhite;
+.date-sunday {
+  &.highlight-date-class > span {
+    background-color: unset;
+  }
+  > span {
+    color: darkred !important;
+    background-color: navajowhite;
+  }
 }
