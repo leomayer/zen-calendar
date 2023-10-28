@@ -1,29 +1,60 @@
-.highlight-date-class {
-  background: orange !important;
-  border-radius: 100%;
-}
-.mat-calendar-body-label:not(:last-of-type) {
-  visibility: hidden;
+.cal-basic {
+  &::ng-deep .highlight-date-class {
+    background: #f7e0bb !important;
+    border-radius: 100%;
+    > span {
+      color: #404040 !important;
+    }
+  }
+  &::ng-deep .mat-calendar-body-label:not(:last-of-type) {
+    visibility: hidden;
+  }
+
+  &::ng-deep .mat-calendar-body-label:last-of-type {
+    display: none;
+  }
+  &::ng-deep .date-sunday {
+    &.highlight-date-class > span {
+      color: darkred !important;
+    }
+    > span {
+      color: #ffa0a0 !important;
+    }
+  }
+  &::ng-deep .date-bottom {
+    &.date-two-entries {
+      @extend %two-entries;
+    }
+    &.date-one-entry {
+      @extend %one-entry;
+    }
+  }
 }
 
-.mat-calendar-body-label:last-of-type {
-  display: none;
+%two-entries {
+  background-image:
+    linear-gradient(to left, rgb(239, 187, 32) 0%, rgb(224, 121, 31) 100%),
+    /* dummy to have transparent (opaque) filler */
+      linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(255, 0, 0, 0) 100%),
+    linear-gradient(
+      to right,
+      rgb(197, 165, 0) 0%,
+      rgb(239, 187, 32) 100%
+    ) !important;
+  background-position:
+    left 10% bottom,
+    center bottom,
+    right 10% bottom !important;
+  background-repeat: no-repeat;
+  background-size: 35% 25% !important;
 }
-.date-sunday {
-  &.highlight-date-class > span {
-    background-color: unset;
-  }
-  > span {
-    color: darkred !important;
-    background-color: navajowhite;
-  }
-}
-.date-bottom {
-  background: linear-gradient(
-      to left,
-      rgba(92, 7, 52, 1) 0%,
-      rgba(255, 93, 177, 1) 100%
-    )
-    right bottom no-repeat !important;
-  background-size: 40% 5px !important;
+%one-entry {
+  background-image: linear-gradient(
+    to left,
+    rgb(239, 187, 32) 0%,
+    rgb(224, 121, 31) 100%
+  ) !important;
+  background-position: center bottom !important;
+  background-repeat: no-repeat;
+  background-size: 60% 25% !important;
 }

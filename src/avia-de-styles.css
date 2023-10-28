@@ -1,7 +1,18 @@
 /* DE */
-.footer_color5 .mat-calendar tr{
-	background: inherit;
+.footer_color .mat-calendar-content {
+	padding-bottom: 0px;
 }
+.footer_color .mat-calendar th{
+	border-left-color: unset;
+    border-right-color: unset;
+}
+.footer_color .mat-calendar th:first-child{
+	border-left-color: transparent;
+}
+.footer_color .mat-calendar th:last-child{
+	border-right-color: transparent;
+}
+
 .footer_color .mat-calendar tr{
 	border-color: unset;
 }

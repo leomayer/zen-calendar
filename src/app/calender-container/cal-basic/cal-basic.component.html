@@ -1,5 +1,7 @@
 <mat-calendar
   #calendar
+  class="cal-basic"
   [dateClass]="dateClass"
   (selectedChange)="changeDate($event)"
+  [headerComponent]="monthHeader"
 />
