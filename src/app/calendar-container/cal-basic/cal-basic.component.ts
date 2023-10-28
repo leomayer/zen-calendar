@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { AppStoreService } from 'src/app/app-store.service';
-import { MonthHeader } from './cal-month-header.component';
+import { CalMonthHeaderComponent } from './cal-month-header/cal-month-header.component';
 
 const isToday = (someDate: Date) => {
   const today = new Date();
@@ -19,7 +19,7 @@ const isToday = (someDate: Date) => {
 })
 export class CalBasicComponent {
   selectedDate!: Date | null;
-  monthHeader = MonthHeader;
+  monthHeader = CalMonthHeaderComponent;
 
   constructor(private store: AppStoreService) {}
 
