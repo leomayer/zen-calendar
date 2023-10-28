@@ -8,7 +8,7 @@ describe('CalShortCodeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CalShortCodeComponent]
+      declarations: [CalShortCodeComponent],
     });
     fixture = TestBed.createComponent(CalShortCodeComponent);
     component = fixture.componentInstance;
