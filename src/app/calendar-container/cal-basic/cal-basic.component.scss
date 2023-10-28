@@ -1,9 +1,17 @@
 .cal-basic {
-  &::ng-deep .highlight-date-class {
+  &::ng-deep .highlight-date {
     background: #f7e0bb !important;
     border-radius: 100%;
     > span {
       color: #404040 !important;
+    }
+    &.date-bottom {
+      &.date-one-entry,
+      &.date-two-entries {
+        background-image: unset !important;
+        border-bottom: 5px solid rgb(224, 121, 31) !important;
+        border-radius: unset;
+      }
     }
   }
   &::ng-deep .mat-calendar-body-label:not(:last-of-type) {

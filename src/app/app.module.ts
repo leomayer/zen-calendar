@@ -11,6 +11,7 @@ import { CalBasicComponent } from '@calendar/cal-basic/cal-basic.component';
 import { CalShortCodeComponent } from '@calendar/cal-short-code/cal-short-code.component';
 import { CalConfigComponent } from '@calConfig/cal-config/cal-config.component';
 import { CalMonthHeaderComponent } from './calendar-container/cal-basic/cal-month-header/cal-month-header.component';
+import { CalDetailsDialogComponent } from './calendar-container/cal-details-dialog/cal-details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CalMonthHeaderComponent } from './calendar-container/cal-basic/cal-mont
     CalShortCodeComponent,
     CalConfigComponent,
     CalMonthHeaderComponent,
+    CalDetailsDialogComponent,
   ],
   imports: [MaterialDesignModule, BrowserModule, AppRoutingModule],
   providers: [
