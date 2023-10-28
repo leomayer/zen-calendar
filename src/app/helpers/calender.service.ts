@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CalenderEvent } from './calenderTypes';
+import { CalendarEvent } from './calenderTypes';
 
 @Injectable({
   providedIn: 'root',
@@ -7,8 +7,8 @@ import { CalenderEvent } from './calenderTypes';
 export class CalenderService {
   constructor() {}
 
-  getEvents(curMonth: Date): CalenderEvent[] {
-    const ret = [] as CalenderEvent[];
+  getEvents(curMonth: Date): CalendarEvent[] {
+    const ret = [] as CalendarEvent[];
     const sampleToday = this.getSampleEvent();
     const sample1 = this.getSampleEvent();
     sample1.start.date.setDate(new Date().getDate() - 5);
@@ -21,11 +21,10 @@ export class CalenderService {
     ret.push(sample1);
     ret.push(sample2);
     ret.push(sample3);
-    console.log('hast list for: ', curMonth, ret);
     return ret;
   }
 
-  private getSampleEvent(): CalenderEvent {
+  private getSampleEvent(): CalendarEvent {
     return {
       id: 'abc',
       start: {

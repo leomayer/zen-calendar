@@ -1,1 +1,7 @@
-<p>cal-details-dialog works!</p>
+<dif mat-dialog-title>Events {{ data.selDate | date: "mediumDate" }}</dif>
+<div mat-dialog-content>
+  <pre>
+		{{ data.events | json }}
+	</pre
+  >
+</div>

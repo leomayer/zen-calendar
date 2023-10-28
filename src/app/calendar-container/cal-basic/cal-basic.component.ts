@@ -8,10 +8,11 @@ import {
   MatCalendar,
   MatCalendarCellClassFunction,
 } from '@angular/material/datepicker';
-import { AppStoreService } from 'src/app/app-store.service';
 import { CalMonthHeaderComponent } from './cal-month-header/cal-month-header.component';
-import { CalenderEvent } from '@app/helpers/calenderTypes';
+import { CalendarEvent } from '@app/helpers/calenderTypes';
 import { CalenderService } from '@app/helpers/calender.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CalDetailsDialogComponent } from '@calendar/cal-details-dialog/cal-details-dialog.component';
 
 const isToday = (checkDate: Date) => {
   return areDatesOnSameDay(new Date(), checkDate);
@@ -23,6 +24,7 @@ function areDatesOnSameDay(date1: Date, date2: Date) {
     date1.getDate() === date2.getDate()
   );
 }
+
 @Component({
   selector: 'app-cal-basic',
   templateUrl: './cal-basic.component.html',
@@ -33,15 +35,15 @@ export class CalBasicComponent implements OnInit {
   selectedDate!: Date | null;
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
-  listOfEvents!: CalenderEvent[] | undefined;
+  listOfEvents!: CalendarEvent[] | undefined;
   // for the header component
   monthHeader = CalMonthHeaderComponent;
+
   constructor(
-    private store: AppStoreService,
     private calService: CalenderService,
+    private dialog: MatDialog,
   ) {}
   async ngOnInit(): Promise<void> {
-    console.log('init done2');
     this.listOfEvents = await this.calService.getEvents(new Date());
     this.calendar.updateTodaysDate();
   }
@@ -83,13 +85,25 @@ export class CalBasicComponent implements OnInit {
 
   displayDayEvents(selDate: Date | null) {
     if (selDate) {
-      console.log(this.getEvents(selDate));
+      const events = this.getEvents(selDate);
+      if (events.length) {
+        const data = {
+          selDate,
+          events,
+        };
+        this.dialog.open(CalDetailsDialogComponent, {
+          data,
+          width: '250px',
+          backdropClass: 'cdk-overlay-transparent-backdrop',
+          hasBackdrop: true,
+          enterAnimationDuration: '500ms',
+          exitAnimationDuration: '500ms',
+        });
+      }
     }
-
-    this.store.state.dateSelected.set(selDate);
   }
 
-  private getEvents(filterDate: Date): CalenderEvent[] {
+  private getEvents(filterDate: Date): CalendarEvent[] {
     return (
       this.listOfEvents?.filter((chk) =>
         areDatesOnSameDay(filterDate, chk.start.date),

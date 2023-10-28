@@ -1,4 +1,4 @@
-export type CalenderEvent = {
+export type CalendarEvent = {
   id: string;
   start: {
     date: Date;
@@ -8,4 +8,8 @@ export type CalenderEvent = {
     date: Date;
     dateTime: string;
   };
+};
+export type CalendarEventUI = {
+  selDate: Date;
+  events: CalendarEvent[];
 };
