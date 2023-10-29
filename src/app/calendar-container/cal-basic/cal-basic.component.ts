@@ -13,6 +13,7 @@ import { CalendarEvent } from '@app/helpers/calenderTypes';
 import { CalenderService } from '@app/helpers/calender.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CalDetailsDialogComponent } from '@calendar/cal-details-dialog/cal-details-dialog.component';
+import { AppStoreService } from '@app/app-store.service';
 
 const isToday = (checkDate: Date) => {
   return areDatesOnSameDay(new Date(), checkDate);
@@ -42,9 +43,17 @@ export class CalBasicComponent implements OnInit {
   constructor(
     private calService: CalenderService,
     private dialog: MatDialog,
+    private store: AppStoreService,
   ) {}
   async ngOnInit(): Promise<void> {
-    this.listOfEvents = await this.calService.getEvents(new Date());
+    await this.updateEvents(new Date());
+    this.store.state.monthChanged.subscribe((month) =>
+      this.updateEvents(month),
+    );
+  }
+
+  async updateEvents(date4Calendar: Date) {
+    this.listOfEvents = await this.calService.getEvents(date4Calendar);
     this.calendar.updateTodaysDate();
   }
 
@@ -68,20 +77,14 @@ export class CalBasicComponent implements OnInit {
           retClass += ' date-two-entries';
         }
       }
-      /*
-      
-      if (date === 14) {
-        retClass += ' date-two-entries';
-      } else if (date === 10) {
-        retClass += ' date-bottom';
-      } else if (date === 13) {
-        retClass += ' date-bottom';
-      }
-      */
     }
 
     return retClass.trim();
   };
+
+  changedView(event: unknown) {
+    console.log('changed view', event);
+  }
 
   displayDayEvents(selDate: Date | null) {
     if (selDate) {

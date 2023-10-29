@@ -2,12 +2,13 @@ export type CalendarEvent = {
   id: string;
   start: {
     date: Date;
-    dateTime: string;
+    time: string;
   };
   end: {
     date: Date;
-    dateTime: string;
+    time: string;
   };
+  description: string;
 };
 export type CalendarEventUI = {
   selDate: Date;

@@ -13,6 +13,7 @@ import {
 } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AppStoreService } from '@app/app-store.service';
 
 @Component({
   selector: 'app-cal-month-header',
@@ -27,6 +28,7 @@ export class CalMonthHeaderComponent<D> implements OnDestroy {
     private _dateAdapter: DateAdapter<D>,
     @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
     cdr: ChangeDetectorRef,
+    private store: AppStoreService,
   ) {
     _calendar.stateChanges
       .pipe(takeUntil(this._destroyed))
@@ -47,17 +49,21 @@ export class CalMonthHeaderComponent<D> implements OnDestroy {
       .toLocaleUpperCase();
   }
 
-  previousClicked(mode: 'month' | 'year') {
-    this._calendar.activeDate =
-      mode === 'month'
-        ? this._dateAdapter.addCalendarMonths(this._calendar.activeDate, -1)
-        : this._dateAdapter.addCalendarYears(this._calendar.activeDate, -1);
+  previousClicked() {
+    const nextMonth = this._dateAdapter.addCalendarMonths(
+      this._calendar.activeDate,
+      -1,
+    );
+    this._calendar.activeDate = nextMonth;
+    this.store.state.monthChanged.next(nextMonth as Date);
   }
 
-  nextClicked(mode: 'month' | 'year') {
-    this._calendar.activeDate =
-      mode === 'month'
-        ? this._dateAdapter.addCalendarMonths(this._calendar.activeDate, 1)
-        : this._dateAdapter.addCalendarYears(this._calendar.activeDate, 1);
+  nextClicked() {
+    const prevMonth = this._dateAdapter.addCalendarMonths(
+      this._calendar.activeDate,
+      1,
+    );
+    this._calendar.activeDate = prevMonth;
+    this.store.state.monthChanged.next(prevMonth as Date);
   }
 }

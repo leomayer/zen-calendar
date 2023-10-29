@@ -24,6 +24,7 @@
     "@angular/platform-browser": "^16.2.10",
     "@angular/platform-browser-dynamic": "^16.2.10",
     "@angular/router": "^16.2.10",
+    "googleapis": "^128.0.0",
     "onchange": "^7.1.0",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
