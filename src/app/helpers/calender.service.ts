@@ -18,6 +18,7 @@ export class CalenderService {
     const dbList = this.helper.getOverview4Month(curMonth);
     this.setFixedDate(dbList, retList);
     this.setRepeatingWeekDates(dbList, retList, curMonth);
+    retList.sort((a, b) => a.start.getTime() - b.start.getTime());
     return retList;
   }
 
@@ -48,14 +49,15 @@ export class CalenderService {
           let addDay = retList.find((chkMapDay) =>
             areDatesOnSameDay(chkMapDay.start, weekDay),
           );
-          if (!addDay) {
+          if (addDay) {
+            addDay.eventIds.push(filterDay.id);
+          } else {
             addDay = {
               start: weekDay,
-              eventIds: [],
+              eventIds: [filterDay.id],
             };
+            retList.push(addDay);
           }
-          addDay.eventIds.push(filterDay.id);
-          retList.push(addDay);
         });
       });
   }
