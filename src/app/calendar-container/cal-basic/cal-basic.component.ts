@@ -9,7 +9,7 @@ import {
   MatCalendarCellClassFunction,
 } from '@angular/material/datepicker';
 import { CalMonthHeaderComponent } from './cal-month-header/cal-month-header.component';
-import { CalendarEvent } from '@app/helpers/calenderTypes';
+import { CalendarEvent, CalendarEventShort } from '@app/helpers/calenderTypes';
 import { CalenderService } from '@app/helpers/calender.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CalDetailsDialogComponent } from '@calendar/cal-details-dialog/cal-details-dialog.component';
@@ -36,7 +36,7 @@ export class CalBasicComponent implements OnInit {
   selectedDate!: Date | null;
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
-  listOfEvents!: CalendarEvent[] | undefined;
+  listOfEvents!: CalendarEventShort[] | undefined;
   // for the header component
   monthHeader = CalMonthHeaderComponent;
 
@@ -68,10 +68,10 @@ export class CalBasicComponent implements OnInit {
       if (isToday(cellDate)) {
         retClass += ' highlight-date';
       }
-      const events = this.getEvents(cellDate);
-      if (events.length > 0) {
+      const cntEvents = this.getEventCount(cellDate);
+      if (cntEvents > 0) {
         retClass += ' date-bottom';
-        if (events.length === 1) {
+        if (cntEvents === 1) {
           retClass += ' date-one-entry';
         } else {
           retClass += ' date-two-entries';
@@ -88,7 +88,8 @@ export class CalBasicComponent implements OnInit {
 
   displayDayEvents(selDate: Date | null) {
     if (selDate) {
-      const events = this.getEvents(selDate);
+      const events = [] as CalendarEvent[];
+      //      const events = this.getEvents(selDate);
       if (events.length) {
         const data = {
           selDate,
@@ -106,11 +107,10 @@ export class CalBasicComponent implements OnInit {
     }
   }
 
-  private getEvents(filterDate: Date): CalendarEvent[] {
-    return (
-      this.listOfEvents?.filter((chk) =>
-        areDatesOnSameDay(filterDate, chk.start.date),
-      ) ?? []
-    );
+  private getEventCount(filterDate: Date): number {
+    const ret =
+      this.listOfEvents?.find((chk) => areDatesOnSameDay(filterDate, chk.start))
+        ?.eventIds.length ?? 0;
+    return ret;
   }
 }

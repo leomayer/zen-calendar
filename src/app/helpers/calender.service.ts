@@ -1,53 +1,66 @@
 import { Injectable } from '@angular/core';
-import { CalendarEvent } from './calenderTypes';
+import { CalendarEvent, CalendarEventShort } from './calenderTypes';
+import { CalendarTestHelper } from './calender.test-helper.service';
+import {
+  areDatesOnSameDay,
+  getWeekdaysInMonth,
+} from './calendar.functions.helper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalenderService {
-  getEvents(curMonth: Date): CalendarEvent[] {
-    const retList = [] as CalendarEvent[];
-    const mondays = this.getWeekdaysInMonth(curMonth, 1);
-    mondays.forEach((curMonday) => {
-      const ret = this.getMondays();
-      ret.start.date = curMonday;
-      ret.end.date = curMonday;
-      retList.push(ret);
-    });
-    const wednesdays = this.getWeekdaysInMonth(curMonth, 3);
-    wednesdays.forEach((curWed) => {
-      const ret = this.getWednesdays();
-      ret.start.date = curWed;
-      ret.end.date = curWed;
-      retList.push(ret);
-    });
+  constructor(private helper: CalendarTestHelper) {}
 
+  getEvents(curMonth: Date): CalendarEventShort[] {
+    const retList = [] as CalendarEventShort[];
+    // get the list from the DB
+    const dbList = this.helper.getOverview4Month(curMonth);
+    this.setFixedDate(dbList, retList);
+    this.setRepeatingWeekDates(dbList, retList, curMonth);
     return retList;
   }
 
-  // targetWeekday:  (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-  getWeekdaysInMonth(date: Date, targetWeekday: number) {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const weekdays = [];
-
-    // Calculate the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday) for the target weekday
-    const dayOfWeek = targetWeekday % 7;
-
-    // Calculate the date of the first occurrence of the target weekday in the month
-    let firstWeekday =
-      1 + ((7 + dayOfWeek - new Date(year, month, 1).getDay()) % 7);
-
-    // Loop through the month and find all occurrences of the target weekday
-    while (firstWeekday <= new Date(year, month + 1, 0).getDate()) {
-      const weekday = new Date(year, month, firstWeekday);
-      weekdays.push(weekday);
-      firstWeekday += 7;
-    }
-
-    return weekdays;
+  // filter all those events which are not repeating
+  setFixedDate(dbList: CalendarEvent[], retList: CalendarEventShort[]) {
+    dbList
+      .filter((chk) => chk.frequ_type === 0)
+      .forEach((filterDay) => {
+        const addDay: CalendarEventShort = {
+          start: filterDay.event_start,
+          eventIds: [filterDay.id],
+        };
+        retList.push(addDay);
+      });
+  }
+  setRepeatingWeekDates(
+    dbList: CalendarEvent[],
+    retList: CalendarEventShort[],
+    curMonth: Date,
+  ) {
+    dbList
+      .filter((chk) => chk.frequ_type === 1)
+      .forEach((filterDay) => {
+        // get for this weekday all dates in this month
+        const weekDays = getWeekdaysInMonth(curMonth, filterDay.frequ_day);
+        // for each weekday: add the event to the calendar
+        weekDays.forEach((weekDay) => {
+          let addDay = retList.find((chkMapDay) =>
+            areDatesOnSameDay(chkMapDay.start, weekDay),
+          );
+          if (!addDay) {
+            addDay = {
+              start: weekDay,
+              eventIds: [],
+            };
+          }
+          addDay.eventIds.push(filterDay.id);
+          retList.push(addDay);
+        });
+      });
   }
 
+  /*
   private getMondays(): CalendarEvent {
     return {
       id: 'abc',
@@ -85,4 +98,5 @@ The practice will take place at the Zen Center.<br>
 (Please register via <a href="mailto:leo_zen@gmx.at" target="_blank" rel="noopener" class="mail-link" data-wpel-link="ignore"><span class="wpmt wpml-rtl"><span class="wpml-sd">ta.xm</span><span class="wpml-nodis">1698600878</span><span class="wpml-sd">g@nez</span><span class="wpml-nodis">1698600878</span><span class="wpml-sd">_oel</span><span class="wpml-nodis">1698600878</span></span></a>.)</p>  `,
     };
   }
+  */
 }
