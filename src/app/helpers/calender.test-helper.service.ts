@@ -13,7 +13,6 @@ export class CalendarTestHelper {
     monday1.event_end = new Date('2020-01-06T03:00:00');
     monday1.frequ_start = new Date('2020-01-06T03:00:00');
     monday1.frequ_type = 1;
-    monday1.frequ_day = 1;
     ret.push(monday1);
 
     const wednesday1 = {} as CalendarEvent;
@@ -22,7 +21,6 @@ export class CalendarTestHelper {
     wednesday1.event_end = new Date('2020-01-01T03:30:00');
     wednesday1.frequ_start = new Date('2020-01-01T03:35:00');
     wednesday1.frequ_type = 1;
-    wednesday1.frequ_day = 3;
     ret.push(wednesday1);
 
     const wednesday2 = {} as CalendarEvent;
@@ -31,7 +29,6 @@ export class CalendarTestHelper {
     wednesday2.event_end = new Date('2020-01-01T03:30:00');
     wednesday2.frequ_start = new Date('2020-01-01T03:35:00');
     wednesday2.frequ_type = 1;
-    wednesday2.frequ_day = 3;
     ret.push(wednesday2);
 
     const testDate = {} as CalendarEvent;

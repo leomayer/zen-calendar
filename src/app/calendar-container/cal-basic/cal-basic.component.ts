@@ -14,17 +14,10 @@ import { CalenderService } from '@app/helpers/calender.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CalDetailsDialogComponent } from '@calendar/cal-details-dialog/cal-details-dialog.component';
 import { AppStoreService } from '@app/app-store.service';
-
-const isToday = (checkDate: Date) => {
-  return areDatesOnSameDay(new Date(), checkDate);
-};
-function areDatesOnSameDay(date1: Date, date2: Date) {
-  return (
-    date1.getFullYear() === date2.getFullYear() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getDate() === date2.getDate()
-  );
-}
+import {
+  areDatesOnSameDay,
+  isToday,
+} from '@app/helpers/calendar.functions.helper';
 
 @Component({
   selector: 'app-cal-basic',

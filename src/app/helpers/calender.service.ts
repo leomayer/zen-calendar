@@ -43,7 +43,10 @@ export class CalenderService {
       .filter((chk) => chk.frequ_type === 1)
       .forEach((filterDay) => {
         // get for this weekday all dates in this month
-        const weekDays = getWeekdaysInMonth(curMonth, filterDay.frequ_day);
+        const weekDays = getWeekdaysInMonth(
+          curMonth,
+          filterDay.frequ_start.getDay(),
+        );
         // for each weekday: add the event to the calendar
         weekDays.forEach((weekDay) => {
           let addDay = retList.find((chkMapDay) =>
