@@ -5,7 +5,7 @@ export type CalendarEventShort = {
 
 export type CalendarEventUI = {
   selDate: Date;
-  events: CalendarEvent[];
+  events: CalenderInfo[];
 };
 export type CalendarEvent = {
   id: number;
@@ -15,4 +15,14 @@ export type CalendarEvent = {
   frequ_start: Date;
   frequ_end: Date;
   frequ_type: number; //0: None; 1: weekly; 2: monthly; 3: yearly
+};
+
+export type CalenderInfo = {
+  title: string;
+  description: string;
+  start: string;
+  end: string;
+  lang: string;
+  link: string;
+  linkType: string;
 };

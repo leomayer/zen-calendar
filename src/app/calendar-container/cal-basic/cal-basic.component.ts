@@ -9,7 +9,10 @@ import {
   MatCalendarCellClassFunction,
 } from '@angular/material/datepicker';
 import { CalMonthHeaderComponent } from './cal-month-header/cal-month-header.component';
-import { CalendarEvent, CalendarEventShort } from '@app/helpers/calenderTypes';
+import {
+  CalendarEventShort,
+  CalendarEventUI,
+} from '@app/helpers/calenderTypes';
 import { CalenderService } from '@app/helpers/calender.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CalDetailsDialogComponent } from '@calendar/cal-details-dialog/cal-details-dialog.component';
@@ -79,15 +82,19 @@ export class CalBasicComponent implements OnInit {
     console.log('changed view', event);
   }
 
-  displayDayEvents(selDate: Date | null) {
+  async displayDayEvents(selDate: Date | null) {
     if (selDate) {
-      const events = [] as CalendarEvent[];
-      //      const events = this.getEvents(selDate);
+      const eventId =
+        this.listOfEvents?.find((chk) =>
+          areDatesOnSameDay(chk.start, selDate),
+        ) ?? ({} as CalendarEventShort);
+      //const events = [] as CalendarEvent[];
+      const events = await this.calService.getEventsByIds(eventId.eventIds);
       if (events.length) {
         const data = {
           selDate,
           events,
-        };
+        } as CalendarEventUI;
         this.dialog.open(CalDetailsDialogComponent, {
           data,
           width: '250px',

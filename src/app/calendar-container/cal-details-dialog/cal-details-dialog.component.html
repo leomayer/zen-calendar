@@ -1,6 +1,26 @@
-<dif mat-dialog-title>Events {{ data.selDate | date: "mediumDate" }}</dif>
+<div mat-dialog-title>
+  <span>{{ data.selDate | date: "mediumDate" }}</span>
+  <ng-container *ngIf="data.events.length === 1">
+    <br />
+    <span>
+      {{ data.events[0]?.start }}
+    </span>
+    <span> &nbsp;-&nbsp; </span>
+    <span>
+      {{ data.events[0]?.end }}
+    </span>
+  </ng-container>
+</div>
 <div mat-dialog-content>
-  <!--
   <div class="description" [innerHTML]="data.events[0]?.description"></div>
-  -->
+  <ng-container *ngIf="data.events[0]?.link">
+    <ng-container *ngIf="data.events[0]?.linkType === 'zoom'">
+      <div>
+        <span>Zoom link: </span>
+        <a target="_blank" href="{{ data.events[0]?.link }}"
+          >{{ data.events[0]?.link }}
+        </a>
+      </div>
+    </ng-container>
+  </ng-container>
 </div>

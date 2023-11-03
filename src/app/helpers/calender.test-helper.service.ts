@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
-import { CalendarEvent } from './calenderTypes';
+import { CalendarEvent, CalenderInfo } from './calenderTypes';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarTestHelper {
+  url = '/assets/samples/';
+  constructor(private http: HttpClient) {}
+
   getOverview4Month(curMonth: Date): CalendarEvent[] {
     const ret = [] as CalendarEvent[];
     const monday1 = {} as CalendarEvent;
@@ -41,5 +46,22 @@ export class CalendarTestHelper {
     ret.push(testDate);
 
     return ret;
+  }
+
+  async getEventsByIds(eventIds: number[]) {
+    const ret = [] as CalenderInfo[];
+    for (let eventId of eventIds) {
+      if (eventId === -2) {
+        const event = await this.getHttpResult('monday-reg.json');
+        ret.push(...event);
+      }
+    }
+    return ret;
+  }
+
+  async getHttpResult(strJson: string): Promise<CalenderInfo[]> {
+    return await firstValueFrom(
+      this.http.get<CalenderInfo[]>(this.url + strJson),
+    );
   }
 }

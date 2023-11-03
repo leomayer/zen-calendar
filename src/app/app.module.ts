@@ -12,6 +12,7 @@ import { CalShortCodeComponent } from '@calendar/cal-short-code/cal-short-code.c
 import { CalConfigComponent } from '@calConfig/cal-config/cal-config.component';
 import { CalMonthHeaderComponent } from './calendar-container/cal-basic/cal-month-header/cal-month-header.component';
 import { CalDetailsDialogComponent } from './calendar-container/cal-details-dialog/cal-details-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,12 @@ import { CalDetailsDialogComponent } from './calendar-container/cal-details-dial
     CalMonthHeaderComponent,
     CalDetailsDialogComponent,
   ],
-  imports: [MaterialDesignModule, BrowserModule, AppRoutingModule],
+  imports: [
+    MaterialDesignModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+  ],
   providers: [
     { provide: DateAdapter, useClass: WeekdayDateService },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
