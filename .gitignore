@@ -6,6 +6,7 @@
 /out-tsc
 /bazel-out
 src/assets/samples
+plugin/**/assets/samples
 
 # Node
 /node_modules

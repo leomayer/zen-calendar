@@ -10,7 +10,8 @@
     "prettier-watch": "onchange \"./{src,e2e}/**/*.{ts,js,html,scss}\" -- prettier --write  --ignore-unknown {{changed}}",
     "test": "ng test",
     "start-zenCal": "npm run start & npm run prettier-watch",
-    "github-pages": "ng deploy --base-href=/zen-calendar/"
+    "github-pages": "ng deploy --base-href=/zen-calendar/",
+    "sme": "ng build --configuration production --source-map=true --named-chunks==true && source-map-explorer dist/zen-calendar/**/*.js"
   },
   "private": true,
   "dependencies": {
@@ -46,6 +47,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "source-map-explorer": "^2.5.3",
     "typescript": "~4.9.4"
   }
 }
