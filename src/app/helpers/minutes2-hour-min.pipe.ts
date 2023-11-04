@@ -1,0 +1,18 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'minutes2HourMin',
+})
+export class Minutes2HourMinPipe implements PipeTransform {
+  transform(minutes: number | undefined, ...args: unknown[]): unknown {
+    if (minutes) {
+      const date = new Date();
+      date.setHours(0, minutes, 0);
+      return date.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    }
+    return null;
+  }
+}

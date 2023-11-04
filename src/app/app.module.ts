@@ -13,6 +13,8 @@ import { CalConfigComponent } from '@calConfig/cal-config/cal-config.component';
 import { CalMonthHeaderComponent } from './calendar-container/cal-basic/cal-month-header/cal-month-header.component';
 import { CalDetailsDialogComponent } from './calendar-container/cal-details-dialog/cal-details-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TimeFormatterComponent } from './calendar-container/time-formatter/time-formatter.component';
+import { Minutes2HourMinPipe } from './helpers/minutes2-hour-min.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     CalConfigComponent,
     CalMonthHeaderComponent,
     CalDetailsDialogComponent,
+    TimeFormatterComponent,
+    Minutes2HourMinPipe,
   ],
   imports: [
     MaterialDesignModule,

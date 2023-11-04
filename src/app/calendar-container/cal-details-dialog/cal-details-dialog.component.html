@@ -2,13 +2,10 @@
   <span>{{ data.selDate | date: "mediumDate" }}</span>
   <ng-container *ngIf="data.events.length === 1">
     <br />
-    <span>
-      {{ data.events[0]?.start }}
-    </span>
-    <span> &nbsp;-&nbsp; </span>
-    <span>
-      {{ data.events[0]?.end }}
-    </span>
+    <app-time-formatter
+      [startTime]="data.events[0]?.startTime"
+      [endTime]="data.events[0]?.endTime"
+    />
   </ng-container>
 </div>
 <div mat-dialog-content>

@@ -20,9 +20,9 @@ export type CalendarEvent = {
 export type CalenderInfo = {
   title: string;
   description: string;
-  start: string;
-  end: string;
+  startTime: number;
+  endTime: number;
   lang: string;
   link: string;
-  linkType: string;
+  linkType: 'zoom'|'email'|undefined;
 };
