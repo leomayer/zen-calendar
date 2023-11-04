@@ -14,7 +14,7 @@ export type CalendarEvent = {
   event_end: Date;
   frequ_start: Date;
   frequ_end: Date;
-  frequ_type: number; //0: None; 1: weekly; 2: monthly; 3: yearly
+  frequ_type: 0 | 1 | 2 | 3; //0: None; 1: weekly; 2: monthly; 3: yearly
 };
 
 export type CalenderInfo = {
@@ -24,5 +24,5 @@ export type CalenderInfo = {
   endTime: number;
   lang: string;
   link: string;
-  linkType: 'zoom'|'email'|undefined;
+  linkType: 'zoom' | 'email' | undefined;
 };
