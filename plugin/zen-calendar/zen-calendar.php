@@ -23,7 +23,7 @@ function attach_zen_cal() {
     wp_enqueue_script( 'ng_polyfills' );
     wp_enqueue_script( 'ng_runtime' );
 
-    return "<app-root useConfigInterface=\"true\"></app-root>";
+    return "<app-root useConfigInterface=\"false\"></app-root>";
 }
 
 add_shortcode( 'zen_cal', 'attach_zen_cal' );

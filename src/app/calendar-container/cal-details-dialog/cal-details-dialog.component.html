@@ -1,7 +1,6 @@
-<div mat-dialog-title>
+<div mat-dialog-title class="reduce-lineheight">
   <span>{{ data.selDate | date: "mediumDate" }}</span>
   <ng-container *ngIf="data.events.length === 1">
-    <br />
     <app-time-formatter
       [startTime]="data.events[0]?.startTime"
       [endTime]="data.events[0]?.endTime"

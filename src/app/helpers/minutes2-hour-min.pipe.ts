@@ -8,7 +8,7 @@ export class Minutes2HourMinPipe implements PipeTransform {
     if (minutes) {
       const date = new Date();
       date.setHours(0, minutes, 0);
-      return date.toLocaleTimeString([], {
+      return date.toLocaleTimeString([document.documentElement.lang], {
         hour: '2-digit',
         minute: '2-digit',
       });
