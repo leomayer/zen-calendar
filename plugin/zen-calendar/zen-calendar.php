@@ -74,7 +74,7 @@ function attach_zen_cal()
 function get_wp_zen_calendar4month($request)
 {
     $useMonth = $request->get_param('useMonth');
-    error_log("use month $useMonth");
+    
     global $wpdb;
     $tblBasic = $wpdb->prefix . "zencalendar_basic";
 
@@ -86,9 +86,24 @@ function get_wp_zen_calendar4month($request)
       ORDER BY event_start;");
     echo json_encode($calOverview);
 }
+// Query the details for the Event
+function get_wp_zen_eventDetails($request)
+{
+    $useEventId = $request->get_param('eventId');
+    $useLang = $request->get_param('lang');
+    global $wpdb;
+    $tblDetails = $wpdb->prefix . "zencalendar_details";
+    
+    $calDetails = $wpdb->get_results("SELECT title, description,startTime, endTime, link, linkType
+      FROM $tblDetails
+      WHERE cal_basic_id=$useEventId
+        AND  lang='$useLang'
+      ORDER BY startTime;");
+    echo json_encode($calDetails);
+}
 
 // Register the useMonth parameter
-function register_use_month_parameter()
+function register_custom_parameter()
 {
     register_rest_field('calendar4month', // Replace with your custom endpoint name
     'useMonth', array(
@@ -96,6 +111,22 @@ function register_use_month_parameter()
         'update_callback' => null,
         'schema' => null
     ));
+    
+    $params = array(
+        'eventId' => array(
+            'get_callback'    => 'get_event_id',
+            'update_callback' => null,
+            'schema'          => null,
+        ),
+        'lang' => array(
+            'get_callback'    => 'get_lang',
+            'update_callback' => null,
+            'schema'          => null,
+        ),
+    );
+    
+    register_rest_field('zenEvent', $params);
+    
 }
 
 // Define a callback function for the use month parameter
@@ -103,15 +134,25 @@ function get_useMonth($object, $field_name, $request)
 {
     return $request['useMonth'];
 }
-
+function get_event_id($object, $field_name, $request) {
+    return $request['eventId'];
+}
+function get_lang($object, $field_name, $request) {
+    return $request['lang'];
+}
 add_action('wp_enqueue_scripts', 'load_ng_scripts');
 register_activation_hook(__FILE__, 'zen_cal_install');
 
-add_action('rest_api_init', 'register_use_month_parameter');
 add_action('rest_api_init', function () {
+    register_custom_parameter();
     register_rest_route('zen_calendar/v1', '/calendar4month/', array(
         'methods' => 'GET',
         'callback' => 'get_wp_zen_calendar4month',
+        'permission_callback' => '__return_true'
+    ));
+    register_rest_route('zen_calendar/v1', '/zenEvent/', array(
+        'methods' => 'GET',
+        'callback' => 'get_wp_zen_eventDetails',
         'permission_callback' => '__return_true'
     ));
 });
