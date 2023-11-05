@@ -24,5 +24,5 @@ export type CalenderInfo = {
   endTime: number;
   lang: string;
   link: string;
-  linkType: 'zoom' | 'email' | undefined;
+  linkType: 'url'|'zoom' | 'email' | undefined;
 };
