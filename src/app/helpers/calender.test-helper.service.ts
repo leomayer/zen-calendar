@@ -1,16 +1,49 @@
 import { Injectable } from '@angular/core';
-import { CalendarEvent, CalenderInfo } from './calenderTypes';
+import {
+  CalendarEvent,
+  CalendarEventString,
+  CalenderInfo,
+} from './calenderTypes';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarTestHelper {
-  url = '/assets/samples/';
+  url4testing = '/assets/samples/';
+  host = 'https://www.zen-meditation.wien';
+  url4Wordpress = '/wp-json/zen_calendar/v1/';
   constructor(private http: HttpClient) {}
 
-  getOverview4Month(curMonth: Date): CalendarEvent[] {
+  async getOverview4Month(curMonth: Date): Promise<CalendarEvent[]> {
+    const formatDate = curMonth.toISOString().split('T')[0];
+    return await firstValueFrom(
+      this.http
+        .get<CalendarEventString[]>(
+          this.host +
+            this.url4Wordpress +
+            'calendar4month?useMonth=' +
+            formatDate,
+        )
+        .pipe(
+          map((dto) => {
+            const converted = dto.map((dtoDetail) => {
+              const convDetail = {} as CalendarEvent;
+              convDetail.id = Number(dtoDetail.id);
+              convDetail.frequ_end = new Date(dtoDetail.frequ_end);
+              convDetail.frequ_start = new Date(dtoDetail.frequ_start);
+              convDetail.event_end = new Date(dtoDetail.event_end);
+              convDetail.event_start = new Date(dtoDetail.event_start);
+              convDetail.frequ_type = Number(dtoDetail.frequ_type);
+              return convDetail;
+            });
+            return converted;
+          }),
+        ),
+    );
+  }
+  getOverview4MonthTesting(curMonth: Date): CalendarEvent[] {
     const ret = [] as CalendarEvent[];
     const monday1 = {} as CalendarEvent;
     monday1.id = -2;
@@ -61,7 +94,7 @@ export class CalendarTestHelper {
 
   async getHttpResult(strJson: string): Promise<CalenderInfo[]> {
     return await firstValueFrom(
-      this.http.get<CalenderInfo[]>(this.url + strJson),
+      this.http.get<CalenderInfo[]>(this.url4testing + strJson),
     );
   }
 }
