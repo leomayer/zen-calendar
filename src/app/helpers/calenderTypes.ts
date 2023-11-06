@@ -16,7 +16,7 @@ export type CalendarEvent = {
   frequ_end: Date;
   frequ_type: number; //0: None; 1: weekly; 2: monthly; 3: yearly
 };
-export type CalendarEventString = {
+export type WordpressString = {
   id: string;
 
   event_start: string;

@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import {
   CalendarEvent,
-  CalendarEventString,
+  WordpressString,
   CalenderInfo,
 } from './calenderTypes';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, map } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarTestHelper {
   url4testing = '/assets/samples/';
-  host = 'https://www.zen-meditation.wien';
+  host = environment?.host? environment?.host : '.';
   url4Wordpress = '/wp-json/zen_calendar/v1/';
   constructor(private http: HttpClient) {}
 
@@ -20,7 +21,7 @@ export class CalendarTestHelper {
     const formatDate = curMonth.toISOString().split('T')[0];
     return await firstValueFrom(
       this.http
-        .get<CalendarEventString[]>(
+        .get<WordpressString[]>(
           this.host +
             this.url4Wordpress +
             'calendar4month?useMonth=' +

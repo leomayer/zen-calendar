@@ -24,14 +24,20 @@ distFilenames = fs.readdirSync(`${destination}/dist/${pluginName}`);
 scriptsAndStyleFiles = distFilenames.filter(
   (file) => file.endsWith(".js") || file.endsWith(".css"),
 );
-
 // replace the js and css file names in the php file contents
 const pluginFileContents = fs.readFileSync(`${pluginFilePath}`, "utf8");
 
 const updateLine = (line, name) => {
+  console.log("update line", line, "with name:", name);
   const matchedLinePart = line.match(/(?<=dist\/).*?(?=\')/gs).toString();
   const matchedFileName = scriptsAndStyleFiles.find((file) =>
     file.includes(name),
+  );
+  console.log(
+    "matchedLine",
+    matchedLinePart,
+    "with filename:",
+    matchedFileName,
   );
   return line.replace(matchedLinePart, matchedFileName);
 };
@@ -40,13 +46,13 @@ const updatedFileContentArray = pluginFileContents
   .split(/\r?\n/)
   .map((line) => {
     switch (true) {
-      case line.includes("wp_enqueue_style( 'ng_styles"):
+      case line.includes("wp_enqueue_style('ng_styles"):
         return updateLine(line, "styles");
-      case line.includes("wp_register_script( 'ng_main"):
+      case line.includes("wp_register_script('ng_main"):
         return updateLine(line, "main");
-      case line.includes("wp_register_script( 'ng_polyfills"):
+      case line.includes("wp_register_script('ng_polyfills"):
         return updateLine(line, "polyfills");
-      case line.includes("wp_register_script( 'ng_runtime"):
+      case line.includes("wp_register_script('ng_runtime"):
         return updateLine(line, "runtime");
       default:
         return line;
