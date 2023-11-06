@@ -1,7 +1,6 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialDesignModule } from './material-design/material-design.module';
 import { DateAdapter } from '@angular/material/core';
@@ -27,12 +26,7 @@ import { Minutes2HourMinPipe } from './helpers/minutes2-hour-min.pipe';
     TimeFormatterComponent,
     Minutes2HourMinPipe,
   ],
-  imports: [
-    MaterialDesignModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-  ],
+  imports: [MaterialDesignModule, BrowserModule, HttpClientModule],
   providers: [
     { provide: DateAdapter, useClass: WeekdayDateService },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

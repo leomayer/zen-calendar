@@ -88,9 +88,6 @@ THE SOFTWARE.
 @angular/platform-browser
 MIT
 
-@angular/router
-MIT
-
 moment
 MIT
 Copyright (c) JS Foundation and other contributors

@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CalendarTestHelper {
   url4testing = '/assets/samples/';
-  host = environment?.host ? environment?.host : '.';
+  host = (environment?.host ? environment?.host : location.origin) + '/';
   url4Wordpress = '/wp-json/zen_calendar/v1/';
   constructor(private http: HttpClient) {}
 
