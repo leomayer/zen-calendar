@@ -1,23 +1,24 @@
 <div mat-dialog-title class="reduce-lineheight">
+  <span>Datum: </span>
   <span>{{ data.selDate | date: "mediumDate" }}</span>
-  <ng-container *ngIf="data.events.length === 1">
-    <app-time-formatter
-      [startTime]="data.events[0]?.startTime"
-      [endTime]="data.events[0]?.endTime"
-    />
-  </ng-container>
 </div>
 <div mat-dialog-content>
-  <div class="title">{{ data.events[0]?.title }}</div>
-  <div class="description" [innerHTML]="data.events[0]?.description"></div>
-  <ng-container *ngIf="data.events[0]?.link">
-    <ng-container *ngIf="data.events[0]?.linkType === 'zoom'">
-      <div>
-        <span>Zoom link: </span>
-        <a target="_blank" href="{{ data.events[0]?.link }}"
-          >{{ data.events[0]?.link }}
-        </a>
-      </div>
+  <!-- loop over all events -->
+  <ng-container *ngFor="let curEvent of data.events">
+    <div class="title">{{ curEvent.title }}</div>
+    <app-time-formatter
+      class="subtitle"
+      [startTime]="curEvent.startTime"
+      [endTime]="curEvent.endTime"
+    />
+    <div class="description" [innerHTML]="curEvent.description"></div>
+    <ng-container *ngIf="curEvent.link">
+      <ng-container *ngIf="curEvent.linkType === 'zoom'">
+        <div>
+          <span>Zoom link: </span>
+          <a target="_blank" href="{{ curEvent.link }}">{{ curEvent.link }} </a>
+        </div>
+      </ng-container>
     </ng-container>
   </ng-container>
 </div>
