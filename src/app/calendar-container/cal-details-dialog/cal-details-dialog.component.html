@@ -8,6 +8,7 @@
   </ng-container>
 </div>
 <div mat-dialog-content>
+  <div class="title">{{ data.events[0]?.title }}</div>
   <div class="description" [innerHTML]="data.events[0]?.description"></div>
   <ng-container *ngIf="data.events[0]?.link">
     <ng-container *ngIf="data.events[0]?.linkType === 'zoom'">

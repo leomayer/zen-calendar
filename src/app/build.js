@@ -28,31 +28,32 @@ scriptsAndStyleFiles = distFilenames.filter(
 const pluginFileContents = fs.readFileSync(`${pluginFilePath}`, "utf8");
 
 const updateLine = (line, name) => {
-  console.log("update line", line, "with name:", name);
   const matchedLinePart = line.match(/(?<=dist\/).*?(?=\')/gs).toString();
   const matchedFileName = scriptsAndStyleFiles.find((file) =>
     file.includes(name),
   );
-  console.log(
-    "matchedLine",
-    matchedLinePart,
-    "with filename:",
-    matchedFileName,
-  );
   return line.replace(matchedLinePart, matchedFileName);
+};
+
+const checkLineInludes = (line, strCheck) => {
+  return (
+    line.includes(strCheck) &&
+    line.includes("plugin_dir_url(__FILE__)") &&
+    line.includes("dist/")
+  );
 };
 
 const updatedFileContentArray = pluginFileContents
   .split(/\r?\n/)
   .map((line) => {
     switch (true) {
-      case line.includes("wp_enqueue_style('ng_styles"):
+      case checkLineInludes(line, "ng_styles"):
         return updateLine(line, "styles");
-      case line.includes("wp_register_script('ng_main"):
+      case checkLineInludes(line, "ng_main"):
         return updateLine(line, "main");
-      case line.includes("wp_register_script('ng_polyfills"):
+      case checkLineInludes(line, "ng_polyfills"):
         return updateLine(line, "polyfills");
-      case line.includes("wp_register_script('ng_runtime"):
+      case checkLineInludes(line, "ng_runtime"):
         return updateLine(line, "runtime");
       default:
         return line;

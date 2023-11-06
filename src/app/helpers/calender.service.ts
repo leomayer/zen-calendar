@@ -23,7 +23,10 @@ export class CalenderService {
   }
 
   async getEventsByIds(eventIds: number[]) {
-    return await this.helper.getEventsByIds(eventIds);
+    return await this.helper.getEventsByIds(
+      eventIds,
+      document.documentElement.lang,
+    );
   }
 
   // filter all those events which are not repeating
