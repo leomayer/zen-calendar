@@ -12,13 +12,6 @@
       [endTime]="curEvent.endTime"
     />
     <div class="description" [innerHTML]="curEvent.description"></div>
-    <ng-container *ngIf="curEvent.link">
-      <ng-container *ngIf="curEvent.linkType === 'zoom'">
-        <div>
-          <span>Zoom link: </span>
-          <a target="_blank" href="{{ curEvent.link }}">{{ curEvent.link }} </a>
-        </div>
-      </ng-container>
-    </ng-container>
+    <app-link-details [curEvent]="curEvent" />
   </ng-container>
 </div>
