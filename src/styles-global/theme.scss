@@ -1,7 +1,7 @@
 // copied from https://stackoverflow.com/a/48159346/325868
 
-@use '@angular/material' as mat;
-@import '@angular/material/theming';
+@use "@angular/material" as mat;
+@import "@angular/material/theming";
 
 /*
  * Include Angular Material colors https://stackoverflow.com/a/50034890/325868
@@ -23,17 +23,18 @@ $bluePalette: mat-palette($mat-blue-palette);
 $greenPalette: mat-palette($mat-green-palette);
 $amberPalette: mat-palette($mat-amber-palette);
 $orangePalette: mat-palette($mat-orange-palette);
+$deeporangePalette: mat-palette($mat-deep-orange-palette);
 $bluegrayPalette: mat-palette($mat-blue-gray);
 
 $app-typography: mat.define-typography-config();
 // following https://stackoverflow.com/a/75411680/325868 and https://material.angular.io/guide/theming#applying-a-theme-to-components
 $app-theme: mat.define-light-theme(
-	(
-		color: (
-			primary: $primaryPalette,
-			accent: $accentPalette,
-		),
-		typography: $app-typography,
-		density: -1,
-	)
+  (
+    color: (
+      primary: $primaryPalette,
+      accent: $accentPalette,
+    ),
+    typography: $app-typography,
+    density: -1,
+  )
 );

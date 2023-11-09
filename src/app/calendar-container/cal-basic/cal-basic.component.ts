@@ -75,6 +75,13 @@ export class CalBasicComponent implements OnInit {
       }
     }
 
+    if (
+      retClass.includes('date-one-entry') &&
+      retClass.includes('date-two-entries')
+    ) {
+      retClass = retClass.replace('date-one-entry', '');
+    }
+
     return retClass.trim();
   };
 
