@@ -15,7 +15,7 @@ $zencal_db_version = '1.0';
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.463c5bcc279f9804.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.e04eebc7d8f235fe.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.c4efa386b636dc67.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.7ef82dbfc6acbeb8.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -81,8 +81,8 @@ function get_wp_zen_calendar4month($request)
     $calOverview = $wpdb->get_results("SELECT id, event_start, event_end, frequ_start, frequ_end, frequ_type 
       FROM $tblBasic 
       WHERE is_valid=TRUE 
-        AND  frequ_start <= DATE_FORMAT('$useMonth', '%Y-%m-01')
-        AND  frequ_end >= DATE_ADD(DATE_FORMAT('$useMonth', '%Y-%m-01'), INTERVAL 1 MONTH)
+        AND  DATE_FORMAT('$useMonth', '%Y-%m-01') <= frequ_end
+        AND  frequ_start <= DATE_ADD(DATE_FORMAT('$useMonth', '%Y-%m-01'), INTERVAL 1 MONTH)
       ORDER BY event_start;");
     echo json_encode($calOverview);
 }

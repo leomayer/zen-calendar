@@ -20,3 +20,6 @@
 .reduce-lineheight {
   line-height: 25px;
 }
+div .title:not(:first-of-type) {
+  padding-block-start: 8px;
+}
