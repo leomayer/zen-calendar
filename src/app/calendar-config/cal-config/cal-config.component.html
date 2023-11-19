@@ -1,3 +1,21 @@
-<pre>
-	{{ events | json }}
-</pre>
+<ng-container *ngIf="events?.start">
+  <pre>{{ events | json }}</pre>
+</ng-container>
+<div class="btn-display-details">
+  <button
+    mat-flat-button
+    (click)="openDialog('en')"
+    [disabled]="!events?.start"
+    color="primary"
+  >
+    Open - englisch
+  </button>
+  <button
+    mat-flat-button
+    (click)="openDialog('de')"
+    [disabled]="!events?.start"
+    color="warn"
+  >
+    <span> Öffen - deutsch </span>
+  </button>
+</div>

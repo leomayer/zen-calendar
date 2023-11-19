@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppStoreService } from '@app/app-store.service';
-import { CalendarEventUI } from '@app/helpers/calenderTypes';
+import { CalendarEventShort } from '@app/helpers/calenderTypes';
 
 @Component({
   selector: 'app-cal-config',
@@ -8,12 +8,16 @@ import { CalendarEventUI } from '@app/helpers/calenderTypes';
   styleUrls: ['./cal-config.component.scss'],
 })
 export class CalConfigComponent implements OnInit {
-  events!: CalendarEventUI;
+  events!: CalendarEventShort;
   constructor(private store: AppStoreService) {}
   ngOnInit(): void {
     this.store.state.editEvent.subscribe((events) => this.editEvents(events));
   }
-  editEvents(events: CalendarEventUI): void {
+  editEvents(events: CalendarEventShort): void {
     this.events = events;
+  }
+  openDialog(lang: string) {
+    const requData = { ...this.events, lang };
+    this.store.state.displayEvent.next(requData);
   }
 }

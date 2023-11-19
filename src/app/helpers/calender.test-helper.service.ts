@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CalendarEvent, WordpressString, CalenderInfo } from './calenderTypes';
+import {
+  CalendarEvent,
+  WordpressString,
+  CalenderInfo,
+  CalendarEventLangs,
+} from './calenderTypes';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -41,17 +46,15 @@ export class CalendarTestHelper {
     );
   }
 
-  async getEventsByIds(
-    eventIds: number[],
-    lang: string,
-  ): Promise<CalenderInfo[]> {
-    const useLang = lang?.substring(0, 2) ?? 'en';
+  async getEventsByIds(data: CalendarEventLangs): Promise<CalenderInfo[]> {
+    const useLang =
+      (data.lang ?? document.documentElement.lang)?.substring(0, 2) ?? 'en';
     return await firstValueFrom(
       this.http.get<CalenderInfo[]>(
         this.host +
           this.url4Wordpress +
           'zenEvent?eventId=' +
-          eventIds.join().split(',') +
+          data.eventIds.join().split(',') +
           '&lang=' +
           useLang,
       ),

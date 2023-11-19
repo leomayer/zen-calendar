@@ -9,10 +9,7 @@ import {
   MatCalendarCellClassFunction,
 } from '@angular/material/datepicker';
 import { CalMonthHeaderComponent } from './cal-month-header/cal-month-header.component';
-import {
-  CalendarEventShort,
-  CalendarEventUI,
-} from '@app/helpers/calenderTypes';
+import { CalendarEventShort } from '@app/helpers/calenderTypes';
 import { CalenderService } from '@app/helpers/calender.service';
 import { AppStoreService } from '@app/app-store.service';
 import {
@@ -93,15 +90,7 @@ export class CalBasicComponent implements OnInit {
         this.listOfEvents?.find((chk) =>
           areDatesOnSameDay(chk.start, selDate),
         ) ?? ({} as CalendarEventShort);
-      //const events = [] as CalendarEvent[];
-      const events = await this.calService.getEventsByIds(eventId.eventIds);
-      if (events.length) {
-        const data = {
-          selDate,
-          events,
-        } as CalendarEventUI;
-        this.store.state.eventSelected.next(data);
-      }
+      this.store.state.eventIdSelected.next(eventId);
     }
   }
 

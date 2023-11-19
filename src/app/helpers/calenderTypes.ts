@@ -2,6 +2,7 @@ export type CalendarEventShort = {
   start: Date;
   eventIds: number[];
 };
+export type CalendarEventLangs = CalendarEventShort & { lang?: string };
 
 export type CalendarEventUI = {
   selDate: Date;

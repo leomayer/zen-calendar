@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CalendarEvent, CalendarEventShort } from './calenderTypes';
+import {
+  CalendarEvent,
+  CalendarEventLangs,
+  CalendarEventShort,
+} from './calenderTypes';
 import { CalendarTestHelper } from './calender.test-helper.service';
 import {
   areDatesOnSameDay,
@@ -22,11 +26,8 @@ export class CalenderService {
     return retList;
   }
 
-  async getEventsByIds(eventIds: number[]) {
-    return await this.helper.getEventsByIds(
-      eventIds,
-      document.documentElement.lang,
-    );
+  async getEventsByIds(data: CalendarEventLangs) {
+    return await this.helper.getEventsByIds(data);
   }
 
   // filter all those events which are not repeating

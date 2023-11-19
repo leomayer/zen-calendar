@@ -1,0 +1,12 @@
+@import "/src/styles-global/styles.scss";
+:host {
+  display: flex;
+}
+.btn-display-details {
+  display: flex;
+  flex: auto;
+  flex-flow: column;
+  gap: 4px;
+  max-width: 350px;
+  background-color: lightgrey;
+}
