@@ -18,6 +18,7 @@ export class AppComponent {
   configComponent!: ViewContainerRef;
 
   constructor(private elementRef: ElementRef) {
+		console.log('load app-root')
     this.useConfigInterface = this.stringToBoolean(
       this.elementRef.nativeElement.getAttribute('useConfigInterface'),
     );
