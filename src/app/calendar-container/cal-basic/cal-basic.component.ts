@@ -14,8 +14,6 @@ import {
   CalendarEventUI,
 } from '@app/helpers/calenderTypes';
 import { CalenderService } from '@app/helpers/calender.service';
-import { MatDialog } from '@angular/material/dialog';
-import { CalDetailsDialogComponent } from '@calendar/cal-details-dialog/cal-details-dialog.component';
 import { AppStoreService } from '@app/app-store.service';
 import {
   areDatesOnSameDay,
@@ -38,7 +36,7 @@ export class CalBasicComponent implements OnInit {
 
   constructor(
     private calService: CalenderService,
-    private dialog: MatDialog,
+
     private store: AppStoreService,
   ) {}
   async ngOnInit(): Promise<void> {
@@ -102,14 +100,7 @@ export class CalBasicComponent implements OnInit {
           selDate,
           events,
         } as CalendarEventUI;
-        this.dialog.open(CalDetailsDialogComponent, {
-          data,
-          width: '250px',
-          backdropClass: 'cdk-overlay-transparent-backdrop',
-          hasBackdrop: true,
-          enterAnimationDuration: '500ms',
-          exitAnimationDuration: '500ms',
-        });
+        this.store.state.eventSelected.next(data);
       }
     }
   }

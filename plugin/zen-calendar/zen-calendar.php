@@ -20,7 +20,7 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.463c5bcc279f9804.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.aaa0e61f3f8e40dc.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.5daa632711003bbc.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.7ef82dbfc6acbeb8.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -71,7 +71,7 @@ function attach_zen_cal()
     wp_enqueue_script('ng_polyfills');
     wp_enqueue_script('ng_runtime');
 
-    return "<app-root useConfigInterface=\"false\"></app-root>";
+    return '<app-root useConfigInterface="false"></app-root>';
 }
 
 // Einstellungen-Seite
@@ -91,7 +91,7 @@ function zen_calendar_settings_page()
     wp_enqueue_script('ng_polyfills');
     wp_enqueue_script('ng_runtime');
 
-    echo '<div>Welcome to admin page11</div><app-root useConfigInterface=\"true\"></app-root>';
+    echo '<div>Welcome to admin page11</div><app-root useConfigInterface="true"></app-root>';
 }
 
 // Query the calender for Event of the given month
