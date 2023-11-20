@@ -30,9 +30,17 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/styles.scss"
+            {
+              "input": "@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "inject": true
+              },
+              "src/styles-global/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles-global"
+              ]
+            },
             "scripts": []
           },
           "configurations": {

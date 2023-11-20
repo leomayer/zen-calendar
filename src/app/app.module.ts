@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TimeFormatterComponent } from './calendar-container/time-formatter/time-formatter.component';
 import { Minutes2HourMinPipe } from './helpers/minutes2-hour-min.pipe';
 import { LinkDetailsComponent } from '@calendar/link-details/link-details.component';
+import { CalButtonDetailsComponent } from './cal-button-details/cal-button-details.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { LinkDetailsComponent } from '@calendar/link-details/link-details.compon
     TimeFormatterComponent,
     Minutes2HourMinPipe,
     LinkDetailsComponent,
+    CalButtonDetailsComponent,
   ],
   imports: [MaterialDesignModule, BrowserModule, HttpClientModule],
   providers: [

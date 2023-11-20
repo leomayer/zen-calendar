@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  background-color: lightgrey;
+}
+.btn-display-details {
+  padding: 8px;
+  display: flex;
+  flex: auto;
+  flex-flow: column;
+  gap: 4px;
+  max-width: 350px;
+}
