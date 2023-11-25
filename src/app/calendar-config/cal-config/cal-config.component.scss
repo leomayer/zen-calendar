@@ -1,3 +1,16 @@
 :host {
   display: flex;
 }
+.date-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  & .header-date {
+    padding: 8px;
+    font-size: larger;
+    & .header-date-det {
+      font-weight: bold;
+    }
+  }
+}

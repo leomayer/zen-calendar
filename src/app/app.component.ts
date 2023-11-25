@@ -17,6 +17,7 @@ import { CalenderService } from './helpers/calender.service';
 })
 export class AppComponent {
   title = 'zen-calendar';
+  isDialogOpened = false;
 
   protected useConfigInterface: boolean = false;
   @ViewChild('configComponent', { read: ViewContainerRef })
@@ -44,6 +45,10 @@ export class AppComponent {
     });
   }
   async displayEvent(event: CalendarEventLangs) {
+    if (this.isDialogOpened) {
+      return;
+    }
+    this.isDialogOpened = true;
     const events = await this.calService.getEventsByIds(event);
     if (events.length) {
       const data = {
@@ -51,7 +56,7 @@ export class AppComponent {
         events,
       } as CalendarEventUI;
 
-      this.dialog.open(CalDetailsDialogComponent, {
+      const dialogRef = this.dialog.open(CalDetailsDialogComponent, {
         data,
         width: '250px',
         backdropClass: 'cdk-overlay-transparent-backdrop',
@@ -59,6 +64,7 @@ export class AppComponent {
         enterAnimationDuration: '500ms',
         exitAnimationDuration: '500ms',
       });
+      dialogRef.afterClosed().subscribe(() => (this.isDialogOpened = false));
     }
   }
   stringToBoolean(value: unknown) {

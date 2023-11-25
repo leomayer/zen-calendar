@@ -1,4 +1,18 @@
 <ng-container *ngIf="events?.start">
-  <pre>{{ events | json }}</pre>
+  <div class="date-container">
+    <div class="header-date">
+      <span>Ausgewähltes Datum </span>
+      <span class="header-date-det">{{
+        events.start | date: "mediumDate"
+      }}</span>
+    </div>
+    <pre>
+			<ng-container *ngFor="let oneDetail of details">
+				
+			{{ oneDetail | json }}
+			----------------
+			</ng-container>
+			</pre>
+  </div>
 </ng-container>
 <app-cal-button-details />

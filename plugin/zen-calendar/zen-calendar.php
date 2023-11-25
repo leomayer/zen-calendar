@@ -12,15 +12,18 @@
 // Plugin-Informationen
 define('ZEN_CAL_PLUGIN_NAME', 'Zen calendar');
 define('ZEN_CAL_PLUGIN_VERSION', '1.0');
+define('ZEN_NAMESPACE', 'zen_calendar/v1');
 // Define the capability name
 define('ZEN_CAL_MANAGE_SETTINGS_CAP', 'manage_zen_calendar');
 define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 
+
+
 // Scripts for Angular script
 function load_ng_scripts()
 {
-    wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.463c5bcc279f9804.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.5daa632711003bbc.js', true);
+    wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.9c13dd98e5a79f13.css');
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.56c1840869a570ad.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.7ef82dbfc6acbeb8.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -91,7 +94,9 @@ function zen_calendar_settings_page()
     wp_enqueue_script('ng_polyfills');
     wp_enqueue_script('ng_runtime');
 
-    echo '<div>Welcome to admin page11</div><app-root useConfigInterface="true"></app-root>';
+    echo '<div>Welcome to admin page for "'
+        . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
+    .' </div><app-root useConfigInterface="true"></app-root>';
 }
 
 // Query the calender for Event of the given month
@@ -126,6 +131,28 @@ function get_wp_zen_eventDetails($request)
       ORDER BY startTime;");
     echo json_encode($calDetails);
 }
+
+function get_events($request) {
+    $params=$request['eventId'];
+    // Validate request parameters
+    if (!isset($params)) {
+        return new WP_Error('400', 'Missing event ID');
+    }
+    
+    $eventIds = explode(',', $params); // Extract event IDs from the comma-separated list
+    // Retrieve event data from the database
+    global $wpdb;
+    $tblDetails = $wpdb->prefix . "zencalendar_details";
+    //$query = "SELECT * FROM " .  $tblDetails . " WHERE event_id IN (" . implode(',', $eventIds) . ")";
+    
+    $calDetails = $wpdb->get_results("SELECT title, description, lang, startTime, endTime, link, linkType
+      FROM $tblDetails
+      WHERE cal_basic_id in (" . implode(',', $eventIds) . ")
+      ORDER BY startTime;");
+    echo json_encode($calDetails);
+}
+
+
 
 // Register the useMonth parameter
 function register_custom_parameter()
@@ -191,16 +218,25 @@ register_activation_hook(__FILE__, 'zen_cal_install');
 
 add_action('rest_api_init', function () {
     register_custom_parameter();
-    register_rest_route('zen_calendar/v1', '/calendar4month/', array(
+    register_rest_route(ZEN_NAMESPACE, 'calendar4month', array(
         'methods' => 'GET',
         'callback' => 'get_wp_zen_calendar4month',
         'permission_callback' => '__return_true'
     ));
-    register_rest_route('zen_calendar/v1', '/zenEvent/', array(
+    register_rest_route(ZEN_NAMESPACE, 'zenEvent', array(
         'methods' => 'GET',
         'callback' => 'get_wp_zen_eventDetails',
         'permission_callback' => '__return_true'
     ));
+    register_rest_route(
+        ZEN_NAMESPACE,
+        'zenEventDetails',
+        [
+            'methods' => 'GET',
+            'permission_callback' => '__return_true',
+            'callback' => 'get_events'
+            ]
+        );
 });
 
 // Plugin-Hooks

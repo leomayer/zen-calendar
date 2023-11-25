@@ -29,6 +29,9 @@ export class CalenderService {
   async getEventsByIds(data: CalendarEventLangs) {
     return await this.helper.getEventsByIds(data);
   }
+  async getEventsDetailsByIds(listOfCalIds: number[]) {
+    return await this.helper.getEventsDetailsByIds(listOfCalIds);
+  }
 
   // filter all those events which are not repeating
   setFixedDate(dbList: CalendarEvent[], retList: CalendarEventShort[]) {

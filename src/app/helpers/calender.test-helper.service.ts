@@ -60,10 +60,14 @@ export class CalendarTestHelper {
       ),
     );
   }
-
-  async getHttpResult(strJson: string): Promise<CalenderInfo[]> {
+  async getEventsDetailsByIds(listOfCalIds: number[]): Promise<CalenderInfo[]> {
     return await firstValueFrom(
-      this.http.get<CalenderInfo[]>(this.url4testing + strJson),
+      this.http.get<CalenderInfo[]>(
+        this.host +
+          this.url4Wordpress +
+          'zenEventDetails?eventId=' +
+          listOfCalIds.join().split(','),
+      ),
     );
   }
 }
