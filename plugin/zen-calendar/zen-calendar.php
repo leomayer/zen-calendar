@@ -96,6 +96,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
+        . ' - updated at: <!--build-time-->today'
     .' </div><app-root useConfigInterface="true"></app-root>';
 }
 
@@ -145,7 +146,7 @@ function get_events($request) {
     $tblDetails = $wpdb->prefix . "zencalendar_details";
     //$query = "SELECT * FROM " .  $tblDetails . " WHERE event_id IN (" . implode(',', $eventIds) . ")";
     
-    $calDetails = $wpdb->get_results("SELECT title, description, lang, startTime, endTime, link, linkType
+    $calDetails = $wpdb->get_results("SELECT id, title, description, lang, startTime, endTime, link, linkType
       FROM $tblDetails
       WHERE cal_basic_id in (" . implode(',', $eventIds) . ")
       ORDER BY startTime;");

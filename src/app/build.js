@@ -22,7 +22,7 @@ execSync(`mv ./dist ${destination}`);
 // copy the js and css file names to an array
 distFilenames = fs.readdirSync(`${destination}/dist/${pluginName}`);
 scriptsAndStyleFiles = distFilenames.filter(
-  (file) => file.endsWith(".js") || file.endsWith(".css"),
+  (file) => file.endsWith(".js") || file.endsWith(".css")
 );
 // replace the js and css file names in the php file contents
 const pluginFileContents = fs.readFileSync(`${pluginFilePath}`, "utf8");
