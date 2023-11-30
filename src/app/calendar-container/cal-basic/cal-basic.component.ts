@@ -49,7 +49,7 @@ export class CalBasicComponent implements OnInit {
   }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    let retClass = '';
+    let retClass = 'clbtn ';
     // Only highligh dates inside the month view.
     if (view === 'month') {
       if (cellDate.getDay() === 0) {

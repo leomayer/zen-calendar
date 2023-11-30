@@ -3,6 +3,10 @@
 @import "/src/styles-global/theme.scss";
 
 .cal-basic {
+  &::ng-deep .clbtn {
+    min-width: 24px;
+    min-height: 24px;
+  }
   &::ng-deep .highlight-date {
     background: mat.get-color-from-palette($amberPalette, 50) !important;
     border-radius: 100%;
