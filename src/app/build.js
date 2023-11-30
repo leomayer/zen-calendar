@@ -22,7 +22,7 @@ execSync(`mv ./dist ${destination}`);
 // copy the js and css file names to an array
 distFilenames = fs.readdirSync(`${destination}/dist/${pluginName}`);
 scriptsAndStyleFiles = distFilenames.filter(
-  (file) => file.endsWith(".js") || file.endsWith(".css")
+  (file) => file.endsWith(".js") || file.endsWith(".css"),
 );
 // replace the js and css file names in the php file contents
 const pluginFileContents = fs.readFileSync(`${pluginFilePath}`, "utf8");
@@ -43,6 +43,27 @@ const checkLineInludes = (line, strCheck) => {
   );
 };
 
+const checkToday = (line, strCheck) => {
+  return line.includes("<!--build-time-->");
+};
+const updateToday = (line) => {
+  // Match the text between and the next single quote
+  const regex = /<!--([\s\S]+?)-->(.*)'/;
+  const match = line.match(regex);
+
+  if (match) {
+    // Replace the matched text with the current date and timestamp in ISO format
+    const currentDate =
+      new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
+    const lastGroup = match[match.length - 1]; // Access the last matching group
+    const replacedStr = line.replace(lastGroup, currentDate); // Replace the last matching group
+
+    return replacedStr;
+  } else {
+    return line;
+  }
+};
+
 const updatedFileContentArray = pluginFileContents
   .split(/\r?\n/)
   .map((line) => {
@@ -55,6 +76,8 @@ const updatedFileContentArray = pluginFileContents
         return updateLine(line, "polyfills");
       case checkLineInludes(line, "ng_runtime"):
         return updateLine(line, "runtime");
+      case checkToday(line):
+        return updateToday(line);
       default:
         return line;
     }

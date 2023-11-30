@@ -23,8 +23,8 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.9c13dd98e5a79f13.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.56c1840869a570ad.js', true);
-    wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.7ef82dbfc6acbeb8.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.8f86b94ecbb2857b.js', true);
+    wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.6cfa49a7c9ca0af9.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
 
@@ -96,8 +96,8 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . ' - updated at: <!--build-time-->today'
-    .' </div><app-root useConfigInterface="true"></app-root>';
+        . ' - last updated at: <strong><!--build-time-->30.11.2023 12:03:29'
+    .' </strong></div><app-root useConfigInterface="true"></app-root>';
 }
 
 // Query the calender for Event of the given month

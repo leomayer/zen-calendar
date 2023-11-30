@@ -80,10 +80,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "zen-calendar:build:production"
+              "buildTarget": "zen-calendar:build:production"
             },
             "development": {
-              "browserTarget": "zen-calendar:build:development"
+              "buildTarget": "zen-calendar:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -91,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "zen-calendar:build"
+            "buildTarget": "zen-calendar:build"
           }
         },
         "test": {
