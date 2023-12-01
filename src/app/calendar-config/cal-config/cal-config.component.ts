@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 import { AppStoreService } from '@app/app-store.service';
 import { CalenderService } from '@app/helpers/calender.service';
-import { CalendarEventShort, CalenderInfo } from '@app/helpers/calenderTypes';
+import {
+  CalConfigDetail,
+  CalendarEventShort,
+  CalenderInfo,
+} from '@app/helpers/calenderTypes';
 
 @Component({
   selector: 'app-cal-config',
@@ -11,6 +16,10 @@ import { CalendarEventShort, CalenderInfo } from '@app/helpers/calenderTypes';
 export class CalConfigComponent implements OnInit {
   events = {} as CalendarEventShort;
   details = {} as CalenderInfo[];
+  duration = 0;
+  calConfigForm = new FormGroup({
+    fields: new FormArray<FormGroup<CalConfigDetail>>([]),
+  });
 
   constructor(
     private store: AppStoreService,
@@ -20,7 +29,17 @@ export class CalConfigComponent implements OnInit {
     this.store.state.editEvent.subscribe((events) => this.editEvents(events));
   }
   async editEvents(events: CalendarEventShort): Promise<void> {
+    const start = new Date().getTime();
     this.events = events;
     this.details = await this.calService.getEventsDetailsByIds(events.eventIds);
+    this.createCalConfigForm();
+
+    this.duration = new Date().getTime() - start;
+  }
+
+  private createCalConfigForm(): void {
+    this.calConfigForm.controls.fields = new FormArray<
+      FormGroup<CalConfigDetail>
+    >([]);
   }
 }

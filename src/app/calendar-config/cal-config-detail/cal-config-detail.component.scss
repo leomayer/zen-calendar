@@ -1,0 +1,48 @@
+@use "@angular/material" as mat;
+@import "/src/styles-global/theme.scss";
+
+form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 8px;
+}
+
+.cal-link {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 8px;
+  & .calInfo {
+    width: 100%;
+  }
+}
+.col-left {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  width: 100%;
+}
+.col-right {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  background-color: mat.get-color-from-palette($limePalette, 900);
+}
+.time-det {
+  display: flex;
+  flex-wrap: wrap;
+  & mat-form-field,
+  & .time-calc {
+    flex: 1 0 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.time-det:first-of-type {
+  background-color: mat.get-color-from-palette($limePalette, 400, 0.5);
+}
+.time-det:last-of-type {
+  background-color: mat.get-color-from-palette($limePalette, 800);
+}

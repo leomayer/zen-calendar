@@ -1,16 +1,34 @@
-:host {
+:host,
+form {
   display: flex;
+}
+form {
+  width: 75%;
 }
 .date-container {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   overflow: auto;
   & .header-date {
     padding: 8px;
+    padding-block-end: 0px;
     font-size: larger;
     & .header-date-det {
       font-weight: bold;
     }
   }
+  app-cal-config-detail {
+    padding: 8px;
+    margin-block-end: 8px;
+    border: 1px inset;
+    border-radius: 4px;
+  }
+}
+.info-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-inline-start: 8px;
 }

@@ -35,6 +35,6 @@ $app-theme: mat.define-light-theme(
       accent: $accentPalette,
     ),
     typography: $app-typography,
-    density: -1,
+    density: 1,
   )
 );

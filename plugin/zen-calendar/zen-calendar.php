@@ -23,7 +23,7 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.9c13dd98e5a79f13.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.8f86b94ecbb2857b.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.7bebc1913d0568c6.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.6cfa49a7c9ca0af9.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -96,7 +96,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . ' - last updated at: <strong><!--build-time-->30.11.2023 12:03:29'
+        . ' - last updated at: <strong><!--build-time-->30.11.2023 15:08:58'
     .' </strong></div><app-root useConfigInterface="true"></app-root>';
 }
 

@@ -1,3 +1,12 @@
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
+
 export type CalendarEventShort = {
   start: Date;
   eventIds: number[];
@@ -27,6 +36,12 @@ export type WordpressString = {
   frequ_type: string;
 };
 
+export type CalLinkType = 'url' | 'zoom' | 'email' | undefined;
+export type CalLinkTypeUI = {
+  name: string;
+  linkType: CalLinkType;
+};
+
 export type CalenderInfo = {
   title: string;
   description: string;
@@ -34,5 +49,44 @@ export type CalenderInfo = {
   endTime: number;
   lang: string;
   link: string;
-  linkType: 'url' | 'zoom' | 'email' | undefined;
+  linkType: CalLinkType;
 };
+
+export class CalConfigDetail {
+  id = new FormControl<number | undefined>(undefined);
+  title = new FormControl<string>('');
+  description = new FormControl<string>('');
+  startTime = new FormControl<number>(0);
+  endTime = new FormControl<number>(0);
+  lang = new FormControl<string>('');
+  link = new FormControl<string>('');
+  linkType = new FormControl<CalLinkType>(undefined);
+}
+
+export interface CalConfigFormDto {
+  data: CalenderInfo;
+  fields: FormArray<FormGroup<CalConfigDetail>>;
+}
+
+export function timeToMinutesValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const timeString = control.value as string;
+
+    if (
+      !timeString ||
+      timeString.length !== 5 ||
+      !timeString.match(/^(\d{2}):(\d{2})$/)
+    ) {
+      return { invalidTimeFormat: true };
+    }
+
+    const [hours, minutes] = timeString.split(':');
+    const totalMinutes = parseInt(hours ?? '0') * 60 + parseInt(minutes ?? '0');
+
+    if (totalMinutes < 0 || totalMinutes > 1440) {
+      return { invalidTimeRange: true };
+    }
+
+    return null;
+  };
+}
