@@ -46,3 +46,6 @@ form {
 .time-det:last-of-type {
   background-color: mat.get-color-from-palette($limePalette, 800);
 }
+input {
+  background-color: inherit;
+}
