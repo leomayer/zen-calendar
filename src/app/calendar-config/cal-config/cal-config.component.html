@@ -1,4 +1,4 @@
-<ng-container *ngIf="events?.start">
+@if (events?.start) {
   <form [formGroup]="calConfigForm">
     <div class="date-container">
       <div class="header-date">
@@ -7,17 +7,17 @@
           events.start | date: "mediumDate"
         }}</span>
       </div>
-      <ng-container *ngFor="let oneDetail of details">
+      @for (oneDetail of details; track oneDetail) {
         <app-cal-config-detail
           [dataInfo]="{
-            data: oneDetail,
-            fields: calConfigForm.controls.fields
+          data: oneDetail,
+          fields: calConfigForm.controls.fields
           }"
-        />
-      </ng-container>
+          />
+      }
     </div>
   </form>
-</ng-container>
+}
 <div class="info-btn">
   <div class="load-info">
     Lade Zeit: <i>{{ duration }} </i> ms

@@ -1,9 +1,9 @@
-<ng-container *ngIf="startTime">
+@if (startTime) {
   <span>{{ startTime | minutes2HourMin }}</span>
-</ng-container>
-<ng-container *ngIf="startTime && endTime">
+}
+@if (startTime && endTime) {
   <span>&nbsp;-&nbsp;</span>
-</ng-container>
-<ng-container *ngIf="endTime">
+}
+@if (endTime) {
   <span>{{ endTime | minutes2HourMin }}</span>
-</ng-container>
+}

@@ -1,24 +1,24 @@
-<ng-container *ngIf="curEvent.link">
-  <ng-container [ngSwitch]="curEvent.linkType">
-    <ng-container *ngSwitchCase="'zoom'">
+@if (curEvent.link) {
+  @switch (curEvent.linkType) {
+    @case ('zoom') {
       <div>
         <span>Zoom link: </span>
         <a target="_blank" href="{{ curEvent.link }}">{{ curEvent.link }} </a>
       </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="'email'">
+    }
+    @case ('email') {
       <div>
         <span>Mail to: </span>
         <a target="_blank" href="mailto:{{ curEvent.link }}"
           >{{ curEvent.link }}
         </a>
       </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="'url'">
+    }
+    @case ('url') {
       <div>
         <span>Link: </span>
         <a target="_blank" href="{{ curEvent.link }}">{{ curEvent.link }} </a>
       </div>
-    </ng-container>
-  </ng-container>
-</ng-container>
+    }
+  }
+}

@@ -1,13 +1,11 @@
-<ng-container *ngIf="events.start; then displayButtons; else displayInfo" />
-
-<ng-template #displayButtons>
+@if (events.start) {
   <div class="btn-display-details">
     <button
       mat-flat-button
       (click)="openDialog('en')"
       [disabled]="!events.start"
       color="primary"
-    >
+      >
       Open - englisch
     </button>
     <button
@@ -15,11 +13,10 @@
       (click)="openDialog('de')"
       [disabled]="!events.start"
       color="warn"
-    >
+      >
       <span> Öffen - deutsch </span>
     </button>
   </div>
-</ng-template>
-<ng-template #displayInfo>
+} @else {
   <p>Bitte eine Datum auswählen</p>
-</ng-template>
+}
