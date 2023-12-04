@@ -41,6 +41,8 @@ export class AppComponent {
       }
     });
     store.state.displayEvent.subscribe((event) => {
+			const tmp=event as CalendarEventLangs;
+			tmp.lang=document.documentElement.lang?.substring(0, 2) ?? 'en';
       this.displayEvent(event);
     });
   }
@@ -53,6 +55,7 @@ export class AppComponent {
     if (events.length) {
       const data = {
         selDate: event.start,
+        lang: event.lang,
         events,
       } as CalendarEventUI;
 

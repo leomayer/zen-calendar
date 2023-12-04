@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CalendarEventUI } from '@app/helpers/calenderTypes';
@@ -15,11 +16,14 @@ type bodyDetails = {
   selector: 'app-cal-details-dialog',
   templateUrl: './cal-details-dialog.component.html',
   styleUrls: ['./cal-details-dialog.component.scss'],
+   providers: [DatePipe],
 })
 export class CalDetailsDialogComponent implements OnInit, OnDestroy {
   memoBody: bodyDetails = {} as bodyDetails;
 
-  constructor(@Inject(MAT_DIALOG_DATA) protected data: CalendarEventUI) {}
+  constructor(@Inject(MAT_DIALOG_DATA) protected data: CalendarEventUI,
+  public datePipe: DatePipe
+  ) {}
   ngOnInit(): void {
     const body = document.body;
     // memorize the current postion

@@ -19,6 +19,13 @@ import { CalButtonDetailsComponent } from './cal-button-details/cal-button-detai
 import { CalConfigDetailComponent } from '@calConfig/cal-config-detail/cal-config-detail.component';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 
+import { registerLocaleData } from '@angular/common';
+import localeEn from '@angular/common/locales/en';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe);
+registerLocaleData(localeEn);
+
 @NgModule({
   declarations: [
     AppComponent,
