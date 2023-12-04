@@ -32,13 +32,6 @@ form {
 .time-det {
   display: flex;
   flex-wrap: wrap;
-  & mat-form-field,
-  & .time-calc {
-    flex: 1 0 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 }
 .time-det:first-of-type {
   background-color: mat.get-color-from-palette($limePalette, 400, 0.5);

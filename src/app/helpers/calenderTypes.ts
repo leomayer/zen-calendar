@@ -58,6 +58,8 @@ export class CalConfigDetail {
   description = new FormControl<string>('');
   startTime = new FormControl<number>(0);
   endTime = new FormControl<number>(0);
+  startTimeUI = new FormControl<string>('00:00');
+  endTimeUI = new FormControl<string>('00:00');
   lang = new FormControl<string>('');
   link = new FormControl<string>('');
   linkType = new FormControl<CalLinkType>(undefined);

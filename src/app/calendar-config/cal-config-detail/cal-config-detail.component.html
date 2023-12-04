@@ -32,31 +32,15 @@
     <div class="time-det">
       <mat-form-field [subscriptSizing]="'dynamic'">
         <mat-label>Start</mat-label>
-        <input
-          matInput
-          formControlName="startTime"
-          type="number"
-          pattern="[0-9]*"
-          [min]="0"
-          [max]="1440"
-        />
+                <input type="time" matInput formControlName="startTimeUI" />
+
       </mat-form-field>
-      <div class="time-calc">
-        <span>{{
-          usedFields.controls.startTime.value ?? 0 | minutes2HourMin
-        }}</span>
-      </div>
     </div>
     <div class="time-det">
       <mat-form-field [subscriptSizing]="'dynamic'">
         <mat-label>Ende</mat-label>
-        <input matInput formControlName="endTime" />
+        <input type="time" matInput formControlName="endTimeUI" />
       </mat-form-field>
-      <div class="time-calc">
-        <span>{{
-          usedFields.controls.endTime.value ?? 0 | minutes2HourMin
-        }}</span>
-      </div>
     </div>
 
     <mat-label id="lang-radio">Auswahl der Sprache</mat-label>

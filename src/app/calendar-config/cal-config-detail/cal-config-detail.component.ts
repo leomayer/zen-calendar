@@ -30,11 +30,25 @@ export class CalConfigDetailComponent {
   }
   initForm() {
     this.usedFields.patchValue(this.dataInfo.data);
+    // set the time value for the UI
+    this.usedFields.controls.startTimeUI.setValue(this.convertMinutesToTimeString(this.dataInfo.data.startTime))
+    this.usedFields.controls.endTimeUI.setValue(this.convertMinutesToTimeString(this.dataInfo.data.endTime))
     this.dataInfo.fields.push(this.usedFields);
+    this.usedFields.controls.endTime.valueChanges.subscribe(value => console.log('changed end:', value, typeof value))
   }
 
-  // Use the calConfigArray control to access and manipulate form data
+convertMinutesToTimeString(minutesSinceMidnight:number) {
+	if (!minutesSinceMidnight) {
+		return '00:00';
+	}
+  const hours = Math.trunc( minutesSinceMidnight/60); // Get the hours from the minutes
+  const minutes = minutesSinceMidnight % 60 // Get the minutes from the minutes
 
+  const hoursString = hours.toString().padStart(2, '0') // Pad hours with leading '0'
+  const minutesString = minutes.toString().padStart(2, '0') // Pad minutes with leading '0'
+
+  return `${hoursString}:${minutesString}`
+}
   updateTitle(newTitle: string) {
     this.usedFields.controls.title.setValue(newTitle);
   }
