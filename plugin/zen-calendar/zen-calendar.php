@@ -44,6 +44,7 @@ function zen_cal_install()
   frequ_end DATE NOT NULL,
   frequ_type INT NOT NULL COMMENT '0:None, 1:weekly, 2:monthly, 3:yearly',
   is_valid BOOLEAN DEFAULT TRUE,
+  is_only_entry4day BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'If true => all other events on this day are ignored',
   PRIMARY KEY (`id`)
   ) COMMENT = 'BasisInfo für den Überblick' $charset_collate;";
 
@@ -96,7 +97,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . ' - last updated at: <strong><!--build-time-->4.12.2023 17:08:37'
+        . ' - last updated at: <strong><!--build-time-->18.12.2023 14:42:12'
     .' </strong></div><app-root useConfigInterface="true"></app-root>';
 }
 
@@ -108,7 +109,7 @@ function get_wp_zen_calendar4month($request)
     global $wpdb;
     $tblBasic = $wpdb->prefix . "zencalendar_basic";
 
-    $calOverview = $wpdb->get_results("SELECT id, event_start, event_end, frequ_start, frequ_end, frequ_type 
+    $calOverview = $wpdb->get_results("SELECT id, event_start, event_end, frequ_start, frequ_end, frequ_type, is_only_entry4day 
       FROM $tblBasic 
       WHERE is_valid=TRUE 
         AND  DATE_FORMAT('$useMonth', '%Y-%m-01') <= frequ_end

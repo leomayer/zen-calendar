@@ -1,17 +1,19 @@
 <div mat-dialog-title class="reduce-lineheight">
   <span>Datum: </span>
-  <span>{{ data.selDate | date: "mediumDate":'':data.lang }}</span>
+  <span>{{ data.selDate | date: "mediumDate" : "" : data.lang }}</span>
 </div>
 <div mat-dialog-content>
   <!-- loop over all events -->
   @for (curEvent of data.events; track curEvent) {
-    <div class="title">{{ curEvent.title }}</div>
-    <app-time-formatter
-      class="subtitle"
-      [startTime]="curEvent.startTime"
-      [endTime]="curEvent.endTime"
-      />
-    <div class="description" [innerHTML]="curEvent.description"></div>
-    <app-link-details [curEvent]="curEvent" />
+  <div class="title">{{ curEvent.title }}</div>
+  @if (curEvent.startTime !== curEvent.endTime){
+  <app-time-formatter
+    class="subtitle"
+    [startTime]="curEvent.startTime"
+    [endTime]="curEvent.endTime"
+  />
+  }
+  <div class="description" [innerHTML]="curEvent.description"></div>
+  <app-link-details [curEvent]="curEvent" />
   }
 </div>

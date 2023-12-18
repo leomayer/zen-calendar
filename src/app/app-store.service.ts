@@ -10,6 +10,7 @@ export class AppStoreService {
     monthChanged: new Subject<Date>(),
     eventIdSelected: new Subject<CalendarEventShort>(),
     editEvent: new ReplaySubject<CalendarEventShort>(),
+    editEvent2Add: new Subject<boolean>(),
     displayEvent: new Subject<CalendarEventShort>(),
   } as const;
 }

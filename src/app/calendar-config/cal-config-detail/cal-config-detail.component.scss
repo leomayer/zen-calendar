@@ -42,3 +42,8 @@ form {
 input {
   background-color: inherit;
 }
+.btn-bar {
+  display: flex;
+  column-gap: 8px;
+  justify-content: flex-end;
+}

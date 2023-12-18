@@ -38,6 +38,7 @@ export class CalendarTestHelper {
               convDetail.event_end = new Date(dtoDetail.event_end);
               convDetail.event_start = new Date(dtoDetail.event_start);
               convDetail.frequ_type = Number(dtoDetail.frequ_type);
+              convDetail.is_only_entry4day = !!Number(dtoDetail.frequ_type);
               return convDetail;
             });
             return converted;

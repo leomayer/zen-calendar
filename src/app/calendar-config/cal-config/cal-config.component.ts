@@ -6,6 +6,7 @@ import {
   CalConfigDetail,
   CalendarEventShort,
   CalenderInfo,
+  DefaultCalenderInfo,
 } from '@app/helpers/calenderTypes';
 
 @Component({
@@ -27,14 +28,25 @@ export class CalConfigComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.store.state.editEvent.subscribe((events) => this.editEvents(events));
+    this.store.state.editEvent2Add.subscribe(() => this.addEvent());
   }
   async editEvents(events: CalendarEventShort): Promise<void> {
+    this.performChangeCheck();
     const start = new Date().getTime();
     this.events = events;
     this.details = await this.calService.getEventsDetailsByIds(events.eventIds);
     this.createCalConfigForm();
 
     this.duration = new Date().getTime() - start;
+  }
+
+  performChangeCheck() {
+    console.log('before change:', this.details);
+    console.log(this.calConfigForm.getRawValue());
+  }
+
+  addEvent() {
+    this.details.push(new DefaultCalenderInfo());
   }
 
   private createCalConfigForm(): void {

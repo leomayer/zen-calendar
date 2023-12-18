@@ -15,7 +15,7 @@ export type CalendarEventLangs = CalendarEventShort & { lang?: string };
 
 export type CalendarEventUI = {
   selDate: Date;
-  lang: string,
+  lang: string;
   events: CalenderInfo[];
 };
 export type CalendarEvent = {
@@ -26,6 +26,7 @@ export type CalendarEvent = {
   frequ_start: Date;
   frequ_end: Date;
   frequ_type: number; //0: None; 1: weekly; 2: monthly; 3: yearly
+  is_only_entry4day: boolean;
 };
 export type WordpressString = {
   id: string;
@@ -35,6 +36,7 @@ export type WordpressString = {
   frequ_start: string;
   frequ_end: string;
   frequ_type: string;
+  is_only_entry4day: string;
 };
 
 export type CalLinkType = 'url' | 'zoom' | 'email' | undefined;
@@ -52,6 +54,15 @@ export type CalenderInfo = {
   link: string;
   linkType: CalLinkType;
 };
+export class DefaultCalenderInfo implements CalenderInfo {
+  title = '';
+  description = '';
+  startTime = 0;
+  endTime = 0;
+  lang = 'de';
+  link = '';
+  linkType = undefined;
+}
 
 export class CalConfigDetail {
   id = new FormControl<number | undefined>(undefined);
@@ -63,7 +74,9 @@ export class CalConfigDetail {
   endTimeUI = new FormControl<string>('00:00');
   lang = new FormControl<string>('');
   link = new FormControl<string>('');
+  isOnlyEntry4day = new FormControl<boolean>(false);
   linkType = new FormControl<CalLinkType>(undefined);
+  keepEntry = new FormControl<boolean>(false);
 }
 
 export interface CalConfigFormDto {

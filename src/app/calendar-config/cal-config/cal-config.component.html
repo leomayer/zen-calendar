@@ -1,22 +1,22 @@
 @if (events.start) {
-  <form [formGroup]="calConfigForm">
-    <div class="date-container">
-      <div class="header-date">
-        <span>Ausgewähltes Datum </span>
-        <span class="header-date-det">{{
-          events.start | date: "mediumDate"
-        }}</span>
-      </div>
-      @for (oneDetail of details; track oneDetail) {
-        <app-cal-config-detail
-          [dataInfo]="{
-          data: oneDetail,
-          fields: calConfigForm.controls.fields
-          }"
-          />
-      }
+<form [formGroup]="calConfigForm">
+  <div class="date-container">
+    <div class="header-date">
+      <span>Ausgewähltes Datum </span>
+      <span class="header-date-det">{{
+        events.start | date: "mediumDate"
+      }}</span>
     </div>
-  </form>
+    @for (oneDetail of details; track oneDetail) {
+    <app-cal-config-detail
+      [dataInfo]="{
+        data: oneDetail,
+        fields: calConfigForm.controls.fields
+      }"
+    />
+    }
+  </div>
+</form>
 }
 <div class="info-btn">
   <div class="load-info">
