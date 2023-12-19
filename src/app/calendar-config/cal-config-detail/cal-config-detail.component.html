@@ -27,40 +27,21 @@
         </mat-select>
       </mat-form-field>
     </div>
-
+  </div>
+  <div class="col-right">
+    <mat-label class="lang-label" id="lang-radio"
+      >Auswahl der Sprache</mat-label
+    >
+    <mat-radio-group aria-labelledby="lang-radio" formControlName="lang">
+      <mat-radio-button value="de">Deutsch</mat-radio-button>
+      <mat-radio-button value="en">English</mat-radio-button>
+    </mat-radio-group>
     <div class="btn-bar">
       <button mat-raised-button (click)="remove()" color="primary">
         {{
           usedFields.controls.keepEntry.value ? "Remove entry" : "Restore entry"
         }}
       </button>
-      <button mat-raised-button (click)="addEntry()" color="accent">
-        Add entry
-      </button>
     </div>
-  </div>
-  <div class="col-right">
-    <div class="time-det">
-      <mat-form-field [subscriptSizing]="'dynamic'">
-        <mat-label>Start</mat-label>
-        <input type="time" matInput formControlName="startTimeUI" />
-      </mat-form-field>
-    </div>
-    <div class="time-det">
-      <mat-form-field [subscriptSizing]="'dynamic'">
-        <mat-label>Ende</mat-label>
-        <input type="time" matInput formControlName="endTimeUI" />
-      </mat-form-field>
-    </div>
-
-    <mat-label id="lang-radio">Auswahl der Sprache</mat-label>
-    <mat-radio-group aria-labelledby="lang-radio" formControlName="lang">
-      <mat-radio-button value="de">Deutsch</mat-radio-button>
-      <mat-radio-button value="en">English</mat-radio-button>
-    </mat-radio-group>
-
-    <mat-checkbox formControlName="isOnlyEntry4day"
-      >Is the only entry for today</mat-checkbox
-    >
   </div>
 </form>

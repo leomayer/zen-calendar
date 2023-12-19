@@ -16,12 +16,12 @@ import { TimeFormatterComponent } from './calendar-container/time-formatter/time
 import { Minutes2HourMinPipe } from './helpers/minutes2-hour-min.pipe';
 import { LinkDetailsComponent } from '@calendar/link-details/link-details.component';
 import { CalButtonDetailsComponent } from './cal-button-details/cal-button-details.component';
-import { CalConfigDetailComponent } from '@calConfig/cal-config-detail/cal-config-detail.component';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localeDe from '@angular/common/locales/de';
+import { CalTimeConfigComponent } from './calendar-config/cal-time-config/cal-time-config.component';
 
 registerLocaleData(localeDe);
 registerLocaleData(localeEn);
@@ -38,9 +38,7 @@ registerLocaleData(localeEn);
     Minutes2HourMinPipe,
     LinkDetailsComponent,
     CalButtonDetailsComponent,
-    CalConfigDetailComponent,
   ],
-  imports: [MaterialDesignModule, BrowserModule, HttpClientModule],
   providers: [
     { provide: DateAdapter, useClass: WeekdayDateService },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
@@ -50,5 +48,11 @@ registerLocaleData(localeEn);
     },
   ],
   bootstrap: [AppComponent],
+  imports: [
+    MaterialDesignModule,
+    BrowserModule,
+    HttpClientModule,
+    CalTimeConfigComponent,
+  ],
 })
 export class AppModule {}

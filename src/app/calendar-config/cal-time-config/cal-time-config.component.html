@@ -1,0 +1,71 @@
+<form [formGroup]="usedFields">
+  <div class="col-left">
+    <div class="time-fields">
+      <mat-form-field [subscriptSizing]="'dynamic'">
+        <mat-label>Start</mat-label>
+        <input type="time" matInput formControlName="startTimeUI" />
+      </mat-form-field>
+      <mat-form-field [subscriptSizing]="'dynamic'">
+        <mat-label>Ende</mat-label>
+        <input type="time" matInput formControlName="endTimeUI" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field [subscriptSizing]="'dynamic'">
+      <mat-label>Start repeat</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker1"
+        [formControl]="usedFields.controls.frequStart"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker1"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field [subscriptSizing]="'dynamic'">
+      <mat-label>End repeat</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker1"
+        [formControl]="usedFields.controls.frequEnd"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker1"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field [subscriptSizing]="'dynamic'">
+      <mat-label>Wiederholung</mat-label>
+      <mat-select [formControl]="usedFields.controls.frequType">
+        @for (singleType of frequTypes; track singleType) {
+        <mat-option [value]="singleType.frequType">{{
+          singleType.name
+        }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isOnlyEntry4day"
+      >Der einzige Eintrag für diesen Tag</mat-checkbox
+    >
+    <div class="btn-bar">
+      <button mat-raised-button color="primary">Hinzufügen</button>
+    </div>
+  </div>
+  <div class="col-right">
+    @for (oneDetail of timeConf.configDet; track oneDetail) {
+
+    <app-cal-config-detail
+      [dataInfo]="{
+        data: oneDetail,
+        fields: usedFields.controls.fields
+      }"
+    />
+    }
+  </div>
+</form>

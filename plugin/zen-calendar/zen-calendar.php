@@ -23,7 +23,7 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.9c13dd98e5a79f13.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.c6cc20f15179d48d.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.4917a2048b986313.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.6cfa49a7c9ca0af9.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -97,7 +97,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . ' - last updated at: <strong><!--build-time-->18.12.2023 14:42:12'
+        . ' - last updated at: <strong><!--build-time-->19.12.2023 19:26:40'
     .' </strong></div><app-root useConfigInterface="true"></app-root>';
 }
 
@@ -145,9 +145,8 @@ function get_events($request) {
     // Retrieve event data from the database
     global $wpdb;
     $tblDetails = $wpdb->prefix . "zencalendar_details";
-    //$query = "SELECT * FROM " .  $tblDetails . " WHERE event_id IN (" . implode(',', $eventIds) . ")";
     
-    $calDetails = $wpdb->get_results("SELECT id, title, description, lang, startTime, endTime, link, linkType
+    $calDetails = $wpdb->get_results("SELECT id, cal_basic_id, title, description, lang, startTime, endTime, link, linkType
       FROM $tblDetails
       WHERE cal_basic_id in (" . implode(',', $eventIds) . ")
       ORDER BY startTime;");

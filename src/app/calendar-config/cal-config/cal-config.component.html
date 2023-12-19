@@ -1,5 +1,5 @@
 @if (events.start) {
-<form [formGroup]="calConfigForm">
+<form [formGroup]="calConfigDetForm">
   <div class="date-container">
     <div class="header-date">
       <span>Ausgewähltes Datum </span>
@@ -7,13 +7,8 @@
         events.start | date: "mediumDate"
       }}</span>
     </div>
-    @for (oneDetail of details; track oneDetail) {
-    <app-cal-config-detail
-      [dataInfo]="{
-        data: oneDetail,
-        fields: calConfigForm.controls.fields
-      }"
-    />
+    @for (timeConf of lstOfConfigDetailsPerDay; track timeConf){
+    <app-cal-time-config [timeConf]="timeConf" />
     }
   </div>
 </form>

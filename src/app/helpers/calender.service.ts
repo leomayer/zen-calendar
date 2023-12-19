@@ -3,6 +3,7 @@ import {
   CalendarEvent,
   CalendarEventLangs,
   CalendarEventShort,
+  EventFrequ,
 } from './calenderTypes';
 import { CalendarTestHelper } from './calender.test-helper.service';
 import {
@@ -14,6 +15,7 @@ import {
   providedIn: 'root',
 })
 export class CalenderService {
+  public useConfigInterface = false;
   constructor(private helper: CalendarTestHelper) {}
 
   async getEvents(curMonth: Date): Promise<CalendarEventShort[]> {
@@ -38,20 +40,19 @@ export class CalenderService {
     dbList
       .filter((chk) => chk.frequ_type === 0)
       .forEach((filterDay) => {
-        const addDay: CalendarEventShort = {
-          start: filterDay.event_start,
-          eventIds: [filterDay.id],
-        };
+        const addDay = this.createShortEvent(filterDay);
         retList.push(addDay);
       });
   }
+
   setRepeatingWeekDates(
     dbList: CalendarEvent[],
     retList: CalendarEventShort[],
     curMonth: Date,
   ) {
+    const useFrequType = 1;
     dbList
-      .filter((chk) => chk.frequ_type === 1)
+      .filter((chk) => chk.frequ_type === useFrequType)
       .forEach((filterDay) => {
         // get for this weekday all dates in this month
         const weekDays = getWeekdaysInMonth(
@@ -65,14 +66,39 @@ export class CalenderService {
           );
           if (addDay) {
             addDay.eventIds.push(filterDay.id);
+            this.appendAddInfo(filterDay, addDay);
           } else {
-            addDay = {
-              start: weekDay,
-              eventIds: [filterDay.id],
-            };
-            retList.push(addDay);
+            const tmpDay = { ...filterDay };
+            tmpDay.frequ_start = weekDay;
+            retList.push(this.createShortEvent(tmpDay));
           }
         });
       });
+  }
+
+  createShortEvent(filterDay: CalendarEvent) {
+    const addDay: CalendarEventShort = {
+      start: filterDay.frequ_start,
+      eventIds: [filterDay.id],
+    };
+    this.appendAddInfo(filterDay, addDay);
+    return addDay;
+  }
+
+  appendAddInfo(filterDay: CalendarEvent, addDay: CalendarEventShort) {
+    if (this.useConfigInterface) {
+      const addInfo = {
+        frequ_id: filterDay.id,
+        frequ_start: filterDay.frequ_start,
+        frequ_end: filterDay.frequ_end,
+        frequ_type: filterDay.frequ_type,
+        is_only_entry4day: filterDay.is_only_entry4day,
+      } as EventFrequ;
+      if (addDay.addInfo?.length) {
+        addDay.addInfo.push(addInfo);
+      } else {
+        addDay.addInfo = [addInfo];
+      }
+    }
   }
 }

@@ -1,0 +1,43 @@
+@use "@angular/material" as mat;
+@import "/src/styles-global/theme.scss";
+form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 8px;
+}
+.col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 20%;
+  background-color: mat.get-color-from-palette($bluegrayPalette, 900);
+  margin-bottom: 8px;
+}
+.col-right {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+app-cal-config-detail {
+  padding: 8px;
+  margin-block-end: 8px;
+  border: 1px inset;
+  border-radius: 4px;
+}
+
+.time-fields {
+  display: flex;
+  column-gap: 8px;
+}
+.btn-bar {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  padding-block-start: 16px;
+}
+
+input {
+  /* for input fields like time fields*/
+  background-color: inherit;
+}

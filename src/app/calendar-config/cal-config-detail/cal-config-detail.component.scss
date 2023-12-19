@@ -27,23 +27,19 @@ form {
   display: flex;
   flex-direction: column;
   width: 20%;
-  background-color: mat.get-color-from-palette($limePalette, 900);
-}
-.time-det {
-  display: flex;
-  flex-wrap: wrap;
-}
-.time-det:first-of-type {
-  background-color: mat.get-color-from-palette($limePalette, 400, 0.5);
-}
-.time-det:last-of-type {
-  background-color: mat.get-color-from-palette($limePalette, 800);
+  padding: 8px;
+  background-color: mat.get-color-from-palette($bluegrayPalette, 900);
 }
 input {
+  /* for input fields like time fields*/
   background-color: inherit;
+}
+.lang-label {
+  color: mat-contrast($bluegrayPalette, 900);
 }
 .btn-bar {
   display: flex;
-  column-gap: 8px;
-  justify-content: flex-end;
+  justify-content: center;
+  flex-grow: 1;
+  align-items: flex-end;
 }

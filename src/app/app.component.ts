@@ -32,6 +32,7 @@ export class AppComponent {
     this.useConfigInterface = this.stringToBoolean(
       this.elementRef.nativeElement.getAttribute('useConfigInterface'),
     );
+    this.calService.useConfigInterface = this.useConfigInterface;
 
     store.state.eventIdSelected.subscribe((events) => {
       if (this.useConfigInterface) {
@@ -41,8 +42,10 @@ export class AppComponent {
       }
     });
     store.state.displayEvent.subscribe((event) => {
-			const tmp=event as CalendarEventLangs;
-			tmp.lang=document.documentElement.lang?.substring(0, 2) ?? 'en';
+      const tmp = event as CalendarEventLangs;
+      if (!tmp.lang) {
+        tmp.lang = document.documentElement.lang?.substring(0, 2) ?? 'en';
+      }
       this.displayEvent(event);
     });
   }

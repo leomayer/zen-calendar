@@ -31,3 +31,12 @@ export const areDatesOnSameDay = (date1: Date, date2: Date) => {
     date1.getDate() === date2.getDate()
   );
 };
+
+/*
+ * with this function it is possible to assign a NEW value to a given property
+ * NOTE: the additional benefit of this function: the property is dynamic (=string) AND
+ * is in accordance to the Typescript config option: "suppressImplicitAnyIndexErrors": false
+ */
+export const setValue = <T>(obj: T, key: keyof T, value: T[keyof T]) => {
+  obj[key] = value;
+};
