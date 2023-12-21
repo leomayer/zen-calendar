@@ -58,7 +58,9 @@ export class CalenderService {
         const weekDays = getWeekdaysInMonth(
           curMonth,
           filterDay.frequ_start.getDay(),
-        );
+        )
+          // filter only those days which are BEFORE the end!!!
+          .filter((chkDay) => chkDay <= filterDay.frequ_end);
         // for each weekday: add the event to the calendar
         weekDays.forEach((weekDay) => {
           let addDay = retList.find((chkMapDay) =>
