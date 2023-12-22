@@ -16,13 +16,14 @@ type bodyDetails = {
   selector: 'app-cal-details-dialog',
   templateUrl: './cal-details-dialog.component.html',
   styleUrls: ['./cal-details-dialog.component.scss'],
-   providers: [DatePipe],
+  providers: [DatePipe],
 })
 export class CalDetailsDialogComponent implements OnInit, OnDestroy {
   memoBody: bodyDetails = {} as bodyDetails;
 
-  constructor(@Inject(MAT_DIALOG_DATA) protected data: CalendarEventUI,
-  public datePipe: DatePipe
+  constructor(
+    @Inject(MAT_DIALOG_DATA) protected data: CalendarEventUI,
+    public datePipe: DatePipe,
   ) {}
   ngOnInit(): void {
     const body = document.body;

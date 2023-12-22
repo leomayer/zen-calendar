@@ -18,6 +18,10 @@
 }
 .reduce-lineheight {
   line-height: 25px;
+  display: flex;
+  justify-content: center;
+  color: mat.get-color-from-palette($amberPalette, 50);
+  align-items: flex-end;
 }
 div .title:not(:first-of-type) {
   padding-block-start: 8px;

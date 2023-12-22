@@ -56,13 +56,15 @@ export class CalendarTestHelper {
   async getEventsByIds(data: CalendarEventLangs): Promise<CalenderInfo[]> {
     const useLang =
       (data.lang ?? document.documentElement.lang)?.substring(0, 2) ?? 'en';
+
+    const useEventIds = data.onlyEventId4Day ?? data.eventIds.join().split(',');
     return await firstValueFrom(
       this.http
         .get<CalenderInfoWP[]>(
           this.host +
             this.url4Wordpress +
             'zenEvent?eventId=' +
-            data.eventIds.join().split(',') +
+            useEventIds +
             '&lang=' +
             useLang,
         )

@@ -34,7 +34,6 @@ export class CalConfigDetailComponent {
 
   initForm() {
     this.usedFields.patchValue(this.dataInfo.data);
-    this.usedFields.controls.keepEntry.setValue(true);
     this.dataInfo.fields.push(this.usedFields);
   }
 
@@ -44,15 +43,5 @@ export class CalConfigDetailComponent {
 
   updateContent(newContent: string) {
     this.usedFields.controls.description.setValue(newContent);
-  }
-  remove() {
-    const keepStatus = this.usedFields.controls.keepEntry.getRawValue();
-    if (keepStatus) {
-      this.usedFields.controls.keepEntry.setValue(false);
-      this.usedFields.disable();
-    } else {
-      this.usedFields.controls.keepEntry.setValue(true);
-      this.usedFields.enable();
-    }
   }
 }

@@ -12,6 +12,7 @@ export type CalendarEventShort = {
   // in DB: for the single Event its the cal_basic_id
   eventIds: number[];
   addInfo?: EventFrequ[];
+  onlyEventId4Day?: number;
 };
 export type EventFrequ = {
   frequ_id: number;
@@ -120,6 +121,7 @@ export class CalConfigTimeDetail {
   frequEnd = new FormControl<Date | null>(null);
   frequType = new FormControl<number>(0);
   fields = new FormArray<FormGroup<CalConfigDetail>>([]);
+  isValid = new FormControl<boolean>(false);
 }
 export class CalConfigDetail {
   id = new FormControl<number | undefined>(undefined);
@@ -128,7 +130,6 @@ export class CalConfigDetail {
   lang = new FormControl<string>('');
   link = new FormControl<string>('');
   linkType = new FormControl<CalLinkType>(null);
-  keepEntry = new FormControl<boolean>(false);
 }
 
 export interface CalConfigFormDto {

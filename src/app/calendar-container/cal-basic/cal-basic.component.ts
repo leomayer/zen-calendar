@@ -95,9 +95,15 @@ export class CalBasicComponent implements OnInit {
   }
 
   private getEventCount(filterDate: Date): number {
-    const ret =
-      this.listOfEvents?.find((chk) => areDatesOnSameDay(filterDate, chk.start))
-        ?.eventIds.length ?? 0;
-    return ret;
+    const chk = this.listOfEvents?.find((chk) =>
+      areDatesOnSameDay(filterDate, chk.start),
+    );
+    if (chk) {
+      if (chk.onlyEventId4Day) {
+        return 1;
+      }
+      return chk.eventIds.length ?? 0;
+    }
+    return 0;
   }
 }

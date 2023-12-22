@@ -35,6 +35,9 @@ app-cal-config-detail {
   justify-content: center;
   flex-grow: 1;
   padding-block-start: 16px;
+  flex-direction: column;
+  margin: 8px;
+  gap: 8px;
 }
 
 input {

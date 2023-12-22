@@ -55,6 +55,11 @@
     >
     <div class="btn-bar">
       <button mat-raised-button color="primary">Hinzufügen</button>
+      <button mat-raised-button (click)="remove()" color="primary">
+        {{
+          usedFields.controls.isValid.value ? "Remove entry" : "Restore entry"
+        }}
+      </button>
     </div>
   </div>
   <div class="col-right">

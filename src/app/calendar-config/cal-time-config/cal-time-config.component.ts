@@ -41,6 +41,10 @@ export class CalTimeConfigComponent {
     this.usedFields.controls.endTimeUI.setValue(
       this.convertMinutesToTimeString(this.timeConf.endTime),
     );
+    this.usedFields.controls.isValid.setValue(true);
+    if (this.timeConf.is_only_entry4day) {
+      this.usedFields.controls.isOnlyEntry4day.setValue(true);
+    }
     this.usedFields.controls.endTimeUI.valueChanges.subscribe((value) => {
       const minuteVal = this.convertStringToMinutes(value ?? '00:00');
       this.usedFields.controls.endTime.setValue(minuteVal);
@@ -53,17 +57,6 @@ export class CalTimeConfigComponent {
     this.usedFields.controls.frequStart.setValue(this.timeConf.frequ_start);
     this.usedFields.controls.frequEnd.setValue(this.timeConf.frequ_end);
     this.usedFields.controls.frequType.setValue(this.timeConf.frequ_type);
-    this.usedFields.controls.isOnlyEntry4day.valueChanges.subscribe(
-      (newValue) => {
-        if (newValue) {
-          this.usedFields.controls.startTimeUI.disable();
-          this.usedFields.controls.endTimeUI.disable();
-        } else {
-          this.usedFields.controls.startTimeUI.enable();
-          this.usedFields.controls.endTimeUI.enable();
-        }
-      },
-    );
   }
 
   convertMinutesToTimeString(minutesSinceMidnight: number) {
@@ -90,5 +83,16 @@ export class CalTimeConfigComponent {
     const minutes = parseInt(match[2] ?? '0');
 
     return hours * 60 + minutes;
+  }
+
+  remove() {
+    const keepStatus = this.usedFields.controls.isValid.getRawValue();
+    if (keepStatus) {
+      this.usedFields.controls.isValid.setValue(false);
+      this.usedFields.disable();
+    } else {
+      this.usedFields.controls.isValid.setValue(true);
+      this.usedFields.enable();
+    }
   }
 }

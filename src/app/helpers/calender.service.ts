@@ -60,7 +60,9 @@ export class CalenderService {
           filterDay.frequ_start.getDay(),
         )
           // filter only those days which are BEFORE the end!!!
-          .filter((chkDay) => chkDay <= filterDay.frequ_end);
+          .filter((chkDay) =>
+            this.isDateWithinFilterDayInterval(filterDay, chkDay),
+          );
         // for each weekday: add the event to the calendar
         weekDays.forEach((weekDay) => {
           let addDay = retList.find((chkMapDay) =>
@@ -72,10 +74,28 @@ export class CalenderService {
           } else {
             const tmpDay = { ...filterDay };
             tmpDay.frequ_start = weekDay;
-            retList.push(this.createShortEvent(tmpDay));
+            addDay = this.createShortEvent(tmpDay);
+            retList.push(addDay);
           }
+          this.setOnlyEventInfo(filterDay, addDay);
         });
       });
+  }
+  setOnlyEventInfo(filterDay: CalendarEvent, addDay: CalendarEventShort) {
+    if (
+      filterDay.is_only_entry4day &&
+      this.isDateWithinFilterDayInterval(filterDay, addDay.start)
+    ) {
+      addDay.onlyEventId4Day = filterDay.id;
+    }
+  }
+  isDateWithinFilterDayInterval(filterDay: CalendarEvent, checkDay: Date) {
+    return (
+      (filterDay.frequ_start < checkDay ||
+        areDatesOnSameDay(filterDay.frequ_start, checkDay)) &&
+      (checkDay < filterDay.frequ_end ||
+        areDatesOnSameDay(filterDay.frequ_end, checkDay))
+    );
   }
 
   createShortEvent(filterDay: CalendarEvent) {
