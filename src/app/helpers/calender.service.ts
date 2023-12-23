@@ -38,10 +38,10 @@ export class CalenderService {
   // filter all those events which are not repeating
   setFixedDate(dbList: CalendarEvent[], retList: CalendarEventShort[]) {
     dbList
-      .filter((chk) => chk.frequ_type === 0)
+      .filter((chk) => chk.frequType === 0)
       .forEach((filterDay) => {
-        const addDay = this.createShortEvent(filterDay);
-        retList.push(addDay);
+        // since its a one day only event ==> StartDate equals EndDate
+        this.addDay2List(filterDay.eventStartDate, retList, filterDay);
       });
   }
 
@@ -52,12 +52,12 @@ export class CalenderService {
   ) {
     const useFrequType = 1;
     dbList
-      .filter((chk) => chk.frequ_type === useFrequType)
+      .filter((chk) => chk.frequType === useFrequType)
       .forEach((filterDay) => {
         // get for this weekday all dates in this month
         const weekDays = getWeekdaysInMonth(
           curMonth,
-          filterDay.frequ_start.getDay(),
+          filterDay.eventStartDate.getDay(),
         )
           // filter only those days which are BEFORE the end!!!
           .filter((chkDay) =>
@@ -65,25 +65,32 @@ export class CalenderService {
           );
         // for each weekday: add the event to the calendar
         weekDays.forEach((weekDay) => {
-          let addDay = retList.find((chkMapDay) =>
-            areDatesOnSameDay(chkMapDay.start, weekDay),
-          );
-          if (addDay) {
-            addDay.eventIds.push(filterDay.id);
-            this.appendAddInfo(filterDay, addDay);
-          } else {
-            const tmpDay = { ...filterDay };
-            tmpDay.frequ_start = weekDay;
-            addDay = this.createShortEvent(tmpDay);
-            retList.push(addDay);
-          }
-          this.setOnlyEventInfo(filterDay, addDay);
+          this.addDay2List(weekDay, retList, filterDay);
         });
       });
   }
+  addDay2List(
+    weekDay: Date,
+    retList: CalendarEventShort[],
+    filterDay: CalendarEvent,
+  ) {
+    let addDay = retList.find((chkMapDay) =>
+      areDatesOnSameDay(chkMapDay.start, weekDay),
+    );
+    if (addDay) {
+      addDay.eventIds.push(filterDay.id);
+      this.appendAddInfo(filterDay, addDay);
+    } else {
+      const tmpDay = { ...filterDay };
+      tmpDay.eventStartDate = weekDay;
+      addDay = this.createShortEvent(tmpDay);
+      retList.push(addDay);
+    }
+    this.setOnlyEventInfo(filterDay, addDay);
+  }
   setOnlyEventInfo(filterDay: CalendarEvent, addDay: CalendarEventShort) {
     if (
-      filterDay.is_only_entry4day &&
+      filterDay.isOnlyEntry4Day &&
       this.isDateWithinFilterDayInterval(filterDay, addDay.start)
     ) {
       addDay.onlyEventId4Day = filterDay.id;
@@ -91,16 +98,16 @@ export class CalenderService {
   }
   isDateWithinFilterDayInterval(filterDay: CalendarEvent, checkDay: Date) {
     return (
-      (filterDay.frequ_start < checkDay ||
-        areDatesOnSameDay(filterDay.frequ_start, checkDay)) &&
-      (checkDay < filterDay.frequ_end ||
-        areDatesOnSameDay(filterDay.frequ_end, checkDay))
+      (filterDay.eventStartDate < checkDay ||
+        areDatesOnSameDay(filterDay.eventStartDate, checkDay)) &&
+      (checkDay < filterDay.eventEndDate ||
+        areDatesOnSameDay(filterDay.eventEndDate, checkDay))
     );
   }
 
   createShortEvent(filterDay: CalendarEvent) {
     const addDay: CalendarEventShort = {
-      start: filterDay.frequ_start,
+      start: filterDay.eventStartDate,
       eventIds: [filterDay.id],
     };
     this.appendAddInfo(filterDay, addDay);
@@ -111,10 +118,10 @@ export class CalenderService {
     if (this.useConfigInterface) {
       const addInfo = {
         frequ_id: filterDay.id,
-        frequ_start: filterDay.frequ_start,
-        frequ_end: filterDay.frequ_end,
-        frequ_type: filterDay.frequ_type,
-        is_only_entry4day: filterDay.is_only_entry4day,
+        eventStartDate: filterDay.eventStartDate,
+        eventEndDate: filterDay.eventEndDate,
+        frequType: filterDay.frequType,
+        isOnlyEntry4Day: filterDay.isOnlyEntry4Day,
       } as EventFrequ;
       if (addDay.addInfo?.length) {
         addDay.addInfo.push(addInfo);

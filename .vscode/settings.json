@@ -3,5 +3,9 @@
         "activityBar.background": "#5C1008",
         "titleBar.activeBackground": "#81170B",
         "titleBar.activeForeground": "#FFFCFC"
-    }
+    },
+    "workbench.editor.revealIfOpen": true,
+    "editor.showFoldingControls": "always",
+    "editor.foldingImportsByDefault": true,
+    "editor.renderWhitespace": "boundary"
 }

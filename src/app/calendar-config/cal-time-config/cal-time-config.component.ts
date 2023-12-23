@@ -36,27 +36,27 @@ export class CalTimeConfigComponent {
     this.usedFields.patchValue(this.timeConf);
     // set the time value for the UI
     this.usedFields.controls.startTimeUI.setValue(
-      this.convertMinutesToTimeString(this.timeConf.startTime),
+      this.convertMinutesToTimeString(this.timeConf.eventStartTime),
     );
     this.usedFields.controls.endTimeUI.setValue(
-      this.convertMinutesToTimeString(this.timeConf.endTime),
+      this.convertMinutesToTimeString(this.timeConf.eventEndTime),
     );
     this.usedFields.controls.isValid.setValue(true);
-    if (this.timeConf.is_only_entry4day) {
+    if (this.timeConf.isOnlyEntry4Day) {
       this.usedFields.controls.isOnlyEntry4day.setValue(true);
     }
     this.usedFields.controls.endTimeUI.valueChanges.subscribe((value) => {
       const minuteVal = this.convertStringToMinutes(value ?? '00:00');
-      this.usedFields.controls.endTime.setValue(minuteVal);
+      this.usedFields.controls.eventEndTime.setValue(minuteVal);
     });
     this.usedFields.controls.startTimeUI.valueChanges.subscribe((value) => {
       const minuteVal = this.convertStringToMinutes(value ?? '00:00');
-      this.usedFields.controls.startTime.setValue(minuteVal);
+      this.usedFields.controls.eventStartTime.setValue(minuteVal);
     });
 
-    this.usedFields.controls.frequStart.setValue(this.timeConf.frequ_start);
-    this.usedFields.controls.frequEnd.setValue(this.timeConf.frequ_end);
-    this.usedFields.controls.frequType.setValue(this.timeConf.frequ_type);
+    this.usedFields.controls.frequStart.setValue(this.timeConf.eventStartDate);
+    this.usedFields.controls.frequEnd.setValue(this.timeConf.eventEndDate);
+    this.usedFields.controls.frequType.setValue(this.timeConf.frequType);
   }
 
   convertMinutesToTimeString(minutesSinceMidnight: number) {

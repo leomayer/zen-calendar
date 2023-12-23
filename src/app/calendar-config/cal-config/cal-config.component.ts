@@ -58,7 +58,7 @@ export class CalConfigComponent implements OnInit {
   }
 
   performChangeCheck() {
-    const change = [] as CalenderInfo[];
+    //const change = [] as CalenderInfo[];
     /*
     const newVals = this.calConfigDetForm.getRawValue().fields;
     let index = 0;
@@ -85,8 +85,8 @@ export class CalConfigComponent implements OnInit {
       index++;
     });
     */
-    console.log('before change:', this.details);
-    console.log(change);
+    //    console.log('before change:', this.details);
+    //    console.log(change);
   }
 
   createConfigDetails(
@@ -101,11 +101,11 @@ export class CalConfigComponent implements OnInit {
       );
       for (const confEntry of filteredDetails) {
         let event = lstOfConfigDetailsPerDay.find(
-          (conf) => conf.startTime === confEntry.startTime,
+          (conf) => conf.eventStartTime === confEntry.eventStartTime,
         );
         if (!event) {
           event = this.createNewConfTime(confEntry, addInfo);
-          listOfUsedStartTimes.push(confEntry.startTime);
+          listOfUsedStartTimes.push(confEntry.eventStartTime);
           lstOfConfigDetailsPerDay.push(event);
         }
         const confDetail = {
@@ -124,12 +124,12 @@ export class CalConfigComponent implements OnInit {
   createNewConfTime(confEntry: CalenderInfoConfig, addInfo: EventFrequ) {
     const frequConfig = {
       cal_basic_id: addInfo.frequ_id,
-      startTime: confEntry.startTime,
-      endTime: confEntry.endTime,
-      frequ_start: addInfo.frequ_start,
-      frequ_end: addInfo.frequ_end,
-      frequ_type: addInfo.frequ_type,
-      is_only_entry4day: addInfo.is_only_entry4day,
+      eventStartTime: confEntry.eventStartTime,
+      eventEndTime: confEntry.eventEndTime,
+      eventStartDate: addInfo.eventStartDate,
+      eventEndDate: addInfo.eventEndDate,
+      frequType: addInfo.frequType,
+      isOnlyEntry4Day: addInfo.isOnlyEntry4Day,
       configDet: [],
     };
 

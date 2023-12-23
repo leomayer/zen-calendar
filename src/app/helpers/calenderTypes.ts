@@ -16,10 +16,10 @@ export type CalendarEventShort = {
 };
 export type EventFrequ = {
   frequ_id: number;
-  frequ_start: Date;
-  frequ_end: Date;
-  frequ_type: number; //0: None; 1: weekly; 2: monthly; 3: yearly
-  is_only_entry4day: boolean;
+  eventStartDate: Date;
+  eventEndDate: Date;
+  frequType: number; //0: None; 1: weekly; 2: monthly; 3: yearly
+  isOnlyEntry4Day: boolean;
 };
 export type CalendarEventLangs = CalendarEventShort & { lang?: string };
 
@@ -31,42 +31,32 @@ export type CalendarEventUI = {
 export type CalendarEvent = {
   id: number;
 
-  event_start: Date;
-  event_end: Date;
-  frequ_start: Date;
-  frequ_end: Date;
-  frequ_type: number; //0: None; 1: weekly; 2: monthly; 3: yearly
-  is_only_entry4day: boolean;
+  eventStartDate: Date;
+  eventStartTime: number;
+  eventEndDate: Date;
+  eventEndTime: number;
+  frequType: number; //0: None; 1: weekly; 2: monthly; 3: yearly
+  isOnlyEntry4Day: boolean;
 };
 export type WordpressString = {
   id: string;
 
-  event_start: string;
-  event_end: string;
-  frequ_start: string;
-  frequ_end: string;
-  frequ_type: string;
-  is_only_entry4day: string;
-};
-
-export type CalLinkType = 'url' | 'zoom' | 'email' | null;
-export type CalLinkTypeUI = {
-  name: string;
-  linkType: CalLinkType;
-};
-export type FrequTypeUI = {
-  name: string;
-  frequType: number;
+  eventStartDate: string;
+  eventStartTime: string;
+  eventEndDate: string;
+  eventEndTime: string;
+  frequType: string;
+  isOnlyEntry4Day: string;
 };
 
 export type CalenderTimeConfig = {
-  startTime: number;
-  endTime: number;
+  eventStartTime: number;
+  eventEndTime: number;
   cal_basic_id: number | null;
-  frequ_start: Date;
-  frequ_end: Date;
-  frequ_type: number; //0: None; 1: weekly; 2: monthly; 3: yearly
-  is_only_entry4day: boolean;
+  eventStartDate: Date;
+  eventEndDate: Date;
+  frequType: number; //0: None; 1: weekly; 2: monthly; 3: yearly
+  isOnlyEntry4Day: boolean;
   configDet: CalenderDetConfig[];
 };
 export type CalenderDetConfig = {
@@ -77,13 +67,22 @@ export type CalenderDetConfig = {
   link: string;
   linkType: CalLinkType;
 };
+export type CalLinkType = 'url' | 'zoom' | 'email' | null;
+export type CalLinkTypeUI = {
+  name: string;
+  linkType: CalLinkType;
+};
+export type FrequTypeUI = {
+  name: string;
+  frequType: number;
+};
 
 export type CalenderInfo = {
   id: number | null;
   title: string;
   description: string;
-  startTime: number;
-  endTime: number;
+  eventStartTime: number;
+  eventEndTime: number;
   lang: string;
   link: string;
   linkType: CalLinkType;
@@ -102,8 +101,8 @@ export class DefaultCalenderInfo implements CalenderInfo {
   id = null;
   title = '';
   description = '';
-  startTime = 0;
-  endTime = 0;
+  eventStartTime = 0;
+  eventEndTime = 0;
   lang = 'de';
   link = '';
   linkType = null;
@@ -111,8 +110,8 @@ export class DefaultCalenderInfo implements CalenderInfo {
 
 export class CalConfigTimeDetail {
   id = new FormControl<number | undefined>(undefined);
-  startTime = new FormControl<number>(0);
-  endTime = new FormControl<number>(0);
+  eventStartTime = new FormControl<number>(0);
+  eventEndTime = new FormControl<number>(0);
   startTimeUI = new FormControl<string>('00:00');
   endTimeUI = new FormControl<string>('00:00');
   isOnlyEntry4day = new FormControl<boolean>(false);

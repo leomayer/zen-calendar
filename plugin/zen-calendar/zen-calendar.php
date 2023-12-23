@@ -23,7 +23,7 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.9c13dd98e5a79f13.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.d680d4b5ed92177a.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.243220a6b15e0336.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.6cfa49a7c9ca0af9.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -38,13 +38,13 @@ function zen_cal_install()
     // create Basic Table
     $sqlBasic = "CREATE TABLE $tblBasic (
   id INT NOT NULL AUTO_INCREMENT,
-  event_start DATE NOT NULL,
-  event_end DATE NOT NULL,
-  frequ_start DATE NOT NULL,
-  frequ_end DATE NOT NULL,
-  frequ_type INT NOT NULL COMMENT '0:None, 1:weekly, 2:monthly, 3:yearly',
-  is_valid BOOLEAN DEFAULT TRUE,
-  is_only_entry4day BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'If true => all other events on this day are ignored',
+  eventStartDate DATE NOT NULL,
+  eventStartTime INT NOT NULL COMMENT 'minutes since midnight',
+  eventEndDate DATE NOT NULL,
+  eventEndTime INT NOT NULL COMMENT 'minutes since midnight',
+  frequType INT NOT NULL COMMENT '0:None, 1:weekly, 2:monthly, 3:yearly',
+  isValid BOOLEAN DEFAULT TRUE,
+  isOnlyEntry4Day BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'If true => all other events on this day are ignored',
   PRIMARY KEY (`id`)
   ) COMMENT = 'BasisInfo für den Überblick' $charset_collate;";
 
@@ -54,8 +54,6 @@ function zen_cal_install()
   cal_basic_id INT NOT NULL,
   title TEXT NOT NULL,
   description TEXT NOT NULL,
-  startTime INT NOT NULL COMMENT 'minutes since midnight',
-  endTime INT NOT NULL COMMENT 'minutes since midnight',
   lang VARCHAR(5) NOT NULL,
   link TEXT NOT NULL,
   linkType TEXT NOT NULL COMMENT 'url, zoom, email, undefined',
@@ -97,7 +95,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . ' - last updated at: <strong><!--build-time-->22.12.2023 17:18:22'
+        . ' - last updated at: <strong><!--build-time-->23.12.2023 19:53:28'
     .' </strong></div><app-root useConfigInterface="true"></app-root>';
 }
 
@@ -109,12 +107,12 @@ function get_wp_zen_calendar4month($request)
     global $wpdb;
     $tblBasic = $wpdb->prefix . "zencalendar_basic";
 
-    $calOverview = $wpdb->get_results("SELECT id, event_start, event_end, frequ_start, frequ_end, frequ_type, is_only_entry4day 
+    $calOverview = $wpdb->get_results("SELECT id, eventStartDate, eventEndDate, frequType, isOnlyEntry4Day 
       FROM $tblBasic 
-      WHERE is_valid=TRUE 
-        AND  DATE_FORMAT('$useMonth', '%Y-%m-01') <= frequ_end
-        AND  frequ_start <= DATE_ADD(DATE_FORMAT('$useMonth', '%Y-%m-01'), INTERVAL 1 MONTH)
-      ORDER BY event_start;");
+      WHERE isValid=TRUE 
+        AND  DATE_FORMAT('$useMonth', '%Y-%m-01') <= eventEndDate
+        AND  eventStartDate <= DATE_ADD(DATE_FORMAT('$useMonth', '%Y-%m-01'), INTERVAL 1 MONTH)
+      ORDER BY eventStartDate;");
     echo json_encode($calOverview);
 }
 
@@ -125,12 +123,14 @@ function get_wp_zen_eventDetails($request)
     $useLang = $request->get_param('lang');
     global $wpdb;
     $tblDetails = $wpdb->prefix . "zencalendar_details";
+    $tblBasic = $wpdb->prefix . "zencalendar_basic";
 
-    $calDetails = $wpdb->get_results("SELECT title, description,startTime, endTime, link, linkType
-      FROM $tblDetails
+    $calDetails = $wpdb->get_results("SELECT title, description,eventStartTime, eventEndTime, link, linkType
+      FROM $tblDetails as zDet
+      JOIN $tblBasic zBasic on (cal_basic_id=zBasic.id)
       WHERE cal_basic_id in ($useEventId)
         AND  lang='$useLang'
-      ORDER BY startTime;");
+      ORDER BY eventStartTime;");
     echo json_encode($calDetails);
 }
 
@@ -145,11 +145,13 @@ function get_events($request) {
     // Retrieve event data from the database
     global $wpdb;
     $tblDetails = $wpdb->prefix . "zencalendar_details";
+    $tblBasic = $wpdb->prefix . "zencalendar_basic";
     
-    $calDetails = $wpdb->get_results("SELECT id, cal_basic_id, title, description, lang, startTime, endTime, link, linkType
-      FROM $tblDetails
+    $calDetails = $wpdb->get_results("SELECT zDet.id, cal_basic_id, title, description, lang, eventStartTime, eventEndTime, link, linkType
+      FROM $tblDetails as zDet
+      JOIN $tblBasic zBasic on (cal_basic_id=zBasic.id)
       WHERE cal_basic_id in (" . implode(',', $eventIds) . ")
-      ORDER BY startTime;");
+      ORDER BY eventStartTime;");
     echo json_encode($calDetails);
 }
 

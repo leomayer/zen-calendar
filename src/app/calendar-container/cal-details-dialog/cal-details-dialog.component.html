@@ -5,11 +5,11 @@
   <!-- loop over all events -->
   @for (curEvent of data.events; track curEvent) {
   <div class="title">{{ curEvent.title }}</div>
-  @if (curEvent.startTime !== curEvent.endTime){
+  @if (curEvent.eventStartTime !== curEvent.eventEndTime){
   <app-time-formatter
     class="subtitle"
-    [startTime]="curEvent.startTime"
-    [endTime]="curEvent.endTime"
+    [eventStartTime]="curEvent.eventStartTime"
+    [eventEndTime]="curEvent.eventEndTime"
   />
   }
   <div class="description" [innerHTML]="curEvent.description"></div>

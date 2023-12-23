@@ -37,14 +37,12 @@ export class CalendarTestHelper {
             const converted = dto.map((dtoDetail) => {
               const convDetail = {} as CalendarEvent;
               convDetail.id = Number(dtoDetail.id);
-              convDetail.frequ_end = new Date(dtoDetail.frequ_end);
-              convDetail.frequ_start = new Date(dtoDetail.frequ_start);
-              convDetail.event_end = new Date(dtoDetail.event_end);
-              convDetail.event_start = new Date(dtoDetail.event_start);
-              convDetail.frequ_type = Number(dtoDetail.frequ_type);
-              convDetail.is_only_entry4day = !!Number(
-                dtoDetail.is_only_entry4day,
-              );
+              convDetail.eventEndDate = new Date(dtoDetail.eventEndDate);
+              convDetail.eventStartDate = new Date(dtoDetail.eventStartDate);
+              convDetail.eventEndDate = new Date(dtoDetail.eventEndDate);
+              convDetail.eventStartDate = new Date(dtoDetail.eventStartDate);
+              convDetail.frequType = Number(dtoDetail.frequType);
+              convDetail.isOnlyEntry4Day = !!Number(dtoDetail.isOnlyEntry4Day);
               return convDetail;
             });
             return converted;
@@ -108,8 +106,8 @@ export class CalendarTestHelper {
     convDetail.id = Number(dtoDetail.id);
     convDetail.title = dtoDetail.title;
     convDetail.description = dtoDetail.description;
-    convDetail.startTime = Number(dtoDetail.startTime);
-    convDetail.endTime = Number(dtoDetail.endTime);
+    convDetail.eventStartTime = Number(dtoDetail.eventStartTime);
+    convDetail.eventEndTime = Number(dtoDetail.eventEndTime);
     convDetail.lang = dtoDetail.lang;
     convDetail.link = dtoDetail.link;
     convDetail.linkType = dtoDetail.linkType as CalLinkType;

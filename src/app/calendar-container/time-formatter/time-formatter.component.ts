@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./time-formatter.component.scss'],
 })
 export class TimeFormatterComponent {
-  @Input({ required: true }) startTime!: number | undefined;
-  @Input({ required: true }) endTime!: number | undefined;
+  @Input({ required: true }) eventStartTime!: number | undefined;
+  @Input({ required: true }) eventEndTime!: number | undefined;
 }
