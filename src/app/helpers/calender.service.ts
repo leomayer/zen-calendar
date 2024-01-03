@@ -5,7 +5,7 @@ import {
   CalendarEventShort,
   EventFrequ,
 } from './calenderTypes';
-import { CalendarTestHelper } from './calender.test-helper.service';
+import { CalendarHelper } from './calender.test-helper.service';
 import {
   areDatesOnSameDay,
   getWeekdaysInMonth,
@@ -16,7 +16,7 @@ import {
 })
 export class CalenderService {
   public useConfigInterface = false;
-  constructor(private helper: CalendarTestHelper) {}
+  constructor(private helper: CalendarHelper) {}
 
   async getEvents(curMonth: Date): Promise<CalendarEventShort[]> {
     const retList = [] as CalendarEventShort[];

@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class CalendarTestHelper {
+export class CalendarHelper {
   url4testing = '/assets/samples/';
   host = (environment?.host ? environment?.host : location.origin) + '/';
   url4Wordpress = '/wp-json/zen_calendar/v1/';
@@ -54,17 +54,24 @@ export class CalendarTestHelper {
   async getEventsByIds(data: CalendarEventLangs): Promise<CalenderInfo[]> {
     const useLang =
       (data.lang ?? document.documentElement.lang)?.substring(0, 2) ?? 'en';
+    const useEventIds = (data.onlyEventId4Day ??
+      data.eventIds.join()) as string;
 
-    const useEventIds = data.onlyEventId4Day ?? data.eventIds.join().split(',');
+    return await this.getEventsViaSignal(useEventIds, useLang);
+  }
+  async getEventsViaSignal(
+    eventIds: string,
+    lang: string,
+  ): Promise<CalenderInfo[]> {
     return await firstValueFrom(
       this.http
         .get<CalenderInfoWP[]>(
           this.host +
             this.url4Wordpress +
             'zenEvent?eventId=' +
-            useEventIds +
+            eventIds +
             '&lang=' +
-            useLang,
+            lang,
         )
         .pipe(map((dto) => this.convertMapCalInfo(dto))),
     );

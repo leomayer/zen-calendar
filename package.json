@@ -26,6 +26,7 @@
     "@angular/platform-browser": "^17.0.5",
     "@angular/platform-browser-dynamic": "^17.0.5",
     "@angular/router": "^17.0.5",
+    "@ngrx/signals": "^17.0.1",
     "googleapis": "^128.0.0",
     "onchange": "^7.1.0",
     "postcss": "^8.4.31",

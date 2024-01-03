@@ -1,7 +1,35 @@
-import { DatePipe } from '@angular/common';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DatePipe, JsonPipe } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit, inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { CalendarStore } from '@app/app-store.service';
 import { CalendarEventUI } from '@app/helpers/calenderTypes';
+import { patchState, signalStoreFeature, withMethods } from '@ngrx/signals';
+
+export function withSignalsDisplayDialog() {
+  return signalStoreFeature(
+    withMethods((state) => ({
+      displayDialog(showDialog: boolean) {
+        console.log('show dialog - 0');
+        const dialog = inject(MatDialog);
+        console.log('show dialog - 1');
+        patchState(state, { showDialog });
+        if (showDialog) {
+          console.log('show dialog -2');
+          const dialogRef = dialog.open(CalDetailsDialogComponent, {
+            width: '250px',
+            backdropClass: 'cdk-overlay-transparent-backdrop',
+            hasBackdrop: true,
+            enterAnimationDuration: '500ms',
+            exitAnimationDuration: '500ms',
+          });
+          dialogRef
+            .afterClosed()
+            .subscribe(() => patchState(state, { showDialog: false }));
+        }
+      },
+    })),
+  );
+}
 
 type bodyDetails = {
   height: string;
@@ -16,10 +44,11 @@ type bodyDetails = {
   selector: 'app-cal-details-dialog',
   templateUrl: './cal-details-dialog.component.html',
   styleUrls: ['./cal-details-dialog.component.scss'],
-  providers: [DatePipe],
+  providers: [DatePipe, JsonPipe],
 })
 export class CalDetailsDialogComponent implements OnInit, OnDestroy {
   memoBody: bodyDetails = {} as bodyDetails;
+  readonly calendarStore = inject(CalendarStore);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) protected data: CalendarEventUI,

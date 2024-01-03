@@ -3,12 +3,13 @@ import {
   ElementRef,
   ViewChild,
   ViewContainerRef,
+  inject,
 } from '@angular/core';
-import { AppStoreService } from './app-store.service';
+import { AppStoreService, CalendarStore } from './app-store.service';
 import { CalendarEventLangs, CalendarEventUI } from './helpers/calenderTypes';
-import { CalDetailsDialogComponent } from '@calendar/cal-details-dialog/cal-details-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CalenderService } from './helpers/calender.service';
+import { CalDetailsDialogComponent } from '@calendar/cal-details-dialog/cal-details-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent {
   protected useConfigInterface: boolean = false;
   @ViewChild('configComponent', { read: ViewContainerRef })
   configComponent!: ViewContainerRef;
+  readonly calendarStore = inject(CalendarStore);
 
   constructor(
     private elementRef: ElementRef,
@@ -50,7 +52,7 @@ export class AppComponent {
     });
   }
   async displayEvent(event: CalendarEventLangs) {
-    if (this.isDialogOpened) {
+    if (this.calendarStore.showDialog() || this.calendarStore.loading()) {
       return;
     }
     this.isDialogOpened = true;
@@ -62,6 +64,7 @@ export class AppComponent {
         events,
       } as CalendarEventUI;
 
+      //  this.dialogStore.loadDetails(event);
       const dialogRef = this.dialog.open(CalDetailsDialogComponent, {
         data,
         width: '250px',

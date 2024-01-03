@@ -78,7 +78,7 @@ div .tox-swatches__row {
 /* for debugging: encapsulate the JSON into a <pre> tag and the make sure it overflows */
 pre {
   overflow: auto;
-  background-color: mat.get-color-from-palette($limePalette, 50);
+  background-color: mat.get-color-from-palette($limePalette, 600);
   border-radius: 4px;
   border-style: inset;
   margin-inline: 8px;

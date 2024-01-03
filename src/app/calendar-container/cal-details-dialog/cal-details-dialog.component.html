@@ -15,4 +15,7 @@
   <div class="description" [innerHTML]="curEvent.description"></div>
   <app-link-details [curEvent]="curEvent" />
   }
+  <pre>{{ calendarStore.useConfigInterface() }}</pre>
+  <pre>{{ calendarStore.showDialog() }}</pre>
+  <pre>{{ calendarStore.matDisplayDialog() }}</pre>
 </div>

@@ -3,6 +3,7 @@ import {
   Component,
   OnInit,
   ViewChild,
+  inject,
 } from '@angular/core';
 import {
   MatCalendar,
@@ -11,7 +12,7 @@ import {
 import { CalMonthHeaderComponent } from './cal-month-header/cal-month-header.component';
 import { CalendarEventShort } from '@app/helpers/calenderTypes';
 import { CalenderService } from '@app/helpers/calender.service';
-import { AppStoreService } from '@app/app-store.service';
+import { AppStoreService, CalendarStore } from '@app/app-store.service';
 import {
   areDatesOnSameDay,
   isToday,
@@ -26,6 +27,7 @@ import {
 export class CalBasicComponent implements OnInit {
   selectedDate!: Date | null;
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
+  readonly calendarStore = inject(CalendarStore);
 
   listOfEvents!: CalendarEventShort[] | undefined;
   // for the header component
@@ -91,6 +93,10 @@ export class CalBasicComponent implements OnInit {
           areDatesOnSameDay(chk.start, selDate),
         ) ?? ({} as CalendarEventShort);
       this.store.state.eventIdSelected.next(eventId);
+
+      // usage with SignalStore
+      console.log('load details...');
+      this.calendarStore.loadDetails(eventId);
     }
   }
 
