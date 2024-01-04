@@ -22,8 +22,8 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 // Scripts for Angular script
 function load_ng_scripts()
 {
-    wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.9c13dd98e5a79f13.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.243220a6b15e0336.js', true);
+    wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.24f954295e0d5ce3.css');
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.878f46981fb047d9.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.6cfa49a7c9ca0af9.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -56,6 +56,7 @@ function zen_cal_install()
   description TEXT NOT NULL,
   lang VARCHAR(5) NOT NULL,
   link TEXT NOT NULL,
+  linkTitle TEXT NOT NULL COMMENT 'display text for the link',
   linkType TEXT NOT NULL COMMENT 'url, zoom, email, undefined',
   PRIMARY KEY (id),
   FOREIGN KEY (cal_basic_id) REFERENCES $tblBasic(id)
@@ -95,7 +96,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . ' - last updated at: <strong><!--build-time-->23.12.2023 19:53:28'
+        . ' - last updated at: <strong><!--build-time-->4.1.2024 16:20:40'
     .' </strong></div><app-root useConfigInterface="true"></app-root>';
 }
 
@@ -125,7 +126,7 @@ function get_wp_zen_eventDetails($request)
     $tblDetails = $wpdb->prefix . "zencalendar_details";
     $tblBasic = $wpdb->prefix . "zencalendar_basic";
 
-    $calDetails = $wpdb->get_results("SELECT title, description,eventStartTime, eventEndTime, link, linkType
+    $calDetails = $wpdb->get_results("SELECT title, description,eventStartTime, eventEndTime, link, linkTitle, linkType
       FROM $tblDetails as zDet
       JOIN $tblBasic zBasic on (cal_basic_id=zBasic.id)
       WHERE cal_basic_id in ($useEventId)
@@ -147,7 +148,7 @@ function get_events($request) {
     $tblDetails = $wpdb->prefix . "zencalendar_details";
     $tblBasic = $wpdb->prefix . "zencalendar_basic";
     
-    $calDetails = $wpdb->get_results("SELECT zDet.id, cal_basic_id, title, description, lang, eventStartTime, eventEndTime, link, linkType
+    $calDetails = $wpdb->get_results("SELECT zDet.id, cal_basic_id, title, description, lang, eventStartTime, eventEndTime, link, linkTitle, linkType
       FROM $tblDetails as zDet
       JOIN $tblBasic zBasic on (cal_basic_id=zBasic.id)
       WHERE cal_basic_id in (" . implode(',', $eventIds) . ")

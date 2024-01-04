@@ -66,6 +66,7 @@ export type CalenderDetConfig = {
   lang: string;
   link: string;
   linkType: CalLinkType;
+  linkTitle: string;
 };
 export type CalLinkType = 'url' | 'zoom' | 'email' | null;
 export type CalLinkTypeUI = {
@@ -86,6 +87,7 @@ export type CalenderInfo = {
   lang: string;
   link: string;
   linkType: CalLinkType;
+  linkTitle: string;
 };
 export type CalenderInfoConfig = CalenderInfo & {
   cal_basic_id: number | null;
@@ -97,7 +99,7 @@ export type CalenderInfoConfigWP = {
   [key in keyof CalenderInfoConfig]: string;
 };
 
-export class DefaultCalenderInfo implements CalenderInfo {
+export class DefaultCalenderInfoDe implements CalenderInfo {
   id = null;
   title = '';
   description = '';
@@ -106,6 +108,10 @@ export class DefaultCalenderInfo implements CalenderInfo {
   lang = 'de';
   link = '';
   linkType = null;
+  linkTitle = '';
+}
+export class DefaultCalenderInfoEn extends DefaultCalenderInfoDe {
+  override lang = 'en';
 }
 
 export class CalConfigTimeDetail {
@@ -129,6 +135,7 @@ export class CalConfigDetail {
   lang = new FormControl<string>('');
   link = new FormControl<string>('');
   linkType = new FormControl<CalLinkType>(null);
+  linkTitle = new FormControl<string>('');
 }
 
 export interface CalConfigFormDto {

@@ -1,21 +1,26 @@
-@if (events.start) {
+@if (calendarStore.displayDate()) {
 <form [formGroup]="calConfigDetForm">
   <div class="date-container">
     <div class="header-date">
       <span>Ausgewähltes Datum </span>
       <span class="header-date-det">{{
-        events.start | date: "mediumDate"
+        calendarStore.displayDate() | date: "mediumDate"
       }}</span>
     </div>
-    @for (timeConf of lstOfConfigDetailsPerDay; track timeConf){
+    @for (timeConf of calendarStore.lstOfConfigDetailsPerDay(); track timeConf){
     <app-cal-time-config [timeConf]="timeConf" />
+    } @empty {
+    <p class="no-data">Keine Daten gefunden</p>
     }
   </div>
 </form>
 }
 <div class="info-btn">
   <div class="load-info">
-    Lade Zeit: <i>{{ duration }} </i> ms
+    Lade Zeit: <i>{{ calendarStore.loadingTime() }} </i> ms
+  </div>
+  <div class="load-info">
+    Status: <i>{{ calendarStore.status() }} </i>
   </div>
   <app-cal-button-details />
 </div>

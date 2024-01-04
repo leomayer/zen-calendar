@@ -1,19 +1,9 @@
-@if (events.start) {
+@if (calendarStore.displayDate()) {
 <div class="btn-display-details">
-  <button
-    mat-flat-button
-    (click)="openDialog('en')"
-    [disabled]="!events.start"
-    color="primary"
-  >
+  <button mat-flat-button (click)="openDialog('en')" color="primary">
     Open - englisch
   </button>
-  <button
-    mat-flat-button
-    (click)="openDialog('de')"
-    [disabled]="!events.start"
-    color="warn"
-  >
+  <button mat-flat-button (click)="openDialog('de')" color="warn">
     <span> Öffne - deutsch </span>
   </button>
 </div>

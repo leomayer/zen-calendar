@@ -35,7 +35,6 @@ export class CalBasicComponent implements OnInit {
 
   constructor(
     private calService: CalenderService,
-
     private store: AppStoreService,
   ) {}
   async ngOnInit(): Promise<void> {
@@ -87,15 +86,15 @@ export class CalBasicComponent implements OnInit {
   }
 
   async displayDayEvents(selDate: Date | null) {
-    if (selDate) {
+    this.calendarStore.patchDate(selDate);
+    if (selDate && !this.calendarStore.isActive()) {
       const eventId =
         this.listOfEvents?.find((chk) =>
           areDatesOnSameDay(chk.start, selDate),
         ) ?? ({} as CalendarEventShort);
-      this.store.state.eventIdSelected.next(eventId);
+      //this.store.state.eventIdSelected.next(eventId);
 
       // usage with SignalStore
-      console.log('load details...');
       this.calendarStore.loadDetails(eventId);
     }
   }

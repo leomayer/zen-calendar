@@ -3,6 +3,10 @@
 
 .description {
   overflow: auto;
+  /* required for Wordpress */
+  &::ng-deep p {
+    font-size: inherit;
+  }
 }
 .title {
   font-size: large;

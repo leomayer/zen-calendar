@@ -16,6 +16,11 @@
         <input matInput formControlName="link" />
       </mat-form-field>
 
+      <mat-form-field [subscriptSizing]="'dynamic'" class="calInfo">
+        <mat-label>LinkTitle</mat-label>
+        <input matInput formControlName="linkTitle" />
+      </mat-form-field>
+
       <mat-form-field [subscriptSizing]="'dynamic'">
         <mat-label>Art des Links</mat-label>
         <mat-select [formControl]="usedFields.controls.linkType">

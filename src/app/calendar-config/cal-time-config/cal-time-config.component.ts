@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { CalendarStore } from '@app/app-store.service';
 import {
   CalConfigTimeDetail,
   CalenderTimeConfig,
@@ -17,6 +18,8 @@ import { CalConfigDetailComponent } from '@calConfig/cal-config-detail/cal-confi
   styleUrl: './cal-time-config.component.scss',
 })
 export class CalTimeConfigComponent {
+  readonly calendarStore = inject(CalendarStore);
+
   usedFields = new FormGroup(new CalConfigTimeDetail());
   frequTypes: FrequTypeUI[] = [
     { name: 'Nie', frequType: 0 },
@@ -33,6 +36,7 @@ export class CalTimeConfigComponent {
   }
 
   initForm() {
+    this.calendarStore.addOneConfigDetail(this.usedFields);
     this.usedFields.patchValue(this.timeConf);
     // set the time value for the UI
     this.usedFields.controls.startTimeUI.setValue(
@@ -94,5 +98,9 @@ export class CalTimeConfigComponent {
       this.usedFields.controls.isValid.setValue(true);
       this.usedFields.enable();
     }
+  }
+
+  addEvent() {
+    this.calendarStore.addEvent2Cal();
   }
 }

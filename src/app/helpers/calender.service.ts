@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   CalendarEvent,
   CalendarEventLangs,
@@ -10,12 +10,14 @@ import {
   areDatesOnSameDay,
   getWeekdaysInMonth,
 } from './calendar.functions.helper';
+import { CalendarStore } from '@app/app-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalenderService {
-  public useConfigInterface = false;
+  readonly calendarStore = inject(CalendarStore);
+
   constructor(private helper: CalendarHelper) {}
 
   async getEvents(curMonth: Date): Promise<CalendarEventShort[]> {
@@ -115,7 +117,7 @@ export class CalenderService {
   }
 
   appendAddInfo(filterDay: CalendarEvent, addDay: CalendarEventShort) {
-    if (this.useConfigInterface) {
+    if (this.calendarStore.useConfigInterface()) {
       const addInfo = {
         frequ_id: filterDay.id,
         eventStartDate: filterDay.eventStartDate,

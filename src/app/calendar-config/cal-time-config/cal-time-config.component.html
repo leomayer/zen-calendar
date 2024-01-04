@@ -54,7 +54,9 @@
       >Der einzige Eintrag für diesen Tag</mat-checkbox
     >
     <div class="btn-bar">
-      <button mat-raised-button color="primary">Hinzufügen</button>
+      <button mat-raised-button (click)="addEvent()" color="primary">
+        Hinzufügen
+      </button>
       <button mat-raised-button (click)="remove()" color="primary">
         {{
           usedFields.controls.isValid.value ? "Remove entry" : "Restore entry"

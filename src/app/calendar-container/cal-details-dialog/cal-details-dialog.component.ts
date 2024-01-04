@@ -1,33 +1,31 @@
 import { DatePipe, JsonPipe } from '@angular/common';
-import { Component, Inject, OnDestroy, OnInit, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { CalendarStore } from '@app/app-store.service';
-import { CalendarEventUI } from '@app/helpers/calenderTypes';
 import { patchState, signalStoreFeature, withMethods } from '@ngrx/signals';
 
 export function withSignalsDisplayDialog() {
   return signalStoreFeature(
-    withMethods((state) => ({
-      displayDialog(showDialog: boolean) {
-        console.log('show dialog - 0');
-        const dialog = inject(MatDialog);
-        console.log('show dialog - 1');
-        patchState(state, { showDialog });
-        if (showDialog) {
-          console.log('show dialog -2');
-          const dialogRef = dialog.open(CalDetailsDialogComponent, {
-            width: '250px',
-            backdropClass: 'cdk-overlay-transparent-backdrop',
-            hasBackdrop: true,
-            enterAnimationDuration: '500ms',
-            exitAnimationDuration: '500ms',
-          });
-          dialogRef
-            .afterClosed()
-            .subscribe(() => patchState(state, { showDialog: false }));
-        }
-      },
-    })),
+    withMethods((state) => {
+      const dialog = inject(MatDialog);
+      return {
+        displayDialog(showDialog: boolean) {
+          patchState(state, { showDialog });
+          if (showDialog) {
+            const dialogRef = dialog.open(CalDetailsDialogComponent, {
+              width: '250px',
+              backdropClass: 'cdk-overlay-transparent-backdrop',
+              hasBackdrop: true,
+              enterAnimationDuration: '500ms',
+              exitAnimationDuration: '500ms',
+            });
+            dialogRef
+              .afterClosed()
+              .subscribe(() => patchState(state, { showDialog: false }));
+          }
+        },
+      };
+    }),
   );
 }
 
@@ -50,10 +48,7 @@ export class CalDetailsDialogComponent implements OnInit, OnDestroy {
   memoBody: bodyDetails = {} as bodyDetails;
   readonly calendarStore = inject(CalendarStore);
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) protected data: CalendarEventUI,
-    public datePipe: DatePipe,
-  ) {}
+  constructor(public datePipe: DatePipe) {}
   ngOnInit(): void {
     const body = document.body;
     // memorize the current postion

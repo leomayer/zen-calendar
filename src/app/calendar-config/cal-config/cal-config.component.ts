@@ -1,63 +1,150 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
-import { AppStoreService } from '@app/app-store.service';
+import { CalendarStore } from '@app/app-store.service';
+import { withCallState } from '@app/helpers/calendar.loading';
 //import { setValue } from '@app/helpers/calendar.functions.helper';
-import { CalenderService } from '@app/helpers/calender.service';
+import { CalendarHelper } from '@app/helpers/calender.test-helper.service';
 import {
   CalConfigDetail,
+  CalConfigTimeDetail,
+  CalendarEventLangs,
   CalendarEventShort,
-  CalenderInfo,
+  CalenderDetConfig,
   CalenderInfoConfig,
   CalenderTimeConfig,
-  DefaultCalenderInfo,
+  DefaultCalenderInfoDe,
+  DefaultCalenderInfoEn,
   EventFrequ,
 } from '@app/helpers/calenderTypes';
+import {
+  patchState,
+  signalStoreFeature,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+
+export function withSignalsConfigDetails() {
+  return signalStoreFeature(
+    withState<{
+      lstOfConfigDetailsPerDay: CalenderTimeConfig[];
+      curDate: Date;
+      calConfigDet: FormGroup<CalConfigTimeDetail>[];
+    }>({
+      lstOfConfigDetailsPerDay: [],
+      curDate: new Date(),
+      calConfigDet: [],
+    }),
+    withCallState(),
+    withMethods((state) => {
+      const calServiceHelper = inject(CalendarHelper);
+      return {
+        async loadConfigDetails(data: CalendarEventLangs) {
+          state.setLoading();
+          patchState(state, { curDate: data.start });
+          try {
+            const detailList = await calServiceHelper.getEventsDetailsByIds(
+              data.eventIds,
+            );
+            patchState(state, {
+              lstOfConfigDetailsPerDay: createConfigDetails(detailList, data),
+            });
+            // clear the previous controls
+            patchState(state, { calConfigDet: [] });
+            state.setLoaded();
+          } catch (error) {
+            state.setError(error);
+          }
+        },
+        addEvent2Cal() {
+          const newCalEntry = {
+            eventStartTime: 0,
+            eventEndTime: 0,
+            eventStartDate: state.curDate(),
+            eventEndDate: state.curDate(),
+            cal_basic_id: null,
+            frequType: 0,
+            configDet: [] as CalenderDetConfig[],
+          } as CalenderTimeConfig;
+          newCalEntry.configDet.push(new DefaultCalenderInfoDe());
+          newCalEntry.configDet.push(new DefaultCalenderInfoEn());
+
+          state.lstOfConfigDetailsPerDay().push(newCalEntry);
+        },
+        addOneConfigDetail(configDetail: FormGroup<CalConfigTimeDetail>) {
+          state.calConfigDet().push(configDetail);
+        },
+      };
+    }),
+  );
+}
+
+export const createConfigDetails = (
+  detailList: CalenderInfoConfig[],
+  events: CalendarEventShort,
+) => {
+  const lstOfConfigDetailsPerDay = [] as CalenderTimeConfig[];
+  events.addInfo?.forEach((addInfo) => {
+    const listOfUsedStartTimes = [] as number[];
+    const filteredDetails = detailList.filter(
+      (chk) => chk.cal_basic_id === addInfo.frequ_id,
+    );
+    for (const confEntry of filteredDetails) {
+      let event = lstOfConfigDetailsPerDay.find(
+        (conf) => conf.eventStartTime === confEntry.eventStartTime,
+      );
+      if (!event) {
+        event = createNewConfTime(confEntry, addInfo);
+        listOfUsedStartTimes.push(confEntry.eventStartTime);
+        lstOfConfigDetailsPerDay.push(event);
+      }
+      const confDetail = {
+        id: confEntry.id,
+        title: confEntry.title,
+        description: confEntry.description,
+        lang: confEntry.lang,
+        link: confEntry.link,
+        linkType: confEntry.linkType,
+        linkTitle: confEntry.linkTitle,
+      };
+      event.configDet.push(confDetail);
+    }
+  });
+  return lstOfConfigDetailsPerDay;
+};
+export const createNewConfTime = (
+  confEntry: CalenderInfoConfig,
+  addInfo: EventFrequ,
+) => {
+  const frequConfig = {
+    cal_basic_id: addInfo.frequ_id,
+    eventStartTime: confEntry.eventStartTime,
+    eventEndTime: confEntry.eventEndTime,
+    eventStartDate: addInfo.eventStartDate,
+    eventEndDate: addInfo.eventEndDate,
+    frequType: addInfo.frequType,
+    isOnlyEntry4Day: addInfo.isOnlyEntry4Day,
+    configDet: [],
+  };
+
+  return frequConfig;
+};
 
 @Component({
   selector: 'app-cal-config',
   templateUrl: './cal-config.component.html',
   styleUrls: ['./cal-config.component.scss'],
 })
-export class CalConfigComponent implements OnInit {
-  events = {} as CalendarEventShort;
-  details = [] as CalenderInfo[];
-  duration = 0;
+export class CalConfigComponent {
   calConfigDetForm = new FormGroup({
     fields: new FormArray<FormGroup<CalConfigDetail>>([]),
   });
 
-  lstOfConfigDetailsPerDay = [] as CalenderTimeConfig[];
   lstBACKUP_OfConfigDetailsPerDay = [] as CalenderTimeConfig[];
 
-  constructor(
-    private store: AppStoreService,
-    private calService: CalenderService,
-  ) {}
-  ngOnInit(): void {
-    this.store.state.editEvent.subscribe((events) => this.editEvents(events));
-    this.store.state.editEvent2Add.subscribe(() => this.addEvent());
-  }
-  async editEvents(events: CalendarEventShort): Promise<void> {
-    this.performChangeCheck();
-    const start = new Date().getTime();
-    this.events = events;
-    const detailList = await this.calService.getEventsDetailsByIds(
-      events.eventIds,
-    );
-    this.lstOfConfigDetailsPerDay = this.createConfigDetails(
-      detailList,
-      events,
-    );
-    this.lstBACKUP_OfConfigDetailsPerDay = structuredClone(
-      this.lstOfConfigDetailsPerDay,
-    );
-    this.details = detailList;
-    this.createCalConfigForm();
-
-    this.duration = new Date().getTime() - start;
-  }
+  readonly calendarStore = inject(CalendarStore);
 
   performChangeCheck() {
+    console.log('run check if something has been changed: editEvents?');
     //const change = [] as CalenderInfo[];
     /*
     const newVals = this.calConfigDetForm.getRawValue().fields;
@@ -89,60 +176,11 @@ export class CalConfigComponent implements OnInit {
     //    console.log(change);
   }
 
-  createConfigDetails(
-    detailList: CalenderInfoConfig[],
-    events: CalendarEventShort,
-  ) {
-    const lstOfConfigDetailsPerDay = [] as CalenderTimeConfig[];
-    events.addInfo?.forEach((addInfo) => {
-      const listOfUsedStartTimes = [] as number[];
-      const filteredDetails = detailList.filter(
-        (chk) => chk.cal_basic_id === addInfo.frequ_id,
-      );
-      for (const confEntry of filteredDetails) {
-        let event = lstOfConfigDetailsPerDay.find(
-          (conf) => conf.eventStartTime === confEntry.eventStartTime,
-        );
-        if (!event) {
-          event = this.createNewConfTime(confEntry, addInfo);
-          listOfUsedStartTimes.push(confEntry.eventStartTime);
-          lstOfConfigDetailsPerDay.push(event);
-        }
-        const confDetail = {
-          id: confEntry.id,
-          title: confEntry.title,
-          description: confEntry.description,
-          lang: confEntry.lang,
-          link: confEntry.link,
-          linkType: confEntry.linkType,
-        };
-        event.configDet.push(confDetail);
-      }
-    });
-    return lstOfConfigDetailsPerDay;
-  }
-  createNewConfTime(confEntry: CalenderInfoConfig, addInfo: EventFrequ) {
-    const frequConfig = {
-      cal_basic_id: addInfo.frequ_id,
-      eventStartTime: confEntry.eventStartTime,
-      eventEndTime: confEntry.eventEndTime,
-      eventStartDate: addInfo.eventStartDate,
-      eventEndDate: addInfo.eventEndDate,
-      frequType: addInfo.frequType,
-      isOnlyEntry4Day: addInfo.isOnlyEntry4Day,
-      configDet: [],
-    };
-
-    return frequConfig;
-  }
-
-  addEvent() {
-    this.details.push(new DefaultCalenderInfo());
-  }
-
+  /*
   private createCalConfigForm(): void {
     this.calConfigDetForm.controls.fields = new FormArray<
       FormGroup<CalConfigDetail>
     >([]);
   }
+  */
 }

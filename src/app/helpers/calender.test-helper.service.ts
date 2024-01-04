@@ -79,6 +79,9 @@ export class CalendarHelper {
   async getEventsDetailsByIds(
     listOfCalIds: number[],
   ): Promise<CalenderInfoConfig[]> {
+    if (!listOfCalIds) {
+      return [];
+    }
     return await firstValueFrom(
       this.http
         .get<CalenderInfoConfigWP[]>(
@@ -117,6 +120,7 @@ export class CalendarHelper {
     convDetail.eventEndTime = Number(dtoDetail.eventEndTime);
     convDetail.lang = dtoDetail.lang;
     convDetail.link = dtoDetail.link;
+    convDetail.linkTitle = dtoDetail.linkTitle;
     convDetail.linkType = dtoDetail.linkType as CalLinkType;
 
     return convDetail;
