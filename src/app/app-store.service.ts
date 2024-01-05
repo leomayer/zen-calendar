@@ -14,6 +14,7 @@ import { withSignalsDisplayDialog } from '@calendar/cal-details-dialog/cal-detai
 import { withSignalsConfigDetails } from '@calConfig/cal-config/cal-config.component';
 import { withCallState } from './helpers/calendar.loading';
 import { environment } from 'src/environments/environment';
+import { withSignalsSave } from '@calConfig/cal-save-config/cal-save-config.component';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +55,7 @@ export const CalendarStore = signalStore(
   }),
   withSignalsConfigDetails(),
   withSignalsDisplayDialog(),
+  withSignalsSave(),
   withMethods((state) => {
     const calServiceHelper = inject(CalendarHelper);
     //const calConfigCheck = inject(CalConfigComponent);
@@ -78,7 +80,6 @@ export const CalendarStore = signalStore(
         } else {
           if (data?.eventIds) {
             state.setLoading();
-            console.log('loading: ');
             const useEventIds = (data.onlyEventId4Day ??
               data.eventIds.join()) as string;
 

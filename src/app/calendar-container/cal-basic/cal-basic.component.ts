@@ -86,6 +86,10 @@ export class CalBasicComponent implements OnInit {
   }
 
   async displayDayEvents(selDate: Date | null) {
+    if (this.calendarStore.hasConfigChanges()) {
+      console.log('has changes');
+      await this.calendarStore.ask4Save();
+    }
     this.calendarStore.patchDate(selDate);
     if (selDate && !this.calendarStore.isActive()) {
       const eventId =

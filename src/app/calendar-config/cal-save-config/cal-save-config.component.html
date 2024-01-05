@@ -1,0 +1,11 @@
+<h2 class="title" mat-dialog-title>Änderungen</h2>
+<mat-dialog-content>
+  <p>Die Eingabe wurde verändert.</p>
+  <p>Sollen diese gespeichert werden?</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button [mat-dialog-close]="false">Verwerfen</button>
+  <button mat-stroked-button [mat-dialog-close]="true" cdkFocusInitial>
+    Speichern
+  </button>
+</mat-dialog-actions>

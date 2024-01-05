@@ -96,7 +96,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . ' - last updated at: <strong><!--build-time-->4.1.2024 16:20:40'
+        . ' - last updated at: <strong><!--build-time-->5.1.2024 09:29:49'
     .' </strong></div><app-root useConfigInterface="true"></app-root>';
 }
 

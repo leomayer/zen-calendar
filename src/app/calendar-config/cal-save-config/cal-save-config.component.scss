@@ -1,0 +1,7 @@
+@use "@angular/material" as mat;
+@import "/src/styles-global/theme.scss";
+
+h2.title {
+  color: mat.get-color-from-palette($amberPalette, 300);
+  text-align: center;
+}

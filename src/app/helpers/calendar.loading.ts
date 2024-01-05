@@ -7,7 +7,12 @@ import {
   withState,
 } from '@ngrx/signals';
 
-export type LoadingState = 'init' | 'loading' | 'loaded' | { error: string };
+export type LoadingState =
+  | 'init'
+  | 'loading'
+  | 'loaded'
+  | 'verifySave'
+  | { error: string };
 
 export function withCallState() {
   return signalStoreFeature(
@@ -34,6 +39,9 @@ export function withCallState() {
           });
           patchState(state, { loadingTime: Date.now() - loadingStart });
           loadingStart = Date.now();
+        },
+        setVerifySave() {
+          patchState(state, { loadingState: 'verifySave' });
         },
       };
     }),

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { CalendarStore } from '@app/app-store.service';
 import { withCallState } from '@app/helpers/calendar.loading';
@@ -19,6 +19,7 @@ import {
 import {
   patchState,
   signalStoreFeature,
+  withComputed,
   withMethods,
   withState,
 } from '@ngrx/signals';
@@ -73,6 +74,13 @@ export function withSignalsConfigDetails() {
         addOneConfigDetail(configDetail: FormGroup<CalConfigTimeDetail>) {
           state.calConfigDet().push(configDetail);
         },
+      };
+    }),
+    withComputed((state) => {
+      return {
+        hasConfigChanges: computed(() =>
+          state.calConfigDet().some((chk) => chk.dirty),
+        ),
       };
     }),
   );
