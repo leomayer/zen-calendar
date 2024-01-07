@@ -35,6 +35,7 @@ export class CalButtonDetailsComponent {
           singleEvent.eventEndTime = chk.eventEndTime ?? 0;
           singleEvent.eventStartTime = chk.eventStartTime ?? 0;
           singleEvent.title = event4Lang.title ?? '';
+          singleEvent.calBasicId = event4Lang.calBasicId ?? 0;
           singleEvent.description = event4Lang.description ?? '';
           singleEvent.link = event4Lang.link ?? '';
           singleEvent.linkTitle = event4Lang.linkTitle ?? '';

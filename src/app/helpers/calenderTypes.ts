@@ -9,7 +9,7 @@ import {
 
 export type CalendarEventShort = {
   start: Date;
-  // in DB: for the single Event its the cal_basic_id
+  // in DB: for the single Event its the calBasicId
   eventIds: number[];
   addInfo?: EventFrequ[];
   onlyEventId4Day?: number;
@@ -40,7 +40,6 @@ export type CalendarEvent = {
 };
 export type WordpressString = {
   id: string;
-
   eventStartDate: string;
   eventStartTime: string;
   eventEndDate: string;
@@ -52,7 +51,7 @@ export type WordpressString = {
 export type CalenderTimeConfig = {
   eventStartTime: number;
   eventEndTime: number;
-  cal_basic_id: number | null;
+  calBasicId: number | null;
   eventStartDate: Date;
   eventEndDate: Date;
   frequType: number; //0: None; 1: weekly; 2: monthly; 3: yearly
@@ -77,9 +76,18 @@ export type FrequTypeUI = {
   name: string;
   frequType: number;
 };
+export type WordpressUpdateDetails = {
+  [key in keyof CalenderDetConfig]: string;
+} & {
+  calBasicId: string;
+};
+export type WordpressUpdateBasic = WordpressString & {
+  isValid: string;
+};
 
 export type CalenderInfo = {
   id: number | null;
+  calBasicId: number | null;
   title: string;
   description: string;
   eventStartTime: number;
@@ -90,7 +98,7 @@ export type CalenderInfo = {
   linkTitle: string;
 };
 export type CalenderInfoConfig = CalenderInfo & {
-  cal_basic_id: number | null;
+  calBasicId: number | null;
 };
 export type CalenderInfoWP = {
   [key in keyof CalenderInfo]: string;
@@ -101,6 +109,7 @@ export type CalenderInfoConfigWP = {
 
 export class DefaultCalenderInfoDe implements CalenderInfo {
   id = null;
+  calBasicId = null;
   title = '';
   description = '';
   eventStartTime = 0;
@@ -130,6 +139,7 @@ export class CalConfigTimeDetail {
 }
 export class CalConfigDetail {
   id = new FormControl<number | undefined>(undefined);
+  calBasicId = new FormControl<number | undefined>(undefined);
   title = new FormControl<string>('');
   description = new FormControl<string>('');
   lang = new FormControl<string>('');

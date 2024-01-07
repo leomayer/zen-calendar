@@ -4,8 +4,13 @@
   <p>Sollen diese gespeichert werden?</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-stroked-button [mat-dialog-close]="false">Verwerfen</button>
-  <button mat-stroked-button [mat-dialog-close]="true" cdkFocusInitial>
+  <button mat-stroked-button mat-dialog-close>Verwerfen</button>
+  <button
+    mat-stroked-button
+    mat-dialog-close
+    (click)="saveChanges()"
+    cdkFocusInitial
+  >
     Speichern
   </button>
 </mat-dialog-actions>

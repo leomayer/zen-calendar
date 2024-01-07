@@ -12,6 +12,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { formatDate4Wordpress } from './calendar.functions.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -23,14 +24,13 @@ export class CalendarHelper {
   constructor(private http: HttpClient) {}
 
   async getOverview4Month(curMonth: Date): Promise<CalendarEvent[]> {
-    const formatDate = curMonth.toISOString().split('T')[0];
     return await firstValueFrom(
       this.http
         .get<WordpressString[]>(
           this.host +
             this.url4Wordpress +
             'calendar4month?useMonth=' +
-            formatDate,
+            formatDate4Wordpress(curMonth),
         )
         .pipe(
           map((dto) => {
@@ -105,7 +105,7 @@ export class CalendarHelper {
       const basic = this.convertMapCalDetail(
         dtoDetail as CalenderInfoWP,
       ) as CalenderInfoConfig;
-      basic.cal_basic_id = Number(dtoDetail.cal_basic_id);
+      basic.calBasicId = Number(dtoDetail.calBasicId);
       return basic;
     });
     return converted;
@@ -114,6 +114,7 @@ export class CalendarHelper {
   convertMapCalDetail(dtoDetail: CalenderInfoWP): CalenderInfo {
     const convDetail = {} as CalenderInfo;
     convDetail.id = Number(dtoDetail.id);
+    convDetail.calBasicId = Number(dtoDetail.calBasicId);
     convDetail.title = dtoDetail.title;
     convDetail.description = dtoDetail.description;
     convDetail.eventStartTime = Number(dtoDetail.eventStartTime);

@@ -17,6 +17,9 @@ import {
   areDatesOnSameDay,
   isToday,
 } from '@app/helpers/calendar.functions.helper';
+import { MatDialog } from '@angular/material/dialog';
+import { CalSaveConfigComponent } from '@calConfig/cal-save-config/cal-save-config.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-cal-basic',
@@ -36,6 +39,7 @@ export class CalBasicComponent implements OnInit {
   constructor(
     private calService: CalenderService,
     private store: AppStoreService,
+    private dialog: MatDialog,
   ) {}
   async ngOnInit(): Promise<void> {
     await this.updateEvents(new Date());
@@ -87,8 +91,7 @@ export class CalBasicComponent implements OnInit {
 
   async displayDayEvents(selDate: Date | null) {
     if (this.calendarStore.hasConfigChanges()) {
-      console.log('has changes');
-      await this.calendarStore.ask4Save();
+      await this.ask4Save();
     }
     this.calendarStore.patchDate(selDate);
     if (selDate && !this.calendarStore.isActive()) {
@@ -101,6 +104,19 @@ export class CalBasicComponent implements OnInit {
       // usage with SignalStore
       this.calendarStore.loadDetails(eventId);
     }
+  }
+  async ask4Save(): Promise<void> {
+    this.calendarStore.setVerifySave();
+    const dialogRef = this.dialog.open(CalSaveConfigComponent, {
+      width: '250px',
+      backdropClass: 'cdk-overlay-transparent-backdrop',
+      hasBackdrop: true,
+      enterAnimationDuration: '500ms',
+      exitAnimationDuration: '500ms',
+    });
+    return await firstValueFrom(dialogRef.afterClosed()).then((result) => {
+      this.calendarStore.setLoaded();
+    });
   }
 
   private getEventCount(filterDate: Date): number {

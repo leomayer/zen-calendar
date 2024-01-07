@@ -38,6 +38,7 @@ export class CalTimeConfigComponent {
   initForm() {
     this.calendarStore.addOneConfigDetail(this.usedFields);
     this.usedFields.patchValue(this.timeConf);
+    this.usedFields.controls.id.setValue(this.timeConf.calBasicId);
     // set the time value for the UI
     this.usedFields.controls.startTimeUI.setValue(
       this.convertMinutesToTimeString(this.timeConf.eventStartTime),

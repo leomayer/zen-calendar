@@ -62,7 +62,7 @@ export function withSignalsConfigDetails() {
             eventEndTime: 0,
             eventStartDate: state.curDate(),
             eventEndDate: state.curDate(),
-            cal_basic_id: null,
+            calBasicId: null,
             frequType: 0,
             configDet: [] as CalenderDetConfig[],
           } as CalenderTimeConfig;
@@ -79,8 +79,24 @@ export function withSignalsConfigDetails() {
     withComputed((state) => {
       return {
         hasConfigChanges: computed(() =>
-          state.calConfigDet().some((chk) => chk.dirty),
+          state.calConfigDet().some(
+            (chk) =>
+              // either changed
+              chk.dirty ||
+              // or newly created
+              !chk.controls.id.value,
+          ),
         ),
+        getChanges: computed(() => {
+          const ret = state.calConfigDet().filter(
+            (chk) =>
+              // either changed
+              chk.dirty ||
+              // or newly created
+              !chk.controls.id.value,
+          );
+          return ret;
+        }),
       };
     }),
   );
@@ -94,7 +110,7 @@ export const createConfigDetails = (
   events.addInfo?.forEach((addInfo) => {
     const listOfUsedStartTimes = [] as number[];
     const filteredDetails = detailList.filter(
-      (chk) => chk.cal_basic_id === addInfo.frequ_id,
+      (chk) => chk.calBasicId === addInfo.frequ_id,
     );
     for (const confEntry of filteredDetails) {
       let event = lstOfConfigDetailsPerDay.find(
@@ -124,7 +140,7 @@ export const createNewConfTime = (
   addInfo: EventFrequ,
 ) => {
   const frequConfig = {
-    cal_basic_id: addInfo.frequ_id,
+    calBasicId: addInfo.frequ_id,
     eventStartTime: confEntry.eventStartTime,
     eventEndTime: confEntry.eventEndTime,
     eventStartDate: addInfo.eventStartDate,

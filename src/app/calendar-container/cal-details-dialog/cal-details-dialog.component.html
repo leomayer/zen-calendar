@@ -7,15 +7,15 @@
 <div mat-dialog-content>
   <!-- loop over all events -->
   @for (curEvent of calendarStore.events(); track curEvent) {
-  <div class="title">{{ curEvent.title }}</div>
-  @if (curEvent.eventStartTime !== curEvent.eventEndTime){
-  <app-time-formatter
-    class="subtitle"
-    [eventStartTime]="curEvent.eventStartTime"
-    [eventEndTime]="curEvent.eventEndTime"
-  />
-  }
-  <div class="description" [innerHTML]="curEvent.description"></div>
-  <app-link-details [curEvent]="curEvent" />
+    <div class="title">{{ curEvent.title }}</div>
+    @if (curEvent.eventStartTime !== curEvent.eventEndTime) {
+      <app-time-formatter
+        class="subtitle"
+        [eventStartTime]="curEvent.eventStartTime"
+        [eventEndTime]="curEvent.eventEndTime"
+      />
+    }
+    <div class="description" [innerHTML]="curEvent.description"></div>
+    <app-link-details [curEvent]="curEvent" />
   }
 </div>

@@ -32,6 +32,10 @@ export const areDatesOnSameDay = (date1: Date, date2: Date) => {
   );
 };
 
+export const formatDate4Wordpress = (date: Date | null) => {
+  return date?.toISOString().split('T')[0] ?? '';
+};
+
 /*
  * with this function it is possible to assign a NEW value to a given property
  * NOTE: the additional benefit of this function: the property is dynamic (=string) AND
