@@ -1,10 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  CalendarEvent,
-  CalendarEventLangs,
-  CalendarEventShort,
-  EventFrequ,
-} from './calenderTypes';
+import { CalendarEvent, CalendarEventShort, EventFrequ } from './calenderTypes';
 import { CalendarHelper } from './calender.test-helper.service';
 import {
   areDatesOnSameDay,
@@ -30,9 +25,6 @@ export class CalenderService {
     return retList;
   }
 
-  async getEventsByIds(data: CalendarEventLangs) {
-    return await this.helper.getEventsByIds(data);
-  }
   async getEventsDetailsByIds(listOfCalIds: number[]) {
     return await this.helper.getEventsDetailsByIds(listOfCalIds);
   }

@@ -3,5 +3,6 @@
 
 h2.title {
   color: mat.get-color-from-palette($amberPalette, 300);
+  background-color: mat.get-color-from-palette($bluegrayPalette, 600);
   text-align: center;
 }

@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CalendarStore } from '@app/app-store.service';
 import { formatDate4Wordpress } from '@app/helpers/calendar.functions.helper';
+import { CalendarHelper } from '@app/helpers/calender.test-helper.service';
 import {
   CalConfigDetail,
   CalConfigTimeDetail,
@@ -20,6 +21,8 @@ import {
 })
 export class CalSaveConfigComponent {
   readonly calendarStore = inject(CalendarStore);
+  readonly calServiceHelper = inject(CalendarHelper);
+
   saveChanges() {
     const changes = this.calendarStore.getChanges();
     changes.forEach((changedEvent) => this.saveIndividualEntry(changedEvent));
@@ -55,7 +58,7 @@ export class CalSaveConfigComponent {
       linkTitle: ctrl.linkTitle.value + '',
       linkType: ctrl.linkType.value + '',
     } as WordpressUpdateDetails;
-    console.log('update changes - details ', updateDetails);
+    this.calServiceHelper.updateEventDetails(updateDetails);
   }
   updateCalOverview(changedCalEvent: FormGroup<CalConfigTimeDetail>) {
     const ctrl = changedCalEvent.controls;
@@ -69,7 +72,7 @@ export class CalSaveConfigComponent {
       isOnlyEntry4Day: ctrl.isOnlyEntry4day ? '1' : '0',
       isValid: ctrl.isValid.value ? '1' : '0',
     } as WordpressUpdateBasic;
-    console.log('update changes - overview ', updateOverview);
+    this.calServiceHelper.updateEventBasic(updateOverview);
   }
   insertCalEvent(changedCalEvent: FormGroup<CalConfigTimeDetail>) {
     console.log(

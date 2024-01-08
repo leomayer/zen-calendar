@@ -8,6 +8,8 @@ import {
   CalenderInfoWP,
   CalenderInfoConfigWP,
   CalLinkType,
+  WordpressUpdateDetails,
+  WordpressUpdateBasic,
 } from './calenderTypes';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, map } from 'rxjs';
@@ -18,17 +20,16 @@ import { formatDate4Wordpress } from './calendar.functions.helper';
   providedIn: 'root',
 })
 export class CalendarHelper {
-  url4testing = '/assets/samples/';
   host = (environment?.host ? environment?.host : location.origin) + '/';
   url4Wordpress = '/wp-json/zen_calendar/v1/';
+  urlLocation = this.host + this.url4Wordpress;
   constructor(private http: HttpClient) {}
 
   async getOverview4Month(curMonth: Date): Promise<CalendarEvent[]> {
     return await firstValueFrom(
       this.http
         .get<WordpressString[]>(
-          this.host +
-            this.url4Wordpress +
+          this.urlLocation +
             'calendar4month?useMonth=' +
             formatDate4Wordpress(curMonth),
         )
@@ -66,12 +67,7 @@ export class CalendarHelper {
     return await firstValueFrom(
       this.http
         .get<CalenderInfoWP[]>(
-          this.host +
-            this.url4Wordpress +
-            'zenEvent?eventId=' +
-            eventIds +
-            '&lang=' +
-            lang,
+          this.urlLocation + 'zenEvent?eventId=' + eventIds + '&lang=' + lang,
         )
         .pipe(map((dto) => this.convertMapCalInfo(dto))),
     );
@@ -85,12 +81,22 @@ export class CalendarHelper {
     return await firstValueFrom(
       this.http
         .get<CalenderInfoConfigWP[]>(
-          this.host +
-            this.url4Wordpress +
+          this.urlLocation +
             'zenEventDetails?eventId=' +
             listOfCalIds.join().split(','),
         )
         .pipe(map((dto) => this.convertMapCalInfoDet(dto))),
+    );
+  }
+
+  async updateEventDetails(updateDetails: WordpressUpdateDetails) {
+    await firstValueFrom(
+      this.http.post(this.urlLocation + 'updateDetails', updateDetails),
+    );
+  }
+  async updateEventBasic(updateBasics: WordpressUpdateBasic) {
+    await firstValueFrom(
+      this.http.post(this.urlLocation + 'updateBasics', updateBasics),
     );
   }
 
