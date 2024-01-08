@@ -6,3 +6,6 @@ h2.title {
   background-color: mat.get-color-from-palette($bluegrayPalette, 600);
   text-align: center;
 }
+p {
+  font-size: inherit;
+}

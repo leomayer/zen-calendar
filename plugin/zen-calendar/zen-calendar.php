@@ -17,13 +17,11 @@ define('ZEN_NAMESPACE', 'zen_calendar/v1');
 define('ZEN_CAL_MANAGE_SETTINGS_CAP', 'manage_zen_calendar');
 define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 
-
-
 // Scripts for Angular script
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.c48965bec8da8b10.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.da3a3bdb11160151.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.318719182951e731.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.6cfa49a7c9ca0af9.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -94,10 +92,23 @@ function zen_calendar_settings_page()
     wp_enqueue_script('ng_polyfills');
     wp_enqueue_script('ng_runtime');
 
+    // Extract the hostname
+    $currentHost = $_SERVER['HTTP_HOST'];
+    // Set the AllowedOrigin variable
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+        $AllowedOrigin = 'https://' . $currentHost;
+    } else {
+        $AllowedOrigin = 'http://' . $currentHost;
+    }
+ // Store the AllowedOrigin variable in the options database
+ add_option('zen_calendar_allowed_origin', $AllowedOrigin);
+
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . ' - last updated at: <strong><!--build-time-->7.1.2024 13:54:52'
-    .' </strong></div><app-root useConfigInterface="true"></app-root>';
+        . '<br> last updated at: <strong><!--build-time-->8.1.2024 17:07:56'
+        .' </strong>'
+        . '<br>Allowed host: <strong>' . $AllowedOrigin  . '</strong>'
+    . '</div><app-root useConfigInterface="true"></app-root>';
 }
 
 // Query the calender for Event of the given month
@@ -156,7 +167,40 @@ function get_events($request) {
     echo json_encode($calDetails);
 }
 
+function update_eventDetails($request) {
+    $AllowedOrigin = get_option('zen_calendar_allowed_origin');
+    if (!getallheaders()['origin'] === $AllowedOrigin) {
+        return new WP_Error('401', 'Permissions  missing1: '. getallheaders()['origin']. '<=>'. $AllowedOrigin );
+    }
 
+    // Validate request data
+    $id = intval($request->get_param('id'));
+    $title = $request->get_param('title');
+    $description = $request->get_param('description');
+    $lang = $request->get_param('lang');
+    $link = $request->get_param('link');
+    $linkType = $request->get_param('linkType');
+    $linkTitle = $request->get_param('linkTitle');
+
+
+    if (!$id || !$title || !$description || !$lang || !$link || !$linkType || !$linkTitle ) {
+        return new WP_Error('400', 'Invalid request data');
+    }
+
+    // Update event details in database
+    global $wpdb;
+    $tblDetails = $wpdb->prefix . "zencalendar_details";
+
+    $query = "UPDATE " . $wpdb->prefix . " $tblDetails SET title = %s, description = %s, lang = %s, link = %s, linkTitle = %s, linkType = %s WHERE id = %d";
+    $statement = $wpdb->prepare($query, array($title, $description, $lang, $link, $linkTitle, $linkType, $id));
+    $result = $statement->execute();
+
+    if ($result) {
+        return new WP_REST_Response('Event updated successfully', 200);
+    } else {
+        return new WP_Error('500', 'Error updating event');
+    } 
+}
 
 // Register the useMonth parameter
 function register_custom_parameter()
@@ -239,6 +283,15 @@ add_action('rest_api_init', function () {
             'methods' => 'GET',
             'permission_callback' => '__return_true',
             'callback' => 'get_events'
+            ]
+        );
+        register_rest_route(
+            ZEN_NAMESPACE,
+            'updateDetails',
+            [
+                'methods' => 'POST',
+                'permission_callback' => '__return_true',
+            'callback' => 'update_eventDetails'
             ]
         );
 });
