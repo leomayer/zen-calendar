@@ -1,23 +1,29 @@
 @if (calendarStore.displayDate()) {
-<form [formGroup]="calConfigDetForm">
-  <div class="date-container">
-    <div class="header-date">
-      <span>Ausgewähltes Datum </span>
-      <span class="header-date-det">{{
-        calendarStore.displayDate() | date: "mediumDate"
-      }}</span>
+  <form [formGroup]="calConfigDetForm">
+    <div class="date-container">
+      <div class="header-date">
+        <span>Ausgewähltes Datum </span>
+        <span class="header-date-det">{{
+          calendarStore.displayDate() | date: "mediumDate"
+        }}</span>
+      </div>
+      @for (
+        timeConf of calendarStore.lstOfConfigDetailsPerDay();
+        track timeConf
+      ) {
+        <app-cal-time-config [timeConf]="timeConf" />
+      } @empty {
+        <p class="no-data">Keine Daten gefunden</p>
+      }
     </div>
-    @for (timeConf of calendarStore.lstOfConfigDetailsPerDay(); track timeConf){
-    <app-cal-time-config [timeConf]="timeConf" />
-    } @empty {
-    <p class="no-data">Keine Daten gefunden</p>
-    }
-  </div>
-</form>
+  </form>
 }
 <div class="info-btn">
   <div class="load-info">
-    Lade Zeit: <i>{{ calendarStore.loadingTime() }} </i> ms
+    Zeit - laden: <i>{{ calendarStore.loadingTime() }} </i> ms
+  </div>
+  <div class="load-info">
+    Zeit - speichern: <i>{{ calendarStore.savingTime() }} </i> ms
   </div>
   <div class="load-info">
     Status: <i>{{ calendarStore.status() }} </i>

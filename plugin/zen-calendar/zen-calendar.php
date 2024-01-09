@@ -21,7 +21,7 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.c48965bec8da8b10.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.318719182951e731.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.52964235e98655a8.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.6cfa49a7c9ca0af9.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -105,7 +105,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . '<br> last updated at: <strong><!--build-time-->8.1.2024 17:07:56'
+        . '<br> last updated at: <strong><!--build-time-->9.1.2024 16:16:54'
         .' </strong>'
         . '<br>Allowed host: <strong>' . $AllowedOrigin  . '</strong>'
     . '</div><app-root useConfigInterface="true"></app-root>';
@@ -169,7 +169,8 @@ function get_events($request) {
 
 function update_eventDetails($request) {
     $AllowedOrigin = get_option('zen_calendar_allowed_origin');
-    if (!getallheaders()['origin'] === $AllowedOrigin) {
+    // $AllowedOrigin = get_option('zen_calendar_compare_origin');
+    if (!(getallheaders()['origin'] === $AllowedOrigin)) {
         return new WP_Error('401', 'Permissions  missing1: '. getallheaders()['origin']. '<=>'. $AllowedOrigin );
     }
 
@@ -191,9 +192,13 @@ function update_eventDetails($request) {
     global $wpdb;
     $tblDetails = $wpdb->prefix . "zencalendar_details";
 
-    $query = "UPDATE " . $wpdb->prefix . " $tblDetails SET title = %s, description = %s, lang = %s, link = %s, linkTitle = %s, linkType = %s WHERE id = %d";
+    $query = "UPDATE $tblDetails SET title = %s, description = %s, lang = %s, link = %s, linkTitle = %s, linkType = %s WHERE id = %d";
+    // $statement = mysqli_prepare($wpdb->connection, $query);
+    // mysqli_stmt_bind_param($statement, "ssssssd", $title, $description, $lang, $link, $linkTitle, $linkType, $id);
+
     $statement = $wpdb->prepare($query, array($title, $description, $lang, $link, $linkTitle, $linkType, $id));
-    $result = $statement->execute();
+
+    $result = $wpdb->query($statement);
 
     if ($result) {
         return new WP_REST_Response('Event updated successfully', 200);

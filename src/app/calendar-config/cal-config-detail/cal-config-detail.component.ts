@@ -35,6 +35,7 @@ export class CalConfigDetailComponent {
   initForm() {
     this.usedFields.patchValue(this.dataInfo.data);
     this.dataInfo.fields.push(this.usedFields);
+    this.usedFields.markAsPristine();
   }
 
   updateTitle(newTitle: string) {

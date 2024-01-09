@@ -24,7 +24,9 @@ export class CalSaveConfigComponent {
   readonly calServiceHelper = inject(CalendarHelper);
 
   saveChanges() {
+    this.calendarStore.setSaving();
     const changes = this.calendarStore.getChanges();
+
     changes.forEach((changedEvent) => this.saveIndividualEntry(changedEvent));
   }
   saveIndividualEntry(changedCalEvent: FormGroup<CalConfigTimeDetail>): void {

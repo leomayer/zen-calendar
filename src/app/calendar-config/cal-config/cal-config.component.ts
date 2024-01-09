@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { CalendarStore } from '@app/app-store.service';
 import { withCallState } from '@app/helpers/calendar.loading';
@@ -19,7 +19,6 @@ import {
 import {
   patchState,
   signalStoreFeature,
-  withComputed,
   withMethods,
   withState,
 } from '@ngrx/signals';
@@ -38,6 +37,12 @@ export function withSignalsConfigDetails() {
     withCallState(),
     withMethods((state) => {
       const calServiceHelper = inject(CalendarHelper);
+      const evalChanged = (chk: FormGroup<CalConfigTimeDetail>) =>
+        // either changed
+        chk.dirty ||
+        // or newly created
+        !chk.controls.id.value;
+
       return {
         async loadConfigDetails(data: CalendarEventLangs) {
           state.setLoading();
@@ -74,29 +79,12 @@ export function withSignalsConfigDetails() {
         addOneConfigDetail(configDetail: FormGroup<CalConfigTimeDetail>) {
           state.calConfigDet().push(configDetail);
         },
-      };
-    }),
-    withComputed((state) => {
-      return {
-        hasConfigChanges: computed(() =>
-          state.calConfigDet().some(
-            (chk) =>
-              // either changed
-              chk.dirty ||
-              // or newly created
-              !chk.controls.id.value,
-          ),
-        ),
-        getChanges: computed(() => {
-          const ret = state.calConfigDet().filter(
-            (chk) =>
-              // either changed
-              chk.dirty ||
-              // or newly created
-              !chk.controls.id.value,
-          );
-          return ret;
-        }),
+        hasConfigChanges() {
+          return state.calConfigDet().some(evalChanged);
+        },
+        getChanges() {
+          return state.calConfigDet().filter(evalChanged);
+        },
       };
     }),
   );
@@ -163,48 +151,5 @@ export class CalConfigComponent {
     fields: new FormArray<FormGroup<CalConfigDetail>>([]),
   });
 
-  lstBACKUP_OfConfigDetailsPerDay = [] as CalenderTimeConfig[];
-
   readonly calendarStore = inject(CalendarStore);
-
-  performChangeCheck() {
-    console.log('run check if something has been changed: editEvents?');
-    //const change = [] as CalenderInfo[];
-    /*
-    const newVals = this.calConfigDetForm.getRawValue().fields;
-    let index = 0;
-    this.details.forEach((oldVal) => {
-      let hasChanges = false;
-      const updatedEntry = new DefaultCalenderInfo();
-      const formDayEntry = newVals[index];
-
-      for (const [key, value] of Object.entries(oldVal)) {
-        const castKey = key as keyof CalenderInfo;
-        if (formDayEntry) {
-          const newVal = formDayEntry[castKey] ?? null;
-          if (value !== newVal) {
-            hasChanges = true;
-          }
-          setValue(updatedEntry, castKey, newVal);
-        } else {
-          setValue(updatedEntry, castKey, value);
-        }
-      }
-      if (hasChanges) {
-        change.push(updatedEntry);
-      }
-      index++;
-    });
-    */
-    //    console.log('before change:', this.details);
-    //    console.log(change);
-  }
-
-  /*
-  private createCalConfigForm(): void {
-    this.calConfigDetForm.controls.fields = new FormArray<
-      FormGroup<CalConfigDetail>
-    >([]);
-  }
-  */
 }

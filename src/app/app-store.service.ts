@@ -63,7 +63,6 @@ export const CalendarStore = signalStore(
         patchState(state, { useConfigInterface });
       },
       patchDate(displayDate: Date | null) {
-        // calConfigCheck.performChangeCheck();
         patchState(state, { displayDate });
       },
       patchLang(displayLang: string) {

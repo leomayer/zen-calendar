@@ -12,21 +12,32 @@ export type LoadingState =
   | 'loading'
   | 'loaded'
   | 'verifySave'
+  | 'saving'
   | { error: string };
 
 export function withCallState() {
   return signalStoreFeature(
-    withState<{ loadingState: LoadingState; loadingTime: number }>({
+    withState<{
+      loadingState: LoadingState;
+      loadingTime: number;
+      savingTime: number;
+    }>({
       loadingState: 'init',
       loadingTime: 0,
+      savingTime: 0,
     }),
     withMethods((state) => {
       //withMethods(({ loadingState: callState }) => {
       let loadingStart = 0;
+      let savingStart = 0;
       return {
         setLoading() {
           loadingStart = Date.now();
           patchState(state, { loadingState: 'loading' });
+          if (savingStart) {
+            patchState(state, { savingTime: Date.now() - savingStart });
+            savingStart = 0;
+          }
         },
         setLoaded() {
           patchState(state, { loadingState: 'loaded' });
@@ -42,6 +53,10 @@ export function withCallState() {
         },
         setVerifySave() {
           patchState(state, { loadingState: 'verifySave' });
+        },
+        setSaving() {
+          patchState(state, { loadingState: 'saving' });
+          savingStart = Date.now();
         },
       };
     }),
