@@ -1,4 +1,20 @@
-<app-cal-short-code />
+<app-cal-short-code>
+  @if (calendarStore.useConfigInterface()) {
+    <div class="info-btn">
+      <div class="load-info">
+        Zeit - laden: <i>{{ calendarStore.loadingTime() }} </i> ms
+      </div>
+      <div class="load-info">
+        Zeit - speichern: <i>{{ calendarStore.savingTime() }} </i> ms
+      </div>
+      <div class="load-info">
+        Status: <i>{{ calendarStore.status() }} </i>
+      </div>
+      <app-cal-button-details />
+    </div>
+  }
+</app-cal-short-code>
+
 @if (calendarStore.useConfigInterface()) {
-<app-cal-config />
+  <app-cal-config />
 }

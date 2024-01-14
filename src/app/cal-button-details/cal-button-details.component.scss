@@ -1,6 +1,9 @@
+@use "@angular/material" as mat;
+@import "/src/styles-global/theme.scss";
+
 :host {
   display: flex;
-  background-color: lightgrey;
+  background-color: mat.get-color-from-palette($bluegrayPalette, 200);
 }
 .btn-display-details {
   padding: 8px;
@@ -9,4 +12,7 @@
   flex-flow: column;
   gap: 4px;
   max-width: 350px;
+}
+.mat-save {
+  background-color: mat.get-color-from-palette($limePalette, 300);
 }

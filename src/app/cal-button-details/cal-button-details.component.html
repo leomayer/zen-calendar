@@ -1,12 +1,15 @@
 @if (calendarStore.displayDate()) {
-<div class="btn-display-details">
-  <button mat-flat-button (click)="openDialog('en')" color="primary">
-    Open - englisch
-  </button>
-  <button mat-flat-button (click)="openDialog('de')" color="warn">
-    <span> Öffne - deutsch </span>
-  </button>
-</div>
+  <div class="btn-display-details">
+    <button mat-flat-button (click)="openDialog('en')" color="primary">
+      Open - englisch
+    </button>
+    <button mat-flat-button (click)="openDialog('de')" color="warn">
+      <span> Öffne - deutsch </span>
+    </button>
+    <button mat-stroked-button (click)="saveChanges()" color="save">
+      <span>Speichern</span>
+    </button>
+  </div>
 } @else {
-<p>Bitte eine Datum auswählen</p>
+  <p>Bitte eine Datum auswählen</p>
 }

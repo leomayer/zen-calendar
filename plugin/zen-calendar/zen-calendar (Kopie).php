@@ -6,7 +6,7 @@
  * Version:             1.0.0
  * Author:              Leo Mayer
  * Author URI:          https://nowhere.gv
- *
+ * 
  */
 
 // Plugin-Informationen
@@ -21,7 +21,7 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.c48965bec8da8b10.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.ab4b20cdca9c5075.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.52964235e98655a8.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.6cfa49a7c9ca0af9.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -100,16 +100,12 @@ function zen_calendar_settings_page()
     } else {
         $AllowedOrigin = 'http://' . $currentHost;
     }
- // Store the AllowedOrigin variable in the options database
- add_option('zen_calendar_allowed_origin', $AllowedOrigin);
+    // Store the AllowedOrigin variable in the options database
+    add_option('zen_calendar_allowed_origin', $AllowedOrigin);
 
-    echo '<div>Welcome to admin page for "'
-        . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . '<br> last updated at: <strong><!--build-time-->14.1.2024 11:16:50'
-        .' </strong>'
-        . '<br>Allowed host: <strong>' . $AllowedOrigin  . '</strong>'
-    . '</div><app-root useConfigInterface="true"></app-root>';
+    echo '<div>Welcome to admin page for "' . ZEN_CAL_PLUGIN_NAME . '" Version: ' . ZEN_CAL_PLUGIN_VERSION . '<br> last updated at: <strong><!--build-time-->14.1.2024 09:57:44';
 }
+
 // Query the calender for Event of the given month
 function get_wp_zen_calendar4month($request)
 {
@@ -118,9 +114,9 @@ function get_wp_zen_calendar4month($request)
     global $wpdb;
     $tblBasic = $wpdb->prefix . "zencalendar_basic";
 
-    $calOverview = $wpdb->get_results("SELECT id, eventStartDate, eventEndDate, frequType, isOnlyEntry4Day
-      FROM $tblBasic
-      WHERE isValid=TRUE
+    $calOverview = $wpdb->get_results("SELECT id, eventStartDate, eventEndDate, frequType, isOnlyEntry4Day 
+      FROM $tblBasic 
+      WHERE isValid=TRUE 
         AND  DATE_FORMAT('$useMonth', '%Y-%m-01') <= eventEndDate
         AND  eventStartDate <= DATE_ADD(DATE_FORMAT('$useMonth', '%Y-%m-01'), INTERVAL 1 MONTH)
       ORDER BY eventStartDate;");
@@ -184,7 +180,7 @@ function update_eventDetails($request)
     $linkType = $request->get_param('linkType');
     $linkTitle = $request->get_param('linkTitle');
 
-    if (! $id || $title === null || $description === null || $lang === null || $link === null || $linkType === null || $linkTitle === null) {
+    if (! $id || ! $title || ! $description || ! $lang || ! $link || ! $linkType || ! $linkTitle) {
         return new WP_Error('400', 'Invalid request data');
     }
 
@@ -193,6 +189,9 @@ function update_eventDetails($request)
     $tblDetails = $wpdb->prefix . "zencalendar_details";
 
     $query = "UPDATE $tblDetails SET title = %s, description = %s, lang = %s, link = %s, linkTitle = %s, linkType = %s WHERE id = %d";
+    // $statement = mysqli_prepare($wpdb->connection, $query);
+    // mysqli_stmt_bind_param($statement, "ssssssd", $title, $description, $lang, $link, $linkTitle, $linkType, $id);
+
     $statement = $wpdb->prepare($query, array(
         $title,
         $description,
@@ -206,59 +205,9 @@ function update_eventDetails($request)
     $result = $wpdb->query($statement);
 
     if ($result) {
-        return new WP_REST_Response('EventDetails updated successfully', 200);
+        return new WP_REST_Response('Event updated successfully', 200);
     } else {
         return new WP_Error('500', 'Error updating event');
-    }
-}
-
-function update_eventBasic($request)
-{
-    $AllowedOrigin = get_option('zen_calendar_allowed_origin');
-    // $AllowedOrigin = get_option('zen_calendar_compare_origin');
-    if (! (getallheaders()['origin'] === $AllowedOrigin)) {
-        return new WP_Error('401', 'Permissions  missing: ' . getallheaders()['origin'] . '<=>' . $AllowedOrigin);
-    }
-
-    // Validate request data
-    $id = intval($request->get_param('id'));
-    $eventStartDate = $request->get_param('eventStartDate');
-    $eventStartTime = $request->get_param('eventStartTime');
-    $eventEndDate = $request->get_param('eventEndDate');
-    $eventEndTime = $request->get_param('eventEndTime');
-    $frequType = $request->get_param('frequType');
-    $isValid = $request->get_param('isValid');
-    $isOnlyEntry4Day = $request->get_param('isOnlyEntry4Day');
-
-    if (! $id || $eventStartDate === null || $eventStartTime === null || $eventEndDate === null || 
-        $eventEndTime === null || $frequType === null || $isValid === null || $isOnlyEntry4Day === null) {
-        return new WP_Error('400', 'Invalid request data');
-    }
-
-    // Update event details in database
-    global $wpdb;
-    $tblDetails = $wpdb->prefix . "zencalendar_basic";
-
-    $query = "UPDATE $tblDetails SET eventStartDate = %s, eventStartTime = %s, eventEndDate = %s, eventEndTime = %s, frequType = %s, isValid = %s, isOnlyEntry4Day=%d WHERE id = %d";
-    $statement = $wpdb->prepare($query, array(
-        $eventStartDate,
-        $eventStartTime,
-        $eventEndDate,
-        $eventEndTime,
-        $frequType,
-        $isValid,
-        $isOnlyEntry4Day,
-        $id
-    ));
-
-    $result = $wpdb->query($statement);
-
-    if ($result && $wpdb->affected_rows > 0) {
-        return new WP_REST_Response('EventBasic updated successfully', 200);
-    } else if ($result === false) {
-        return new WP_Error('500', 'Error updating event');
-    } else {
-        return new WP_REST_Response('Update not done', 204);
     }
 }
 
@@ -346,11 +295,6 @@ add_action('rest_api_init', function () {
         'methods' => 'POST',
         'permission_callback' => '__return_true',
         'callback' => 'update_eventDetails'
-    ]);
-    register_rest_route(ZEN_NAMESPACE, 'updateBasics', [
-        'methods' => 'POST',
-        'permission_callback' => '__return_true',
-        'callback' => 'update_eventBasic'
     ]);
 });
 

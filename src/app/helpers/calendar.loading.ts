@@ -65,6 +65,10 @@ export function withCallState() {
         const state = loadingState();
         return typeof state === 'object' ? state.error : state;
       }),
+      hasErrors: computed(() => {
+        const state = loadingState();
+        return typeof state === 'object';
+      }),
     })),
   );
 }

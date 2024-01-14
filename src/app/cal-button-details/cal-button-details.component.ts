@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CalendarStore } from '@app/app-store.service';
 import { CalendarEventShort, CalenderInfo } from '@app/helpers/calenderTypes';
+import { CalSaveService } from '@calConfig/cal-save-config/cal-save.service';
+//import { CalSaveConfigComponent } from '@calConfig/cal-save-config/cal-save-config.component';
 
 @Component({
   selector: 'app-cal-button-details',
@@ -11,6 +13,12 @@ import { CalendarEventShort, CalenderInfo } from '@app/helpers/calenderTypes';
 export class CalButtonDetailsComponent {
   events = {} as CalendarEventShort;
   readonly calendarStore = inject(CalendarStore);
+  readonly calSaveConfig = inject(CalSaveService);
+
+  saveChanges() {
+    this.calSaveConfig.saveChanges();
+  }
+
   openDialog(lang: string) {
     this.calendarStore.patchLang(lang);
     const lstOfEvents: CalenderInfo[] = [];

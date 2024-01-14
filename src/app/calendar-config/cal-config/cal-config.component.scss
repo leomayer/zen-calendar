@@ -3,7 +3,7 @@ form {
   display: flex;
 }
 form {
-  width: 75%;
+  width: 100%;
 }
 .date-container {
   display: flex;
@@ -19,12 +19,6 @@ form {
       font-weight: bold;
     }
   }
-}
-.info-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-inline-start: 8px;
 }
 
 .no-data {
