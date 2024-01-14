@@ -49,7 +49,9 @@ export function withCallState() {
             loadingState: { error: 'errorSignal:\n' + errorCause },
           });
           patchState(state, { loadingTime: Date.now() - loadingStart });
+          patchState(state, { savingTime: Date.now() - savingStart });
           loadingStart = Date.now();
+          savingStart = Date.now();
         },
         setVerifySave() {
           patchState(state, { loadingState: 'verifySave' });

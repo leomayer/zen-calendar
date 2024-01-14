@@ -90,13 +90,9 @@ export class CalendarHelper {
   }
 
   async updateEventDetails(updateDetails: WordpressUpdateDetails) {
-    try {
-      await firstValueFrom(
-        this.http.post(this.urlLocation + 'updateDetails', updateDetails),
-      );
-    } catch (error) {
-      throw new Error('Update Details failed');
-    }
+    await firstValueFrom(
+      this.http.post(this.urlLocation + 'updateDetails', updateDetails),
+    );
   }
   async updateEventBasic(updateBasics: WordpressUpdateBasic) {
     await firstValueFrom(

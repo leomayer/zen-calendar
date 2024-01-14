@@ -21,7 +21,7 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.c48965bec8da8b10.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.ab4b20cdca9c5075.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.9667d83367d8345c.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.6cfa49a7c9ca0af9.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -105,7 +105,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME. '" Version: '.ZEN_CAL_PLUGIN_VERSION
-        . '<br> last updated at: <strong><!--build-time-->14.1.2024 11:16:50'
+        . '<br> last updated at: <strong><!--build-time-->14.1.2024 20:25:37'
         .' </strong>'
         . '<br>Allowed host: <strong>' . $AllowedOrigin  . '</strong>'
     . '</div><app-root useConfigInterface="true"></app-root>';
@@ -204,12 +204,7 @@ function update_eventDetails($request)
     ));
 
     $result = $wpdb->query($statement);
-
-    if ($result) {
-        return new WP_REST_Response('EventDetails updated successfully', 200);
-    } else {
-        return new WP_Error('500', 'Error updating event');
-    }
+    return handleQueryResult($result, $wpdb);
 }
 
 function update_eventBasic($request)
@@ -252,16 +247,19 @@ function update_eventBasic($request)
     ));
 
     $result = $wpdb->query($statement);
-
-    if ($result && $wpdb->affected_rows > 0) {
-        return new WP_REST_Response('EventBasic updated successfully', 200);
-    } else if ($result === false) {
-        return new WP_Error('500', 'Error updating event');
-    } else {
-        return new WP_REST_Response('Update not done', 204);
-    }
+    return handleQueryResult($result, $wpdb);
 }
 
+function handleQueryResult($result, $wpdb) { 
+    if ($result && $wpdb->affected_rows > 0) { 
+        return new WP_REST_Response('EventBasic updated successfully', 200); 
+    } else if ($result === false) { 
+        return new WP_Error('500', 'Error updating event'); 
+    } else { 
+        return new WP_REST_Response('Update not done', 204); 
+    } 
+} 
+ 
 // Register the useMonth parameter
 function register_custom_parameter()
 {

@@ -34,14 +34,15 @@ export class CalSaveService {
     const updateDetails = changedCalEvent.controls.fields.controls.filter(
       (ctrl) => ctrl.dirty,
     );
-    await updateDetails.forEach(async (det) => {
+    for (const det of updateDetails) {
       if (!this.calendarStore.hasErrors()) {
         await this.updateCalDetails(
           det,
           changedCalEvent.controls.id.value ?? 0,
         );
       }
-    });
+    }
+    console.log('end loop: ', this.calendarStore.loadingState());
     if (!this.calendarStore.hasErrors()) {
       this.updateCalOverview(changedCalEvent);
     }
@@ -65,6 +66,7 @@ export class CalSaveService {
       await this.calServiceHelper.updateEventDetails(updateDetails);
     } catch (error) {
       this.calendarStore.setError('Update Details failed');
+      console.log('error - save');
     }
   }
   updateCalOverview(changedCalEvent: FormGroup<CalConfigTimeDetail>) {
