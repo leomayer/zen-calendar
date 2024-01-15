@@ -42,9 +42,12 @@ export class CalSaveService {
         );
       }
     }
-    console.log('end loop: ', this.calendarStore.loadingState());
     if (!this.calendarStore.hasErrors()) {
       this.updateCalOverview(changedCalEvent);
+    }
+    if (!this.calendarStore.hasErrors()) {
+      this.calendarStore.markDetailsPristine();
+      this.calendarStore.setSaved();
     }
   }
   async updateCalDetails(
@@ -66,7 +69,6 @@ export class CalSaveService {
       await this.calServiceHelper.updateEventDetails(updateDetails);
     } catch (error) {
       this.calendarStore.setError('Update Details failed');
-      console.log('error - save');
     }
   }
   updateCalOverview(changedCalEvent: FormGroup<CalConfigTimeDetail>) {
@@ -81,7 +83,11 @@ export class CalSaveService {
       isOnlyEntry4Day: ctrl.isOnlyEntry4day ? '1' : '0',
       isValid: ctrl.isValid.value ? '1' : '0',
     } as WordpressUpdateBasic;
-    this.calServiceHelper.updateEventBasic(updateOverview);
+    try {
+      this.calServiceHelper.updateEventBasic(updateOverview);
+    } catch (error) {
+      this.calendarStore.setError('Update Basics failed');
+    }
   }
   insertCalEvent(changedCalEvent: FormGroup<CalConfigTimeDetail>) {
     console.log(

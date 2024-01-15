@@ -1,0 +1,8 @@
+@if (calendarStore.hasErrors()) {
+  <mat-icon class="stat-error">report</mat-icon>
+} @else if (calendarStore.isLoaded()) {
+  <mat-icon>check_circle_outline</mat-icon>
+}
+<span [ngClass]="{ 'stat-error': calendarStore.hasErrors() }"
+  >{{ calendarStore.status() }}
+</span>

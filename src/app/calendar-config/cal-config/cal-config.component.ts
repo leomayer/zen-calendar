@@ -85,6 +85,9 @@ export function withSignalsConfigDetails() {
         getChanges() {
           return state.calConfigDet().filter(evalChanged);
         },
+        markDetailsPristine() {
+          state.calConfigDet().forEach((ctrl) => ctrl.markAsPristine());
+        },
       };
     }),
   );

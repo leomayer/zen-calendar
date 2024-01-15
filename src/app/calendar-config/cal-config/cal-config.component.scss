@@ -1,6 +1,10 @@
 :host,
 form {
   display: flex;
+  /* in Wordpress additional paddings might be loaded */
+  &::ng-deep input {
+    padding-inline: 0px !important;
+  }
 }
 form {
   width: 100%;

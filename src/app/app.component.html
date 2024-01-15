@@ -7,15 +7,7 @@
       <div class="load-info">
         Zeit - speichern: <i>{{ calendarStore.savingTime() }} </i> ms
       </div>
-      <div class="load-info">
-        <span [ngClass]="{ 'stat-error': calendarStore.hasErrors() }">
-          Status:
-        </span>
-        @if (calendarStore.hasErrors()) {
-          <mat-icon class="stat-error">report</mat-icon>
-        }
-        <i>{{ calendarStore.status() }} </i>
-      </div>
+      <app-cal-status />
       <app-cal-button-details />
     </div>
   }

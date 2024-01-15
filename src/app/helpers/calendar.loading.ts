@@ -13,6 +13,7 @@ export type LoadingState =
   | 'loaded'
   | 'verifySave'
   | 'saving'
+  | 'saved'
   | { error: string };
 
 export function withCallState() {
@@ -60,6 +61,11 @@ export function withCallState() {
           patchState(state, { loadingState: 'saving' });
           savingStart = Date.now();
         },
+        setSaved() {
+          patchState(state, { loadingState: 'saved' });
+          patchState(state, { savingTime: Date.now() - savingStart });
+          savingStart = Date.now();
+        },
       };
     }),
     withComputed(({ loadingState }) => ({
@@ -71,6 +77,7 @@ export function withCallState() {
         const state = loadingState();
         return typeof state === 'object';
       }),
+      isLoaded: computed(() => loadingState() === 'loaded'),
     })),
   );
 }

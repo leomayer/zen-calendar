@@ -8,9 +8,3 @@
   padding-inline-start: 8px;
   width: 50%;
 }
-.load-info {
-  display: flex;
-  & .stat-error {
-    background-color: mat.get-color-from-palette($redPalette, 400);
-  }
-}

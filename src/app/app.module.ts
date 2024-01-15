@@ -22,6 +22,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localeDe from '@angular/common/locales/de';
 import { CalTimeConfigComponent } from './calendar-config/cal-time-config/cal-time-config.component';
+import { CalStatusComponent } from '@calConfig/cal-status/cal-status.component';
 
 registerLocaleData(localeDe);
 registerLocaleData(localeEn);
@@ -38,6 +39,7 @@ registerLocaleData(localeEn);
     Minutes2HourMinPipe,
     LinkDetailsComponent,
     CalButtonDetailsComponent,
+    CalStatusComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: WeekdayDateService },

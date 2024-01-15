@@ -16,12 +16,18 @@ export class CalenderService {
   constructor(private helper: CalendarHelper) {}
 
   async getEvents(curMonth: Date): Promise<CalendarEventShort[]> {
+    this.calendarStore.setLoading();
     const retList = [] as CalendarEventShort[];
     // get the list from the DB
-    const dbList = await this.helper.getOverview4Month(curMonth);
-    this.setFixedDate(dbList, retList);
-    this.setRepeatingWeekDates(dbList, retList, curMonth);
-    retList.sort((a, b) => a.start.getTime() - b.start.getTime());
+    try {
+      const dbList = await this.helper.getOverview4Month(curMonth);
+      this.setFixedDate(dbList, retList);
+      this.setRepeatingWeekDates(dbList, retList, curMonth);
+      retList.sort((a, b) => a.start.getTime() - b.start.getTime());
+      this.calendarStore.setLoaded();
+    } catch (error) {
+      this.calendarStore.setError('Error loading overview month');
+    }
     return retList;
   }
 
