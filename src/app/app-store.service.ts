@@ -14,6 +14,7 @@ import { withSignalsDisplayDialog } from '@calendar/cal-details-dialog/cal-detai
 import { withSignalsConfigDetails } from '@calConfig/cal-config/cal-config.component';
 import { withCallState } from './helpers/calendar.loading';
 import { environment } from 'src/environments/environment';
+import { areDatesOnSameDay } from './helpers/calendar.functions.helper';
 
 @Injectable({
   providedIn: 'root',
@@ -71,9 +72,19 @@ export const CalendarStore = signalStore(
       patchEvents(events: CalenderInfo[]) {
         patchState(state, { events });
       },
+      isSelectedDate(checkDate: Date) {
+        if (state.useConfigInterface()) {
+          return areDatesOnSameDay(
+            state.displayDate() ?? new Date(),
+            checkDate,
+          );
+        } else {
+          return areDatesOnSameDay(new Date(), checkDate);
+        }
+      },
       async loadDetails(data: CalendarEventLangs) {
         if (state.useConfigInterface()) {
-          state.loadConfigDetails(data);
+          await state.loadConfigDetails(data);
         } else {
           if (data?.eventIds) {
             state.setLoading();

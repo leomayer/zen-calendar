@@ -13,10 +13,7 @@ import { CalMonthHeaderComponent } from './cal-month-header/cal-month-header.com
 import { CalendarEventShort } from '@app/helpers/calenderTypes';
 import { CalenderService } from '@app/helpers/calender.service';
 import { AppStoreService, CalendarStore } from '@app/app-store.service';
-import {
-  areDatesOnSameDay,
-  isToday,
-} from '@app/helpers/calendar.functions.helper';
+import { areDatesOnSameDay } from '@app/helpers/calendar.functions.helper';
 import { MatDialog } from '@angular/material/dialog';
 import { CalSaveConfigComponent } from '@calConfig/cal-save-config/cal-save-config.component';
 import { firstValueFrom } from 'rxjs';
@@ -61,7 +58,8 @@ export class CalBasicComponent implements OnInit {
         retClass += ' date-sunday';
       }
       // Highlight today.
-      if (isToday(cellDate)) {
+      //if (isToday(cellDate)) {
+      if (this.calendarStore.isSelectedDate(cellDate)) {
         retClass += ' highlight-date';
       }
       const cntEvents = this.getEventCount(cellDate);
@@ -99,10 +97,13 @@ export class CalBasicComponent implements OnInit {
         this.listOfEvents?.find((chk) =>
           areDatesOnSameDay(chk.start, selDate),
         ) ?? ({} as CalendarEventShort);
-      //this.store.state.eventIdSelected.next(eventId);
 
+      // update the selected date
+      if (this.calendarStore.useConfigInterface()) {
+        this.calendar.updateTodaysDate();
+      }
       // usage with SignalStore
-      this.calendarStore.loadDetails(eventId);
+      await this.calendarStore.loadDetails(eventId);
     }
   }
   async ask4Save(): Promise<void> {
