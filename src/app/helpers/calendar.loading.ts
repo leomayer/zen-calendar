@@ -28,13 +28,17 @@ export function withCallState() {
       savingTime: 0,
     }),
     withMethods((state) => {
-      //withMethods(({ loadingState: callState }) => {
       let loadingStart = 0;
       let savingStart = 0;
       return {
         setLoading() {
           loadingStart = Date.now();
-          patchState(state, { loadingState: 'loading' });
+          try {
+            patchState(state, { loadingState: 'loading' });
+          } catch (error) {
+            // only at the startup this might happen
+            console.error(error);
+          }
           if (savingStart) {
             patchState(state, { savingTime: Date.now() - savingStart });
             savingStart = 0;

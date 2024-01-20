@@ -1,5 +1,4 @@
 import { Injectable, computed, effect, inject } from '@angular/core';
-import { Subject } from 'rxjs';
 import { CalendarEventLangs, CalenderInfo } from './helpers/calenderTypes';
 import {
   patchState,
@@ -15,6 +14,7 @@ import { withSignalsConfigDetails } from '@calConfig/cal-config/cal-config.compo
 import { withCallState } from './helpers/calendar.loading';
 import { environment } from 'src/environments/environment';
 import { areDatesOnSameDay } from './helpers/calendar.functions.helper';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,12 +30,14 @@ export type t_initialState = {
   configLang: string;
   displayDate: null | Date;
   events: CalenderInfo[];
+  selectedMonth: null | Date;
 };
 const initialState: t_initialState = {
   showDialog: false,
   useConfigInterface: false,
   configLang: '',
   displayDate: null,
+  selectedMonth: new Date(),
   events: [] as CalenderInfo[],
 };
 
@@ -47,17 +49,17 @@ export const CalendarStore = signalStore(
     onInit(state) {
       const configLang = document.documentElement.lang?.substring(0, 2) ?? 'en';
       patchState(state, { configLang });
-      if (!environment.production)
+      if (!environment.production) {
         effect(() =>
           console.log('loading state changed', state.loadingState()),
         );
+      }
     },
   }),
   withSignalsConfigDetails(),
   withSignalsDisplayDialog(),
   withMethods((state) => {
     const calServiceHelper = inject(CalendarHelper);
-    //const calConfigCheck = inject(CalConfigComponent);
 
     return {
       patchInterfaceType(useConfigInterface: boolean) {
@@ -71,6 +73,9 @@ export const CalendarStore = signalStore(
       },
       patchEvents(events: CalenderInfo[]) {
         patchState(state, { events });
+      },
+      setSelectedMonth(selectedMonth: Date) {
+        patchState(state, { selectedMonth });
       },
       isSelectedDate(checkDate: Date) {
         if (state.useConfigInterface()) {

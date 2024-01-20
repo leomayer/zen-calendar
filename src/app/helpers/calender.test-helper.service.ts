@@ -94,9 +94,9 @@ export class CalendarHelper {
       this.http.post(this.urlLocation + 'updateDetails', updateDetails),
     );
   }
-  async updateEventBasic(updateBasics: WordpressUpdateBasic) {
-    await firstValueFrom(
-      this.http.post(this.urlLocation + 'updateBasics', updateBasics),
+  async updateEventBasic(updateBasics: WordpressUpdateBasic): Promise<number> {
+    return await firstValueFrom(
+      this.http.post<number>(this.urlLocation + 'updateBasics', updateBasics),
     );
   }
 

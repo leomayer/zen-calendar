@@ -80,9 +80,11 @@ export type WordpressUpdateDetails = {
   [key in keyof CalenderDetConfig]: string;
 } & {
   calBasicId: string;
+  isUpdate: string;
 };
 export type WordpressUpdateBasic = WordpressString & {
   isValid: string;
+  isUpdate: string;
 };
 
 export type CalenderInfo = {

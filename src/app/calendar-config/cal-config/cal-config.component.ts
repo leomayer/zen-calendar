@@ -41,8 +41,9 @@ export function withSignalsConfigDetails() {
         // either changed
         chk.dirty ||
         // or newly created
-        !chk.controls.id.value;
-
+        !chk.controls.id.value ||
+        // set to invalid (aka remove)
+        !chk.controls.isValid.value;
       return {
         async loadConfigDetails(data: CalendarEventLangs) {
           state.setLoading();

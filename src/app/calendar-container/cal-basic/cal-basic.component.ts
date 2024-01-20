@@ -46,8 +46,10 @@ export class CalBasicComponent implements OnInit {
   }
 
   async updateEvents(date4Calendar: Date) {
+    this.calendarStore.setSelectedMonth(date4Calendar);
     this.listOfEvents = await this.calService.getEvents(date4Calendar);
     this.calendar.updateTodaysDate();
+    this.calendarStore.patchDate(null);
   }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
@@ -58,7 +60,6 @@ export class CalBasicComponent implements OnInit {
         retClass += ' date-sunday';
       }
       // Highlight today.
-      //if (isToday(cellDate)) {
       if (this.calendarStore.isSelectedDate(cellDate)) {
         retClass += ' highlight-date';
       }

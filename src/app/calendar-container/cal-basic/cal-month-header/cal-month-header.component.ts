@@ -4,6 +4,7 @@ import {
   Component,
   Inject,
   OnDestroy,
+  inject,
 } from '@angular/core';
 import { MatCalendar } from '@angular/material/datepicker';
 import {
@@ -13,7 +14,7 @@ import {
 } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AppStoreService } from '@app/app-store.service';
+import { AppStoreService, CalendarStore } from '@app/app-store.service';
 
 @Component({
   selector: 'app-cal-month-header',
@@ -23,6 +24,8 @@ import { AppStoreService } from '@app/app-store.service';
 })
 export class CalMonthHeaderComponent<D> implements OnDestroy {
   private _destroyed = new Subject<void>();
+  readonly calendarStore = inject(CalendarStore);
+
   constructor(
     private _calendar: MatCalendar<D>,
     private _dateAdapter: DateAdapter<D>,

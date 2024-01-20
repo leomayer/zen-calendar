@@ -5,7 +5,7 @@ import {
   ViewContainerRef,
   inject,
 } from '@angular/core';
-import { AppStoreService, CalendarStore } from './app-store.service';
+import { CalendarStore } from './app-store.service';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +20,7 @@ export class AppComponent {
   configComponent!: ViewContainerRef;
   readonly calendarStore = inject(CalendarStore);
 
-  constructor(
-    private elementRef: ElementRef,
-    store: AppStoreService,
-  ) {
+  constructor(private elementRef: ElementRef) {
     const useConfigInterface = this.stringToBoolean(
       this.elementRef.nativeElement.getAttribute('useConfigInterface'),
     );
