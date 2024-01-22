@@ -13,7 +13,14 @@
       ) {
         <app-cal-time-config [timeConf]="timeConf" />
       } @empty {
-        <p class="no-data">Keine Daten gefunden</p>
+        <div class="no-data">
+          <p>Keine Daten gefunden</p>
+          <p>
+            <button mat-raised-button (click)="addEvent()" color="primary">
+              Hinzufügen
+            </button>
+          </p>
+        </div>
       }
     </div>
   </form>

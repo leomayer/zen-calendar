@@ -45,9 +45,13 @@ export function withSignalsConfigDetails() {
         // set to invalid (aka remove)
         !chk.controls.isValid.value;
       return {
+        setCurrentDate(curDate: Date) {
+          patchState(state, { curDate });
+        },
+
         async loadConfigDetails(data: CalendarEventLangs) {
           state.setLoading();
-          patchState(state, { curDate: data.start });
+          this.setCurrentDate(data.start);
           try {
             const detailList = await calServiceHelper.getEventsDetailsByIds(
               data.eventIds,
@@ -151,6 +155,10 @@ export const createNewConfTime = (
   styleUrls: ['./cal-config.component.scss'],
 })
 export class CalConfigComponent {
+  addEvent() {
+    this.calendarStore.setCurrentDate(this.calendarStore.displayDate() as Date);
+    this.calendarStore.addEvent2Cal();
+  }
   calConfigDetForm = new FormGroup({
     fields: new FormArray<FormGroup<CalConfigDetail>>([]),
   });

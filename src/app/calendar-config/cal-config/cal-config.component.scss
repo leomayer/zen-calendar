@@ -27,6 +27,7 @@ form {
 
 .no-data {
   display: flex;
+  flex-direction: column;
   background-color: lightgrey;
   padding: 8px;
   font-weight: 500;
