@@ -46,7 +46,9 @@ export function withSignalsConfigDetails() {
         !chk.controls.isValid.value;
       return {
         setCurrentDate(curDate: Date) {
-          patchState(state, { curDate });
+          patchState(state, {
+            curDate,
+          });
         },
 
         async loadConfigDetails(data: CalendarEventLangs) {
@@ -156,8 +158,14 @@ export const createNewConfTime = (
 })
 export class CalConfigComponent {
   addEvent() {
-    this.calendarStore.setCurrentDate(this.calendarStore.displayDate() as Date);
-    this.calendarStore.addEvent2Cal();
+    const selDate = this.calendarStore.displayDate();
+    if (selDate !== null) {
+      const offSet = Math.abs(selDate.getTimezoneOffset() * 60 * 1000);
+      const curDate = new Date(selDate.getTime() + offSet);
+
+      this.calendarStore.setCurrentDate(curDate);
+      this.calendarStore.addEvent2Cal();
+    }
   }
   calConfigDetForm = new FormGroup({
     fields: new FormArray<FormGroup<CalConfigDetail>>([]),
