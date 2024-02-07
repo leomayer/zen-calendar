@@ -3,6 +3,7 @@
 
 .description {
   overflow: auto;
+  hyphens: auto;
   /* required for Wordpress */
   &::ng-deep p {
     font-size: inherit;
