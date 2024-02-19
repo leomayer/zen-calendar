@@ -36,11 +36,9 @@ export class CalSaveService {
     if (!this.calendarStore.hasErrors()) {
       this.calendarStore.markDetailsPristine();
       this.calendarStore.setSaved();
-      if (!isUpdate) {
-        this.appInfo.state.monthChanged.next(
-          this.calendarStore.selectedMonth() ?? new Date(),
-        );
-      }
+      this.appInfo.state.monthChanged.next(
+        this.calendarStore.selectedMonth() ?? new Date(),
+      );
     }
   }
   async updateCalEvent(changedCalEvent: FormGroup<CalConfigTimeDetail>) {

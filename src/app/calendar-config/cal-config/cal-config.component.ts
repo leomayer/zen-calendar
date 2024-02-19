@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { CalendarStore } from '@app/app-store.service';
 import { withCallState } from '@app/helpers/calendar.loading';
@@ -19,6 +19,7 @@ import {
 import {
   patchState,
   signalStoreFeature,
+  withComputed,
   withMethods,
   withState,
 } from '@ngrx/signals';
@@ -95,6 +96,38 @@ export function withSignalsConfigDetails() {
         markDetailsPristine() {
           state.calConfigDet().forEach((ctrl) => ctrl.markAsPristine());
         },
+        getFormError() {
+          const invalid = [];
+          const controls = state.calConfigDet();
+          for (const ctrlGroup of controls) {
+            for (const name in ctrlGroup.controls) {
+              const castedName = name as keyof typeof ctrlGroup.controls;
+              if (ctrlGroup.controls[castedName].invalid) {
+                const error = ctrlGroup.controls[castedName].errors ?? [];
+                invalid.push(Object.keys(error)[0]);
+              }
+            }
+          }
+          return invalid.length ? [...new Set(invalid)] : null;
+        },
+      };
+    }),
+    withComputed((state) => {
+      return {
+        getFormError1: computed(() => {
+          const invalid = [];
+          const controls = state.calConfigDet();
+          for (const ctrlGroup of controls) {
+            for (const name in ctrlGroup.controls) {
+              const castedName = name as keyof typeof ctrlGroup.controls;
+              if (ctrlGroup.controls[castedName].invalid) {
+                const error = ctrlGroup.controls[castedName].errors ?? [];
+                invalid.push(Object.keys(error)[0]);
+              }
+            }
+          }
+          return invalid.length ? [...new Set(invalid)] : null;
+        }),
       };
     }),
   );

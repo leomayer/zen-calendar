@@ -17,6 +17,7 @@
         matInput
         [matDatepicker]="picker1"
         [formControl]="usedFields.controls.frequStart"
+        [max]="usedFields.controls.frequEnd.value"
       />
       <mat-datepicker-toggle
         matIconSuffix
@@ -31,6 +32,7 @@
         matInput
         [matDatepicker]="picker2"
         [formControl]="usedFields.controls.frequEnd"
+        [min]="usedFields.controls.frequStart.value"
       />
       <mat-datepicker-toggle
         matIconSuffix

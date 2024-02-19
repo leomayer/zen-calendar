@@ -6,7 +6,13 @@
     <button mat-flat-button (click)="openDialog('de')" color="warn">
       <span> Öffne - deutsch </span>
     </button>
-    <button mat-stroked-button (click)="saveChanges()" color="save">
+    <!-- das disabled attribute wird leider falsch ausgewertet => Ursache etwas unklar -->
+    <button
+      mat-stroked-button
+      [disabled]="calendarStore.getFormError()"
+      (click)="saveChanges()"
+      color="save"
+    >
       <span>Speichern</span>
     </button>
   </div>

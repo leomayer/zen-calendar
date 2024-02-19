@@ -1,11 +1,4 @@
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-} from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 export type CalendarEventShort = {
   start: Date;
@@ -153,27 +146,4 @@ export class CalConfigDetail {
 export interface CalConfigFormDto {
   data: CalenderDetConfig;
   fields: FormArray<FormGroup<CalConfigDetail>>;
-}
-
-export function timeToMinutesValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const timeString = control.value as string;
-
-    if (
-      !timeString ||
-      timeString.length !== 5 ||
-      !timeString.match(/^(\d{2}):(\d{2})$/)
-    ) {
-      return { invalidTimeFormat: true };
-    }
-
-    const [hours, minutes] = timeString.split(':');
-    const totalMinutes = parseInt(hours ?? '0') * 60 + parseInt(minutes ?? '0');
-
-    if (totalMinutes < 0 || totalMinutes > 1440) {
-      return { invalidTimeRange: true };
-    }
-
-    return null;
-  };
 }

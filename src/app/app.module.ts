@@ -3,8 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { MaterialDesignModule } from './material-design/material-design.module';
-import { DateAdapter } from '@angular/material/core';
-import { WeekdayDateService } from './helpers/weekday-date.service';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import {
+  CUSTOM_DATE_FORMATS,
+  WeekdayDateService,
+} from './helpers/weekday-date.service';
 import { GlobalErrorHandler } from './helpers/GlobalErrorHandler';
 import { CalBasicComponent } from '@calendar/cal-basic/cal-basic.component';
 import { CalShortCodeComponent } from '@calendar/cal-short-code/cal-short-code.component';
@@ -48,6 +51,7 @@ registerLocaleData(localeEn);
       provide: MAT_RADIO_DEFAULT_OPTIONS,
       useValue: { color: 'accent' },
     },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
   ],
   bootstrap: [AppComponent],
   imports: [

@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CalendarStore } from '@app/app-store.service';
 import { CalendarEventShort, CalenderInfo } from '@app/helpers/calenderTypes';
 import { CalSaveService } from '@calConfig/cal-save-config/cal-save.service';
-//import { CalSaveConfigComponent } from '@calConfig/cal-save-config/cal-save-config.component';
 
 @Component({
   selector: 'app-cal-button-details',
