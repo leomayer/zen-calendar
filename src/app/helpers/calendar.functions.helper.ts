@@ -33,7 +33,13 @@ export const areDatesOnSameDay = (date1: Date, date2: Date) => {
 };
 
 export const formatDate4Wordpress = (date: Date | null) => {
-  return date?.toISOString().split('T')[0] ?? '';
+  if (date) {
+    // get the proper offset of the date (might be a diff between current date and selected date)
+    const offset = date.getTimezoneOffset() / -60;
+    date.setHours(offset);
+    return date.toISOString().split('T')[0];
+  }
+  return '';
 };
 
 /*

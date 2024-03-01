@@ -2,8 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Inject,
-  LOCALE_ID,
   OnDestroy,
   inject,
 } from '@angular/core';
@@ -26,7 +24,6 @@ export class CalMonthHeaderComponent<D> implements OnDestroy {
   constructor(
     private _calendar: MatCalendar<D>,
     private _dateAdapter: DateAdapter<D>,
-    @Inject(LOCALE_ID) private localeId: string,
     cdr: ChangeDetectorRef,
     private store: AppStoreService,
   ) {
@@ -41,7 +38,12 @@ export class CalMonthHeaderComponent<D> implements OnDestroy {
   }
 
   get periodLabel() {
-    return this.formatHeader(this._calendar.activeDate as Date, this.localeId);
+    return this.formatHeader(
+      this._calendar.activeDate as Date,
+      // use it from the document AND not from the lang
+      // might be different in the context the app is running (2024-03-01)
+      document.documentElement.lang,
+    );
   }
 
   previousClicked() {

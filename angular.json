@@ -20,7 +20,6 @@
             "outputPath": "dist/zen-calendar",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "clearScreen": true,
             "polyfills": [
               "zone.js"
             ],

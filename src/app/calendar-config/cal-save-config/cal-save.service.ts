@@ -109,11 +109,6 @@ export class CalSaveService {
   async insertCalEvent(changedCalEvent: FormGroup<CalConfigTimeDetail>) {
     const newCalId =
       (await this.updateCalOverview(changedCalEvent, false)) ?? 0;
-    console.log(
-      'insert changes ',
-      newCalId,
-      changedCalEvent.controls.eventStartTime.value,
-    );
     if (!this.calendarStore.hasErrors()) {
       changedCalEvent.controls.id.setValue(newCalId);
       for (const detail of changedCalEvent.controls.fields.controls) {

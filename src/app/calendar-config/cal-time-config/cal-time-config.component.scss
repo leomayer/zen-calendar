@@ -44,3 +44,6 @@ input {
   /* for input fields like time fields*/
   background-color: inherit;
 }
+.mat-clone {
+  background-color: mat.get-color-from-palette($tealPalette, 200);
+}

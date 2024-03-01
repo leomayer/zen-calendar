@@ -4,6 +4,8 @@ import { FormGroup } from '@angular/forms';
 import { CalendarStore } from '@app/app-store.service';
 import {
   CalConfigTimeDetail,
+  CalenderDetConfig,
+  CalenderInfo,
   CalenderTimeConfig,
   FrequTypeUI,
 } from '@app/helpers/calenderTypes';
@@ -101,6 +103,37 @@ export class CalTimeConfigComponent {
     }
   }
 
+  clone() {
+    /* basic entry */
+    const clonedCalEntry = {
+      eventStartTime: this.usedFields.controls.eventStartTime.value,
+      eventEndTime: this.usedFields.controls.eventEndTime.value,
+      eventStartDate: this.calendarStore.curDate(),
+      eventEndDate: this.calendarStore.curDate(),
+      calBasicId: null,
+      frequType: this.usedFields.controls.frequType.value,
+      configDet: [] as CalenderDetConfig[],
+    } as CalenderTimeConfig;
+    /* details in German */
+
+    const infoDe = structuredClone(
+      this.timeConf.configDet.find((chk) => (chk.lang = 'de')),
+    ) as CalenderInfo;
+    infoDe.id = null;
+    infoDe.calBasicId = null;
+
+    clonedCalEntry.configDet.push(infoDe);
+    /* details in English */
+    const infoEn = structuredClone(
+      this.timeConf.configDet.find((chk) => (chk.lang = 'en')),
+    ) as CalenderInfo;
+    infoDe.id = null;
+    infoDe.calBasicId = null;
+
+    clonedCalEntry.configDet.push(infoEn);
+
+    this.calendarStore.lstOfConfigDetailsPerDay().push(clonedCalEntry);
+  }
   addEvent() {
     this.calendarStore.addEvent2Cal();
   }
