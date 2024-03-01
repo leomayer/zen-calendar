@@ -3,15 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
+  LOCALE_ID,
   OnDestroy,
   inject,
 } from '@angular/core';
 import { MatCalendar } from '@angular/material/datepicker';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MatDateFormats,
-} from '@angular/material/core';
+import { DateAdapter } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AppStoreService, CalendarStore } from '@app/app-store.service';
@@ -29,7 +26,7 @@ export class CalMonthHeaderComponent<D> implements OnDestroy {
   constructor(
     private _calendar: MatCalendar<D>,
     private _dateAdapter: DateAdapter<D>,
-    @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats,
+    @Inject(LOCALE_ID) private localeId: string,
     cdr: ChangeDetectorRef,
     private store: AppStoreService,
   ) {
@@ -44,12 +41,7 @@ export class CalMonthHeaderComponent<D> implements OnDestroy {
   }
 
   get periodLabel() {
-    return this._dateAdapter
-      .format(
-        this._calendar.activeDate,
-        this._dateFormats.display.monthYearLabel,
-      )
-      .toLocaleUpperCase();
+    return this.formatHeader(this._calendar.activeDate as Date, this.localeId);
   }
 
   previousClicked() {
@@ -68,5 +60,13 @@ export class CalMonthHeaderComponent<D> implements OnDestroy {
     );
     this._calendar.activeDate = prevMonth;
     this.store.state.monthChanged.next(prevMonth as Date);
+  }
+
+  formatHeader(date: Date, locale = 'en-US') {
+    const formatter = new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: 'long',
+    });
+    return formatter.format(date);
   }
 }
