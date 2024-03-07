@@ -1,5 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { CalendarEvent, CalendarEventShort, EventFrequ } from './calenderTypes';
+import {
+  CalendarEvent,
+  CalendarEventShort,
+  EventFrequ,
+  FrequType,
+} from './calenderTypes';
 import { CalendarHelper } from './calender.test-helper.service';
 import {
   areDatesOnSameDay,
@@ -23,6 +28,8 @@ export class CalenderService {
       const dbList = await this.helper.getOverview4Month(curMonth);
       this.setFixedDate(dbList, retList);
       this.setRepeatingWeekDates(dbList, retList, curMonth);
+      this.setRepeatingDaily(dbList, retList, curMonth);
+
       retList.sort((a, b) => a.start.getTime() - b.start.getTime());
       this.calendarStore.setLoaded();
     } catch (error) {
@@ -45,15 +52,31 @@ export class CalenderService {
       });
   }
 
+  setRepeatingDaily(
+    dbList: CalendarEvent[],
+    retList: CalendarEventShort[],
+    curMonth: Date,
+  ) {
+    this.filterDatesByFequency(dbList, FrequType.DAILY).forEach((filterDay) => {
+      for (
+        const loopDay = filterDay.eventStartDate;
+        loopDay <= filterDay.eventEndDate;
+
+      ) {
+        loopDay.setDate(loopDay.getDate() + 1);
+
+        this.addDay2List(loopDay, retList, filterDay);
+      }
+    });
+  }
+
   setRepeatingWeekDates(
     dbList: CalendarEvent[],
     retList: CalendarEventShort[],
     curMonth: Date,
   ) {
-    const useFrequType = 1;
-    dbList
-      .filter((chk) => chk.frequType === useFrequType)
-      .forEach((filterDay) => {
+    this.filterDatesByFequency(dbList, FrequType.WEEKLY).forEach(
+      (filterDay) => {
         // get for this weekday all dates in this month
         const weekDays = getWeekdaysInMonth(
           curMonth,
@@ -67,8 +90,14 @@ export class CalenderService {
         weekDays.forEach((weekDay) => {
           this.addDay2List(weekDay, retList, filterDay);
         });
-      });
+      },
+    );
   }
+
+  filterDatesByFequency(dbList: CalendarEvent[], useFrequType: FrequType) {
+    return dbList.filter((chk) => chk.frequType === useFrequType);
+  }
+
   addDay2List(
     weekDay: Date,
     retList: CalendarEventShort[],

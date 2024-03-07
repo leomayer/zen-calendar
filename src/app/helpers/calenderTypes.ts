@@ -7,11 +7,21 @@ export type CalendarEventShort = {
   addInfo?: EventFrequ[];
   onlyEventId4Day?: number;
 };
+
+//0: None; 1: weekly; 2: monthly; 3: yearly; 4 daily
+export enum FrequType {
+  NONE = 0,
+  WEEKLY = 1,
+  MONTHLY,
+  YEARLY,
+  DAILY = 4,
+}
+
 export type EventFrequ = {
   frequ_id: number;
   eventStartDate: Date;
   eventEndDate: Date;
-  frequType: number; //0: None; 1: weekly; 2: monthly; 3: yearly
+  frequType: FrequType;
   isOnlyEntry4Day: boolean;
 };
 export type CalendarEventLangs = CalendarEventShort & { lang?: string };
@@ -28,7 +38,7 @@ export type CalendarEvent = {
   eventStartTime: number;
   eventEndDate: Date;
   eventEndTime: number;
-  frequType: number; //0: None; 1: weekly; 2: monthly; 3: yearly
+  frequType: FrequType;
   isOnlyEntry4Day: boolean;
 };
 export type WordpressString = {
@@ -47,7 +57,7 @@ export type CalenderTimeConfig = {
   calBasicId: number | null;
   eventStartDate: Date;
   eventEndDate: Date;
-  frequType: number; //0: None; 1: weekly; 2: monthly; 3: yearly
+  frequType: FrequType;
   isOnlyEntry4Day: boolean;
   configDet: CalenderDetConfig[];
 };
@@ -67,7 +77,7 @@ export type CalLinkTypeUI = {
 };
 export type FrequTypeUI = {
   name: string;
-  frequType: number;
+  frequType: FrequType;
 };
 export type WordpressUpdateDetails = {
   [key in keyof CalenderDetConfig]: string;
@@ -128,7 +138,7 @@ export class CalConfigTimeDetail {
 
   frequStart = new FormControl<Date | null>(null);
   frequEnd = new FormControl<Date | null>(null);
-  frequType = new FormControl<number>(0);
+  frequType = new FormControl<FrequType>(0);
   fields = new FormArray<FormGroup<CalConfigDetail>>([]);
   isValid = new FormControl<boolean>(false);
 }
@@ -147,3 +157,11 @@ export interface CalConfigFormDto {
   data: CalenderDetConfig;
   fields: FormArray<FormGroup<CalConfigDetail>>;
 }
+
+export const isFrequType = (obj: unknown): obj is FrequType => {
+  const chkNumber =
+    typeof obj === 'number' && (obj === 0 || obj === 1 || obj === 4);
+  const chkString =
+    typeof obj === 'string' && (obj === '0' || obj === '1' || obj === '4');
+  return chkNumber || chkString;
+};

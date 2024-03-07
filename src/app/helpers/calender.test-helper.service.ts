@@ -10,6 +10,7 @@ import {
   CalLinkType,
   WordpressUpdateDetails,
   WordpressUpdateBasic,
+  isFrequType,
 } from './calenderTypes';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, map } from 'rxjs';
@@ -42,8 +43,15 @@ export class CalendarHelper {
               convDetail.eventStartDate = new Date(dtoDetail.eventStartDate);
               convDetail.eventEndDate = new Date(dtoDetail.eventEndDate);
               convDetail.eventStartDate = new Date(dtoDetail.eventStartDate);
-              convDetail.frequType = Number(dtoDetail.frequType);
               convDetail.isOnlyEntry4Day = !!Number(dtoDetail.isOnlyEntry4Day);
+              if (isFrequType(dtoDetail.frequType)) {
+                convDetail.frequType = Number(dtoDetail.frequType);
+              } else {
+                const msgError =
+                  'Frequency Type not implemented: ' + dtoDetail.frequType;
+                console.error(msgError);
+                throw new Error(msgError);
+              }
               return convDetail;
             });
             return converted;

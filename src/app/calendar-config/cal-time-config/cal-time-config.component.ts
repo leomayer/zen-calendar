@@ -7,6 +7,7 @@ import {
   CalenderDetConfig,
   CalenderInfo,
   CalenderTimeConfig,
+  FrequType,
   FrequTypeUI,
 } from '@app/helpers/calenderTypes';
 import { MaterialDesignModule } from '@app/material-design/material-design.module';
@@ -24,8 +25,9 @@ export class CalTimeConfigComponent {
 
   usedFields = new FormGroup(new CalConfigTimeDetail());
   frequTypes: FrequTypeUI[] = [
-    { name: 'Nie', frequType: 0 },
-    { name: 'Wöchentlich', frequType: 1 },
+    { name: 'Nie', frequType: FrequType.NONE },
+    { name: 'Täglich', frequType: FrequType.DAILY },
+    { name: 'Wöchentlich', frequType: FrequType.WEEKLY },
   ];
 
   _timeConf!: CalenderTimeConfig;

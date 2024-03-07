@@ -21,7 +21,7 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 function load_ng_scripts()
 {
     wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.109994348556e96a.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.0e4d709124ee47bb.js', true);
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.7b9168e1b4c8581f.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.0899932fdd15363a.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.d828c3a65864714d.js', true);
 }
@@ -40,7 +40,7 @@ function zen_cal_install()
   eventStartTime INT NOT NULL COMMENT 'minutes since midnight',
   eventEndDate DATE NOT NULL,
   eventEndTime INT NOT NULL COMMENT 'minutes since midnight',
-  frequType INT NOT NULL COMMENT '0:None, 1:weekly, 2:monthly, 3:yearly',
+  frequType INT NOT NULL COMMENT '0:None, 1:weekly, 2:monthly, 3:yearly, 4: daily',
   isValid BOOLEAN DEFAULT TRUE,
   isOnlyEntry4Day BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'If true => all other events on this day are ignored',
   PRIMARY KEY (`id`)
@@ -105,7 +105,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME . '" Version: ' . ZEN_CAL_PLUGIN_VERSION
-        . '<br> last updated at: <strong><!--build-time-->1.3.2024 11:08:58'
+        . '<br> last updated at: <strong><!--build-time-->7.3.2024 09:05:33'
         . ' </strong>'
         . '<br>Allowed host: <strong>' . $AllowedOrigin . '</strong>'
         . '</div><app-root useConfigInterface="true"></app-root>';
