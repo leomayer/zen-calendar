@@ -26,6 +26,8 @@ import localeEn from '@angular/common/locales/en';
 import localeDe from '@angular/common/locales/de';
 import { CalTimeConfigComponent } from './calendar-config/cal-time-config/cal-time-config.component';
 import { CalStatusComponent } from '@calConfig/cal-status/cal-status.component';
+import { FullcalendarComponent } from './fullcalendar/fullcalendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 registerLocaleData(localeDe);
 registerLocaleData(localeEn);
@@ -43,6 +45,7 @@ registerLocaleData(localeEn);
     LinkDetailsComponent,
     CalButtonDetailsComponent,
     CalStatusComponent,
+    FullcalendarComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: WeekdayDateService },
@@ -59,6 +62,7 @@ registerLocaleData(localeEn);
     BrowserModule,
     HttpClientModule,
     CalTimeConfigComponent,
+    FullCalendarModule,
   ],
 })
 export class AppModule {}
