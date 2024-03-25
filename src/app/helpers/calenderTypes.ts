@@ -20,6 +20,7 @@ export enum FrequType {
 export type EventFrequ = {
   frequ_id: number;
   eventStartDate: Date;
+  configDate: Date;
   eventEndDate: Date;
   frequType: FrequType;
   isOnlyEntry4Day: boolean;
@@ -35,6 +36,7 @@ export type CalendarEvent = {
   id: number;
 
   eventStartDate: Date;
+  configStartDate: Date;
   eventStartTime: number;
   eventEndDate: Date;
   eventEndTime: number;

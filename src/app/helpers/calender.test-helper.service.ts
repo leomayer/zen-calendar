@@ -41,8 +41,6 @@ export class CalendarHelper {
               convDetail.id = Number(dtoDetail.id);
               convDetail.eventEndDate = new Date(dtoDetail.eventEndDate);
               convDetail.eventStartDate = new Date(dtoDetail.eventStartDate);
-              convDetail.eventEndDate = new Date(dtoDetail.eventEndDate);
-              convDetail.eventStartDate = new Date(dtoDetail.eventStartDate);
               convDetail.isOnlyEntry4Day = !!Number(dtoDetail.isOnlyEntry4Day);
               if (isFrequType(dtoDetail.frequType)) {
                 convDetail.frequType = Number(dtoDetail.frequType);

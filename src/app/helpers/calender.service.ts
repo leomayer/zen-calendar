@@ -111,6 +111,7 @@ export class CalenderService {
       this.appendAddInfo(filterDay, addDay);
     } else {
       const tmpDay = { ...filterDay };
+      tmpDay.configStartDate = tmpDay.eventStartDate;
       tmpDay.eventStartDate = weekDay;
       addDay = this.createShortEvent(tmpDay);
       retList.push(addDay);
@@ -147,7 +148,8 @@ export class CalenderService {
     if (this.calendarStore.useConfigInterface()) {
       const addInfo = {
         frequ_id: filterDay.id,
-        eventStartDate: filterDay.eventStartDate,
+        // use the config date from the DB - and NOT from the displayed calendar!!!
+        eventStartDate: filterDay.configStartDate,
         eventEndDate: filterDay.eventEndDate,
         frequType: filterDay.frequType,
         isOnlyEntry4Day: filterDay.isOnlyEntry4Day,
