@@ -11,7 +11,7 @@ form {
   flex-direction: column;
   gap: 8px;
   width: 20%;
-  background-color: mat.get-color-from-palette($bluegrayPalette, 900);
+  background-color: mat.m2-get-color-from-palette($bluegrayPalette, 900);
   margin-bottom: 8px;
 }
 .col-right {
@@ -45,5 +45,5 @@ input {
   background-color: inherit;
 }
 .mat-clone {
-  background-color: mat.get-color-from-palette($tealPalette, 200);
+  background-color: mat.m2-get-color-from-palette($tealPalette, 200);
 }

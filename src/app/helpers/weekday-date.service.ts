@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { NativeDateAdapter } from '@angular/material/core';
-import * as moment from 'moment';
 
 export const CUSTOM_DATE_FORMATS = {
   parse: {
@@ -26,7 +25,9 @@ export class WeekdayDateService extends NativeDateAdapter {
 
   override format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
-      return moment(date).format(this.dateFormat);
+      console.error('formater - required')
+      //return moment(date).format(this.dateFormat);
+      return '01-10-11';
     } else {
       return date.toDateString();
     }

@@ -3,7 +3,7 @@
 
 :host {
   display: flex;
-  border: 2px outset mat.get-color-from-palette($purplePalette, 500);
+  border: 2px outset mat.m2-get-color-from-palette($purplePalette, 500);
   border-radius: 4px;
   max-width: 250px;
   width: 100%;
@@ -12,7 +12,7 @@
   align-items: center;
 
   & .stat-error {
-    background-color: mat.get-color-from-palette($redPalette, 400);
+    background-color: mat.m2-get-color-from-palette($redPalette, 400);
   }
 }
 mat-icon {

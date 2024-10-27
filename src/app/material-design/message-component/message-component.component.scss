@@ -2,10 +2,10 @@
 @import 'src/styles-global/styles_angular_material_mdc_adapt.scss';
 
 .msg-snack {
-	background-color: mat.get-color-from-palette($limePalette, 100);
+	background-color: mat.m2-get-color-from-palette($limePalette, 100);
 }
 .error {
-	color: mat.get-color-from-palette($redPalette, 900);
+	color: mat.m2-get-color-from-palette($redPalette, 900);
 	font-weight: bolder;
 }
 

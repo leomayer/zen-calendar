@@ -1,6 +1,5 @@
 @use "@angular/material" as mat;
-@import "/src/styles-global/styles_angular_material_mdc_adapt.scss";
-@import "/src/styles-global/theme.scss";
+@import "/src/styles-global/theme_color_paletts.scss";
 
 .cal-basic {
   &::ng-deep .clbtn {
@@ -8,7 +7,7 @@
     min-height: 24px;
   }
   &::ng-deep .highlight-date {
-    background: mat.get-color-from-palette($amberPalette, 50) !important;
+    background: mat.m2-get-color-from-palette($amberPalette, 50) !important;
     border-radius: 100%;
     > span {
       color: #404040 !important;
@@ -17,12 +16,12 @@
       &.date-one-entry,
       &.date-two-entries {
         background-image: unset !important;
-        border-bottom: 5px solid mat.get-color-from-palette($amberPalette, 800) !important;
+        border-bottom: 5px solid mat.m2-get-color-from-palette($amberPalette, 800) !important;
         border-radius: unset;
       }
     }
     &.date-sunday > span {
-      color: mat.get-color-from-palette($deeporangePalette, 900) !important;
+      color: mat.m2-get-color-from-palette($deeporangePalette, 900) !important;
     }
   }
   &::ng-deep .mat-calendar-body-label:not(:last-of-type) {
@@ -34,10 +33,10 @@
   }
   &::ng-deep .date-sunday {
     &.highlight-date-class > span {
-      color: mat.get-color-from-palette($redPalette, 900) !important;
+      color: mat.m2-get-color-from-palette($redPalette, 900) !important;
     }
     > span {
-      color: mat.get-color-from-palette($redPalette, 300) !important;
+      color: mat.m2-get-color-from-palette($redPalette, 300) !important;
     }
   }
   &::ng-deep .date-bottom {
@@ -54,15 +53,15 @@
   background-image:
     linear-gradient(
       to left,
-      mat.get-color-from-palette($amberPalette, 100) 0%,
-      mat.get-color-from-palette($amberPalette, 800) 100%
+      mat.m2-get-color-from-palette($amberPalette, 100) 0%,
+      mat.m2-get-color-from-palette($amberPalette, 800) 100%
     ),
     /* dummy to have transparent (opaque) filler */
       linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(255, 0, 0, 0) 100%),
     linear-gradient(
       to left,
-      mat.get-color-from-palette($amberPalette, 800) 0%,
-      mat.get-color-from-palette($amberPalette, 100) 100%
+      mat.m2-get-color-from-palette($amberPalette, 800) 0%,
+      mat.m2-get-color-from-palette($amberPalette, 100) 100%
     ) !important;
   background-position:
     left 10% bottom,
@@ -74,8 +73,8 @@
 %one-entry {
   background-image: linear-gradient(
     to left,
-    mat.get-color-from-palette($amberPalette, 300) 0%,
-    mat.get-color-from-palette($amberPalette, 800) 100%
+    mat.m2-get-color-from-palette($amberPalette, 300) 0%,
+    mat.m2-get-color-from-palette($amberPalette, 800) 100%
   ) !important;
   background-position: center bottom !important;
   background-repeat: no-repeat;

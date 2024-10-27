@@ -3,9 +3,8 @@
 */
 
 @use "@angular/material" as mat;
+@import 'theme.scss';
 
-@import "styles_angular_material_mdc_adapt.scss";
-@import "theme.scss";
 
 html,
 body {
@@ -28,7 +27,7 @@ body {
 /* for debugging: encapsulate the JSON into a <pre> tag and the make sure it overflows */
 pre {
   overflow: auto;
-  background-color: mat.get-color-from-palette($limePalette, 600);
+  background-color: mat.m2-get-color-from-palette($limePalette, 600);
   border-radius: 4px;
   border-style: inset;
   margin-inline: 8px;
@@ -78,7 +77,7 @@ pre {
   font-size: larger !important;
 }
 .title-tooltip {
-  background-color: mat.get-color-from-palette(
+  background-color: mat.m2-get-color-from-palette(
     $greyPalette,
     600,
     30

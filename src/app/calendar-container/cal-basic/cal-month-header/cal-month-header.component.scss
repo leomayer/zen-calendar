@@ -1,12 +1,11 @@
 @use "@angular/material" as mat;
-@import "/src/styles-global/styles_angular_material_mdc_adapt.scss";
 @import "/src/styles-global/theme.scss";
 
 .cal-header {
   display: flex;
   align-items: center;
   padding-inline: 0.5em;
-  color: mat.get-color-from-palette($amberPalette, 50);
+  color: mat.m2-get-color-from-palette($amberPalette, 50);
   height: 100%;
 }
 

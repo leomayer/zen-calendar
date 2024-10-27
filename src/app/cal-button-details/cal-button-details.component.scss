@@ -3,7 +3,7 @@
 
 :host {
   display: flex;
-  background-color: mat.get-color-from-palette($bluegrayPalette, 200);
+  background-color: mat.m2-get-color-from-palette($bluegrayPalette, 200);
 }
 .btn-display-details {
   padding: 8px;
@@ -14,5 +14,5 @@
   max-width: 350px;
 }
 .mat-save {
-  background-color: mat.get-color-from-palette($limePalette, 300);
+  background-color: mat.m2-get-color-from-palette($limePalette, 300);
 }
