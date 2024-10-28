@@ -1,43 +1,43 @@
 // copied from https://stackoverflow.com/a/48159346/325868
 
-@use '@angular/material' as mat;
-@use 'sass:map';
-@import 'theme_color_paletts.scss';
+@use "@angular/material" as mat;
+@use "sass:map";
+@import "theme_color_paletts.scss";
 
 // following https://stackoverflow.com/a/75411680/325868 and https://material.angular.io/guide/theming#applying-a-theme-to-components
 $light-theme: mat.m2-define-light-theme(
-	(
-		color: (
-			primary: $primaryPalette,
-			accent: $accentPalette,
-		),
-		typography: $app-typography,
-		density: $app-density,
-	)
+  (
+    color: (
+      primary: $primaryPalette,
+      accent: $accentPalette,
+    ),
+    typography: $app-typography,
+    density: $app-density,
+  )
 );
 
 @include mat.core();
 
 :root {
-	--standard-forecolor: $black-87-opacity;
-	--standard-backcolor: white;
+  --standard-forecolor: $black-87-opacity;
+  --standard-backcolor: white;
 }
 
 @mixin create-light-theme() {
-	$theme: map.deep-merge(
-		$light-theme,
-		(
-			color: (
-				background: (
-					background: green,
-				),
-			),
-		)
-	);
-	@include mat.all-component-themes($light-theme); // Apply light theme colors
+  $theme: map.deep-merge(
+    $light-theme,
+    (
+      color: (
+        background: (
+          background: green,
+        ),
+      ),
+    )
+  );
+  @include mat.all-component-themes($light-theme); // Apply light theme colors
 }
 
 .light-theme {
-	// This mixin only generates the color styles now.
-	@include create-light-theme();
+  // This mixin only generates the color styles now.
+  @include create-light-theme();
 }

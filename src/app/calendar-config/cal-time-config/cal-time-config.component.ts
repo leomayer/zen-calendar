@@ -1,6 +1,12 @@
-import { JsonPipe } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { CalendarStore } from '@app/app-store.service';
 import {
   CalConfigTimeDetail,
@@ -10,13 +16,22 @@ import {
   FrequType,
   FrequTypeUI,
 } from '@app/helpers/calenderTypes';
-import { MaterialDesignModule } from '@app/material-design/material-design.module';
 import { CalConfigDetailComponent } from '@calConfig/cal-config-detail/cal-config-detail.component';
 
 @Component({
   selector: 'app-cal-time-config',
   standalone: true,
-  imports: [JsonPipe, MaterialDesignModule, CalConfigDetailComponent],
+  imports: [
+    CalConfigDetailComponent,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+  ],
   templateUrl: './cal-time-config.component.html',
   styleUrl: './cal-time-config.component.scss',
 })

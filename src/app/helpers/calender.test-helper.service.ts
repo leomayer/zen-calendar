@@ -29,11 +29,9 @@ export class CalendarHelper {
   async getOverview4Month(curMonth: Date): Promise<CalendarEvent[]> {
     return await firstValueFrom(
       this.http
-        .get<WordpressString[]>(
-          this.urlLocation +
-            'calendar4month?useMonth=' +
-            formatDate4Wordpress(curMonth),
-        )
+        .get<
+          WordpressString[]
+        >(this.urlLocation + 'calendar4month?useMonth=' + formatDate4Wordpress(curMonth))
         .pipe(
           map((dto) => {
             const converted = dto.map((dtoDetail) => {
@@ -72,9 +70,9 @@ export class CalendarHelper {
   ): Promise<CalenderInfo[]> {
     return await firstValueFrom(
       this.http
-        .get<CalenderInfoWP[]>(
-          this.urlLocation + 'zenEvent?eventId=' + eventIds + '&lang=' + lang,
-        )
+        .get<
+          CalenderInfoWP[]
+        >(this.urlLocation + 'zenEvent?eventId=' + eventIds + '&lang=' + lang)
         .pipe(map((dto) => this.convertMapCalInfo(dto))),
     );
   }
@@ -86,11 +84,9 @@ export class CalendarHelper {
     }
     return await firstValueFrom(
       this.http
-        .get<CalenderInfoConfigWP[]>(
-          this.urlLocation +
-            'zenEventDetails?eventId=' +
-            listOfCalIds.join().split(','),
-        )
+        .get<
+          CalenderInfoConfigWP[]
+        >(this.urlLocation + 'zenEventDetails?eventId=' + listOfCalIds.join().split(','))
         .pipe(map((dto) => this.convertMapCalInfoDet(dto))),
     );
   }

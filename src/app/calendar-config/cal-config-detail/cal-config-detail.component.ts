@@ -1,18 +1,29 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatOptionModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import {
   CalConfigDetail,
   CalConfigFormDto,
   CalLinkTypeUI,
 } from '@app/helpers/calenderTypes';
-import { MaterialDesignModule } from '@app/material-design/material-design.module';
 
 @Component({
   selector: 'app-cal-config-detail',
   styleUrl: './cal-config-detail.component.scss',
   templateUrl: './cal-config-detail.component.html',
   standalone: true,
-  imports: [MaterialDesignModule],
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatRadioModule,
+    MatInputModule,
+    MatSelectModule,
+  ],
 })
 export class CalConfigDetailComponent {
   usedFields = new FormGroup(new CalConfigDetail());

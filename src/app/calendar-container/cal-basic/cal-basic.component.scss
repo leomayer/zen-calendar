@@ -16,7 +16,8 @@
       &.date-one-entry,
       &.date-two-entries {
         background-image: unset !important;
-        border-bottom: 5px solid mat.m2-get-color-from-palette($amberPalette, 800) !important;
+        border-bottom: 5px solid
+          mat.m2-get-color-from-palette($amberPalette, 800) !important;
         border-radius: unset;
       }
     }

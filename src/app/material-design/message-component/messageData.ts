@@ -1,4 +1,4 @@
 export interface MessageData {
-	title: string;
-	content: string;
+  title: string;
+  content: string;
 }

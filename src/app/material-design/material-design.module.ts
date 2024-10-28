@@ -2,15 +2,13 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
-import { CdkColumnDef, CdkTableModule } from '@angular/cdk/table';
+import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MatMomentDateModule,
+  MatMomentDateModule
 } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -49,10 +47,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MessageComponentComponent } from './message-component/message-component.component';
 
 @NgModule({
-  declarations: [MessageComponentComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -98,7 +94,6 @@ import { MessageComponentComponent } from './message-component/message-component
     MatToolbarModule,
     MatTooltipModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     FormsModule,
     ScrollingModule,
     ReactiveFormsModule,
@@ -151,16 +146,9 @@ import { MessageComponentComponent } from './message-component/message-component
     MatToolbarModule,
     MatTooltipModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     FormsModule,
     ScrollingModule,
     ReactiveFormsModule,
-  ],
-  providers: [
-    CdkColumnDef,
-    // datepicker als UTC
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
-    MessageComponentComponent,
   ],
 })
 export class MaterialDesignModule {}

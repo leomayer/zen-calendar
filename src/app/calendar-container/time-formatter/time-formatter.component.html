@@ -1,7 +1,9 @@
 @if (eventStartTime) {
-<span>{{ eventStartTime | minutes2HourMin }}</span>
-} @if (eventStartTime && eventEndTime) {
-<span>&nbsp;-&nbsp;</span>
-} @if (eventEndTime) {
-<span>{{ eventEndTime | minutes2HourMin }}</span>
+  <span>{{ eventStartTime | minutes2HourMin }}</span>
+}
+@if (eventStartTime && eventEndTime) {
+  <span>&nbsp;-&nbsp;</span>
+}
+@if (eventEndTime) {
+  <span>{{ eventEndTime | minutes2HourMin }}</span>
 }

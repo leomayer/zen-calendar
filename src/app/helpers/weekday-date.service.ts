@@ -25,7 +25,7 @@ export class WeekdayDateService extends NativeDateAdapter {
 
   override format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
-      console.error('formater - required')
+      console.error('formater - required');
       //return moment(date).format(this.dateFormat);
       return '01-10-11';
     } else {

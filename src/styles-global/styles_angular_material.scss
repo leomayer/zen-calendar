@@ -7,57 +7,57 @@ $mdc-typography-button-letter-spacing: 1px;
 /* for the icons: following https://stackoverflow.com/a/69015172/325868 */
 
 @font-face {
-	font-style: normal;
-	font-weight: 400;
-	src:
-		local('Material Icons'),
-		local('MaterialIcons-Regular'),
-		url('../assets/font/MaterialIcons-Regular.ttf') format('truetype');
-	font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local("Material Icons"),
+    local("MaterialIcons-Regular"),
+    url("../assets/font/MaterialIcons-Regular.ttf") format("truetype");
+  font-family: "Material Icons";
 }
 
 @font-face {
-	font-style: normal;
-	font-weight: 400;
-	src:
-		local('Material Icons Outlined'),
-		local('MaterialIconsOutlined-Regular'),
-		url('../assets/font/MaterialIconsOutlined-Regular.otf') format('truetype');
-	font-family: 'Material Icons Outlined';
-	font-display: fallback;
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local("Material Icons Outlined"),
+    local("MaterialIconsOutlined-Regular"),
+    url("../assets/font/MaterialIconsOutlined-Regular.otf") format("truetype");
+  font-family: "Material Icons Outlined";
+  font-display: fallback;
 }
 .material-icon {
-	word-wrap: normal;
+  word-wrap: normal;
 
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
 
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
 
-	/* Support for IE. */
-	font-feature-settings: 'liga';
-	display: inline-block;
-	margin: 0px; /* make sure we don't have any additional spaces for the margin */
-	width: 24px;
-	height: 24px;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 24px; /* Preferred icon size */
-	line-height: 1;
-	letter-spacing: normal;
-	direction: ltr;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-	text-transform: none;
-	white-space: nowrap;
+  /* Support for IE. */
+  font-feature-settings: "liga";
+  display: inline-block;
+  margin: 0px; /* make sure we don't have any additional spaces for the margin */
+  width: 24px;
+  height: 24px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px; /* Preferred icon size */
+  line-height: 1;
+  letter-spacing: normal;
+  direction: ltr;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  white-space: nowrap;
 }
 .material-icons {
-	@extend .material-icon;
-	font-family: 'Material Icons';
+  @extend .material-icon;
+  font-family: "Material Icons";
 }
 
 .material-icons-outlined {
-	@extend .material-icon;
-	font-family: 'Material Icons Outlined';
+  @extend .material-icon;
+  font-family: "Material Icons Outlined";
 }

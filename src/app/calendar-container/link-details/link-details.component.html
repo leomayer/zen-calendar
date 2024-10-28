@@ -1,24 +1,30 @@
-@if (curEvent.link) { @switch (curEvent.linkType) { @case ('zoom') {
-<div>
-  <span>Zoom link: </span>
-  <a target="_blank" href="{{ curEvent.link }}"
-    >{{ curEvent.linkTitle ? curEvent.linkTitle : curEvent.link }}
-  </a>
-</div>
-} @case ('email') {
-<div>
-  <span>Mail to: </span>
-  <a target="_blank" href="mailto:{{ curEvent.link }}"
-    >{{ curEvent.linkTitle ? curEvent.linkTitle : curEvent.link }}
-  </a>
-</div>
-} @case ('url') {
-<div>
-  @if(!curEvent.linkTitle){
-  <span>Link: </span>
+@if (curEvent.link) {
+  @switch (curEvent.linkType) {
+    @case ("zoom") {
+      <div>
+        <span>Zoom link: </span>
+        <a target="_blank" href="{{ curEvent.link }}"
+          >{{ curEvent.linkTitle ? curEvent.linkTitle : curEvent.link }}
+        </a>
+      </div>
+    }
+    @case ("email") {
+      <div>
+        <span>Mail to: </span>
+        <a target="_blank" href="mailto:{{ curEvent.link }}"
+          >{{ curEvent.linkTitle ? curEvent.linkTitle : curEvent.link }}
+        </a>
+      </div>
+    }
+    @case ("url") {
+      <div>
+        @if (!curEvent.linkTitle) {
+          <span>Link: </span>
+        }
+        <a target="_blank" href="{{ curEvent.link }}"
+          >{{ curEvent.linkTitle ? curEvent.linkTitle : curEvent.link }}
+        </a>
+      </div>
+    }
   }
-  <a target="_blank" href="{{ curEvent.link }}"
-    >{{ curEvent.linkTitle ? curEvent.linkTitle : curEvent.link }}
-  </a>
-</div>
-} } }
+}

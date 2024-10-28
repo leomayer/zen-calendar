@@ -14,7 +14,10 @@ import { CalShortCodeComponent } from '@calendar/cal-short-code/cal-short-code.c
 import { CalConfigComponent } from '@calConfig/cal-config/cal-config.component';
 import { CalMonthHeaderComponent } from './calendar-container/cal-basic/cal-month-header/cal-month-header.component';
 import { CalDetailsDialogComponent } from './calendar-container/cal-details-dialog/cal-details-dialog.component';
-import {  provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { TimeFormatterComponent } from './calendar-container/time-formatter/time-formatter.component';
 import { Minutes2HourMinPipe } from './helpers/minutes2-hour-min.pipe';
 import { LinkDetailsComponent } from '@calendar/link-details/link-details.component';
@@ -28,6 +31,8 @@ import { CalTimeConfigComponent } from './calendar-config/cal-time-config/cal-ti
 import { CalStatusComponent } from '@calConfig/cal-status/cal-status.component';
 import { FullcalendarComponent } from './fullcalendar/fullcalendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { CdkColumnDef } from '@angular/cdk/table';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 /*
 import {
 	MAT_LUXON_DATE_ADAPTER_OPTIONS,
@@ -66,6 +71,10 @@ registerLocaleData(localeEn);
     {provide: MAT_LUXON_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true, firstDayOfWeek: 1}},
     provideLuxonDateAdapter(),
     */
+    CdkColumnDef,
+    // datepicker als UTC
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+
   ],
   bootstrap: [AppComponent],
   imports: [
