@@ -8,7 +8,7 @@ describe('CalMonthHeaderComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CalMonthHeaderComponent],
+      imports: [CalMonthHeaderComponent],
     });
     fixture = TestBed.createComponent(CalMonthHeaderComponent);
     component = fixture.componentInstance;

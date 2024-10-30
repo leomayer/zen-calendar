@@ -8,7 +8,7 @@ describe('CalBasicComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CalBasicComponent],
+      imports: [CalBasicComponent],
     });
     fixture = TestBed.createComponent(CalBasicComponent);
     component = fixture.componentInstance;

@@ -44,8 +44,30 @@ registerLocaleData(localeDe);
 registerLocaleData(localeEn);
 
 @NgModule({
-  declarations: [
-    AppComponent,
+  declarations: [AppComponent],
+  providers: [
+    { provide: DateAdapter, useClass: WeekdayDateService },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    {
+      provide: MAT_RADIO_DEFAULT_OPTIONS,
+      useValue: { color: 'accent' },
+    },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    provideHttpClient(withInterceptorsFromDi()),
+    /*
+        {provide: MAT_LUXON_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true, firstDayOfWeek: 1}},
+        provideLuxonDateAdapter(),
+        */
+    CdkColumnDef,
+    // datepicker als UTC
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+  ],
+  bootstrap: [AppComponent],
+  imports: [
+    MaterialDesignModule,
+    BrowserModule,
+    CalTimeConfigComponent,
+    FullCalendarModule,
     CalBasicComponent,
     CalShortCodeComponent,
     CalConfigComponent,
@@ -57,30 +79,6 @@ registerLocaleData(localeEn);
     CalButtonDetailsComponent,
     CalStatusComponent,
     FullcalendarComponent,
-  ],
-  providers: [
-    { provide: DateAdapter, useClass: WeekdayDateService },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    {
-      provide: MAT_RADIO_DEFAULT_OPTIONS,
-      useValue: { color: 'accent' },
-    },
-    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
-    provideHttpClient(withInterceptorsFromDi()),
-    /*
-    {provide: MAT_LUXON_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true, firstDayOfWeek: 1}},
-    provideLuxonDateAdapter(),
-    */
-    CdkColumnDef,
-    // datepicker als UTC
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
-  ],
-  bootstrap: [AppComponent],
-  imports: [
-    MaterialDesignModule,
-    BrowserModule,
-    CalTimeConfigComponent,
-    FullCalendarModule,
   ],
 })
 export class AppModule {}

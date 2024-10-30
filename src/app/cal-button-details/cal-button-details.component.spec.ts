@@ -8,7 +8,7 @@ describe('CalButtonDetailsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CalButtonDetailsComponent],
+      imports: [CalButtonDetailsComponent],
     });
     fixture = TestBed.createComponent(CalButtonDetailsComponent);
     component = fixture.componentInstance;

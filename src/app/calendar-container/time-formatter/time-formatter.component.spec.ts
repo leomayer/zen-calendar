@@ -8,7 +8,7 @@ describe('TimeFormatterComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TimeFormatterComponent],
+      imports: [TimeFormatterComponent],
     });
     fixture = TestBed.createComponent(TimeFormatterComponent);
     component = fixture.componentInstance;

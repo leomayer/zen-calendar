@@ -1,5 +1,10 @@
 import { Component, computed, inject } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CalendarStore } from '@app/app-store.service';
 import { withCallState } from '@app/helpers/calendar.loading';
 //import { setValue } from '@app/helpers/calendar.functions.helper';
@@ -23,6 +28,9 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
+import { CalTimeConfigComponent } from '../cal-time-config/cal-time-config.component';
+import { MatButton } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
 
 export function withSignalsConfigDetails() {
   return signalStoreFeature(
@@ -188,6 +196,14 @@ export const createNewConfTime = (
   selector: 'app-cal-config',
   templateUrl: './cal-config.component.html',
   styleUrls: ['./cal-config.component.scss'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CalTimeConfigComponent,
+    MatButton,
+    DatePipe,
+  ],
 })
 export class CalConfigComponent {
   addEvent() {

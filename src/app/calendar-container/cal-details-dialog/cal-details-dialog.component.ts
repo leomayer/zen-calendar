@@ -1,8 +1,15 @@
 import { DatePipe, JsonPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogTitle,
+  MatDialogContent,
+} from '@angular/material/dialog';
 import { CalendarStore } from '@app/app-store.service';
 import { patchState, signalStoreFeature, withMethods } from '@ngrx/signals';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { TimeFormatterComponent } from '../time-formatter/time-formatter.component';
+import { LinkDetailsComponent } from '../link-details/link-details.component';
 
 export function withSignalsDisplayDialog() {
   return signalStoreFeature(
@@ -43,6 +50,15 @@ type bodyDetails = {
   templateUrl: './cal-details-dialog.component.html',
   styleUrls: ['./cal-details-dialog.component.scss'],
   providers: [DatePipe, JsonPipe],
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    TimeFormatterComponent,
+    LinkDetailsComponent,
+    DatePipe,
+  ],
 })
 export class CalDetailsDialogComponent implements OnInit, OnDestroy {
   memoBody: bodyDetails = {} as bodyDetails;

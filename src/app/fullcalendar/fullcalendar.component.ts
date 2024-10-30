@@ -7,11 +7,14 @@ import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-fullcalendar',
   templateUrl: './fullcalendar.component.html',
   styleUrl: './fullcalendar.component.scss',
+  standalone: true,
+  imports: [FullCalendarModule],
 })
 export class FullcalendarComponent implements OnInit {
   calendarOptions = signal<CalendarOptions>({

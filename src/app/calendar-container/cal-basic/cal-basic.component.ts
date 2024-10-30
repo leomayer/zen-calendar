@@ -23,6 +23,8 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './cal-basic.component.html',
   styleUrls: ['./cal-basic.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatCalendar],
 })
 export class CalBasicComponent implements OnInit {
   selectedDate!: Date | null;

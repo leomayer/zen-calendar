@@ -10,12 +10,15 @@ import { DateAdapter } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AppStoreService, CalendarStore } from '@app/app-store.service';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-cal-month-header',
   templateUrl: './cal-month-header.component.html',
   styleUrls: ['./cal-month-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatIconButton],
 })
 export class CalMonthHeaderComponent<D> implements OnDestroy {
   private _destroyed = new Subject<void>();

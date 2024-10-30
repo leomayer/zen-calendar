@@ -8,7 +8,7 @@ describe('CalDetailsDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CalDetailsDialogComponent],
+      imports: [CalDetailsDialogComponent],
     });
     fixture = TestBed.createComponent(CalDetailsDialogComponent);
     component = fixture.componentInstance;

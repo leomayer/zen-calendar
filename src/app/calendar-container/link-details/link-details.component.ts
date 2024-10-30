@@ -5,6 +5,7 @@ import { CalenderInfo } from '@app/helpers/calenderTypes';
   selector: 'app-link-details',
   templateUrl: './link-details.component.html',
   styleUrls: ['./link-details.component.scss'],
+  standalone: true,
 })
 export class LinkDetailsComponent {
   @Input({ required: true }) curEvent!: CalenderInfo;
