@@ -1,21 +1,25 @@
 <app-cal-short-code>
   @if (calendarStore.useConfigInterface()) {
-    <div class="info-btn">
-      <div class="load-info">
-        Zeit - laden: <i>{{ calendarStore.loadingTime() }} </i> ms
+    @defer {
+      <div class="info-btn">
+        <div class="load-info">
+          Zeit - laden: <i>{{ calendarStore.loadingTime() }} </i> ms
+        </div>
+        <div class="load-info">
+          Zeit - speichern: <i>{{ calendarStore.savingTime() }} </i> ms
+        </div>
+        <app-cal-status />
+        <app-cal-button-details />
       </div>
-      <div class="load-info">
-        Zeit - speichern: <i>{{ calendarStore.savingTime() }} </i> ms
-      </div>
-      <app-cal-status />
-      <app-cal-button-details />
-    </div>
+    }
   }
 </app-cal-short-code>
 
 @if (calendarStore.useConfigInterface()) {
-  <mat-tab-group>
-    <mat-tab label="Config"> <app-cal-config /> </mat-tab>
-    <mat-tab label="Second"> <app-fullcalendar /> </mat-tab>
-  </mat-tab-group>
+  @defer {
+    <mat-tab-group>
+      <mat-tab label="Config"> <app-cal-config /> </mat-tab>
+      <mat-tab label="Second"> <app-fullcalendar /> </mat-tab>
+    </mat-tab-group>
+  }
 }
