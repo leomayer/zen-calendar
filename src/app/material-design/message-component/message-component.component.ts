@@ -12,7 +12,7 @@ import { MessageData } from './messageData';
   selector: 'app-message-component',
   template: '<span>NotUsed</span>',
   standalone: true,
-  imports: [MatSnackBarModule]
+  imports: [MatSnackBarModule],
 })
 export class MessageComponentComponent {
   constructor(private snackBar: MatSnackBar) {}

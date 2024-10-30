@@ -74,7 +74,6 @@ registerLocaleData(localeEn);
     CdkColumnDef,
     // datepicker als UTC
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
-
   ],
   bootstrap: [AppComponent],
   imports: [

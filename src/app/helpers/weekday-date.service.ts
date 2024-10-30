@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable, LOCALE_ID } from '@angular/core';
 import { NativeDateAdapter } from '@angular/material/core';
 
 export const CUSTOM_DATE_FORMATS = {
@@ -17,7 +17,10 @@ export const CUSTOM_DATE_FORMATS = {
   providedIn: 'root',
 })
 export class WeekdayDateService extends NativeDateAdapter {
-  readonly dateFormat = 'YYYY-MM-DD';
+  readonly loacle = inject(LOCALE_ID);
+  readonly dateFormatter = new Intl.DateTimeFormat(this.locale, {
+    dateStyle: 'medium',
+  });
 
   override getFirstDayOfWeek(): number {
     return 1;
@@ -25,9 +28,7 @@ export class WeekdayDateService extends NativeDateAdapter {
 
   override format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
-      console.error('formater - required');
-      //return moment(date).format(this.dateFormat);
-      return '01-10-11';
+      return this.dateFormatter.format(date);
     } else {
       return date.toDateString();
     }
