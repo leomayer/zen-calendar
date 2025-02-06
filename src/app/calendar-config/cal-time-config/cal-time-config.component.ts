@@ -19,21 +19,20 @@ import {
 import { CalConfigDetailComponent } from '@calConfig/cal-config-detail/cal-config-detail.component';
 
 @Component({
-  selector: 'app-cal-time-config',
-  standalone: true,
-  imports: [
-    CalConfigDetailComponent,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatDatepickerModule,
-    MatSelectModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCheckboxModule,
-  ],
-  templateUrl: './cal-time-config.component.html',
-  styleUrl: './cal-time-config.component.scss',
+    selector: 'app-cal-time-config',
+    imports: [
+        CalConfigDetailComponent,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCheckboxModule,
+    ],
+    templateUrl: './cal-time-config.component.html',
+    styleUrl: './cal-time-config.component.scss'
 })
 export class CalTimeConfigComponent {
   readonly FrequType = FrequType;

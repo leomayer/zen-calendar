@@ -19,12 +19,11 @@ import { CalSaveConfigComponent } from '@calConfig/cal-save-config/cal-save-conf
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-cal-basic',
-  templateUrl: './cal-basic.component.html',
-  styleUrls: ['./cal-basic.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [MatCalendar],
+    selector: 'app-cal-basic',
+    templateUrl: './cal-basic.component.html',
+    styleUrls: ['./cal-basic.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [MatCalendar]
 })
 export class CalBasicComponent implements OnInit {
   selectedDate!: Date | null;

@@ -9,10 +9,9 @@ import {
 import { MessageData } from './messageData';
 
 @Component({
-  selector: 'app-message-component',
-  template: '<span>NotUsed</span>',
-  standalone: true,
-  imports: [MatSnackBarModule],
+    selector: 'app-message-component',
+    template: '<span>NotUsed</span>',
+    imports: [MatSnackBarModule]
 })
 export class MessageComponentComponent {
   constructor(private snackBar: MatSnackBar) {}
@@ -26,10 +25,11 @@ export class MessageComponentComponent {
   }
 }
 @Component({
-  selector: 'app-message-component-display',
-  templateUrl: './message-component.component.html',
-  styleUrls: ['./message-component.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-message-component-display',
+    templateUrl: './message-component.component.html',
+    styleUrls: ['./message-component.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MessageDisplayComponent {
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: MessageData) {}

@@ -193,17 +193,16 @@ export const createNewConfTime = (
 };
 
 @Component({
-  selector: 'app-cal-config',
-  templateUrl: './cal-config.component.html',
-  styleUrls: ['./cal-config.component.scss'],
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CalTimeConfigComponent,
-    MatButton,
-    DatePipe,
-  ],
+    selector: 'app-cal-config',
+    templateUrl: './cal-config.component.html',
+    styleUrls: ['./cal-config.component.scss'],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        CalTimeConfigComponent,
+        MatButton,
+        DatePipe,
+    ]
 })
 export class CalConfigComponent {
   addEvent() {

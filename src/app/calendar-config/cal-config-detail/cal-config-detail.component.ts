@@ -12,18 +12,17 @@ import {
 } from '@app/helpers/calenderTypes';
 
 @Component({
-  selector: 'app-cal-config-detail',
-  styleUrl: './cal-config-detail.component.scss',
-  templateUrl: './cal-config-detail.component.html',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatRadioModule,
-    MatInputModule,
-    MatSelectModule,
-  ],
+    selector: 'app-cal-config-detail',
+    styleUrl: './cal-config-detail.component.scss',
+    templateUrl: './cal-config-detail.component.html',
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatRadioModule,
+        MatInputModule,
+        MatSelectModule,
+    ]
 })
 export class CalConfigDetailComponent {
   usedFields = new FormGroup(new CalConfigDetail());

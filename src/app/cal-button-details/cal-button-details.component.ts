@@ -5,12 +5,11 @@ import { CalSaveService } from '@calConfig/cal-save-config/cal-save.service';
 import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-cal-button-details',
-  templateUrl: './cal-button-details.component.html',
-  styleUrls: ['./cal-button-details.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [MatButton],
+    selector: 'app-cal-button-details',
+    templateUrl: './cal-button-details.component.html',
+    styleUrls: ['./cal-button-details.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [MatButton]
 })
 export class CalButtonDetailsComponent {
   events = {} as CalendarEventShort;
