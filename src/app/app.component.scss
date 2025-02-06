@@ -1,5 +1,5 @@
 @use "@angular/material" as mat;
-@import "/src/styles-global/theme.scss";
+@use 'theme_color_paletts.scss';
 
 .info-btn {
   display: flex;

@@ -1,5 +1,5 @@
 @use "@angular/material" as mat;
-@import "/src/styles-global/theme.scss";
+@use 'theme_color_paletts.scss';
 
 .description {
   overflow: auto;
@@ -11,12 +11,12 @@
 }
 .title {
   font-size: large;
-  color: mat.m2-get-color-from-palette($amberPalette, 300);
+  color: mat.m2-get-color-from-palette(theme_color_paletts.$amberPalette, 300);
   text-align: center;
 }
 .subtitle {
   display: block;
-  color: mat.m2-get-color-from-palette($amberPalette, 300);
+  color: mat.m2-get-color-from-palette(theme_color_paletts.$amberPalette, 300);
   padding-block-end: 8px;
   text-align: center;
   transform: scale(0.9);
@@ -25,7 +25,7 @@
   line-height: 25px;
   display: flex;
   justify-content: center;
-  color: mat.m2-get-color-from-palette($amberPalette, 50);
+  color: mat.m2-get-color-from-palette(theme_color_paletts.$amberPalette, 50);
   align-items: flex-end;
 }
 div .title:not(:first-of-type) {

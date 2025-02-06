@@ -1,9 +1,9 @@
 @use "@angular/material" as mat;
-@import "/src/styles-global/theme.scss";
+@use 'theme_color_paletts.scss';
 
 h2.title {
-  color: mat.m2-get-color-from-palette($amberPalette, 300);
-  background-color: mat.m2-get-color-from-palette($bluegrayPalette, 600);
+  color: mat.m2-get-color-from-palette(theme_color_paletts.$amberPalette, 300);
+  background-color: mat.m2-get-color-from-palette(theme_color_paletts.$bluegrayPalette, 600);
   text-align: center;
 }
 p {

@@ -3,7 +3,7 @@
 */
 
 @use "@angular/material" as mat;
-@import "theme.scss";
+@use 'theme_color_paletts.scss';
 
 html,
 body {
@@ -26,7 +26,7 @@ body {
 /* for debugging: encapsulate the JSON into a <pre> tag and the make sure it overflows */
 pre {
   overflow: auto;
-  background-color: mat.m2-get-color-from-palette($limePalette, 600);
+  background-color: mat.m2-get-color-from-palette(theme_color_paletts.$limePalette, 600);
   border-radius: 4px;
   border-style: inset;
   margin-inline: 8px;
@@ -77,7 +77,7 @@ pre {
 }
 .title-tooltip {
   background-color: mat.m2-get-color-from-palette(
-    $greyPalette,
+    theme_color_paletts.$greyPalette,
     600,
     30
   ) !important;

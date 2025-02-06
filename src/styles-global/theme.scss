@@ -2,24 +2,24 @@
 
 @use "@angular/material" as mat;
 @use "sass:map";
-@import "theme_color_paletts.scss";
+@use 'theme_color_paletts.scss';
 
 // following https://stackoverflow.com/a/75411680/325868 and https://material.angular.io/guide/theming#applying-a-theme-to-components
 $light-theme: mat.m2-define-light-theme(
   (
     color: (
-      primary: $primaryPalette,
-      accent: $accentPalette,
+      primary: theme_color_paletts.$primaryPalette,
+      accent: theme_color_paletts.$accentPalette,
     ),
-    typography: $app-typography,
-    density: $app-density,
+    typography: theme_color_paletts.$app-typography,
+    density: theme_color_paletts.$app-density,
   )
 );
 
 @include mat.core();
 
 :root {
-  --standard-forecolor: $black-87-opacity;
+  --standard-forecolor: theme_color_paletts.$black-87-opacity;
   --standard-backcolor: white;
 }
 

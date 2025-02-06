@@ -1,5 +1,5 @@
 @use "@angular/material" as mat;
-@import "/src/styles-global/theme.scss";
+@use 'theme_color_paletts.scss';
 
 form {
   display: flex;
@@ -28,12 +28,12 @@ form {
   flex-direction: column;
   width: 20%;
   padding: 8px;
-  background-color: mat.m2-get-color-from-palette($bluegrayPalette, 900);
+  background-color: mat.m2-get-color-from-palette(theme_color_paletts.$bluegrayPalette, 900);
 }
 input {
   /* for input fields like time fields*/
   background-color: inherit;
 }
 .lang-label {
-  color: mat.m2-get-contrast-color-from-palette($bluegrayPalette, 900);
+  color: mat.m2-get-contrast-color-from-palette(theme_color_paletts.$bluegrayPalette, 900);
 }

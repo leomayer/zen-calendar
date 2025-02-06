@@ -20,8 +20,8 @@ define('ZEN_CAL_SLUG', 'zen-calendar-settings');
 // Scripts for Angular script
 function load_ng_scripts()
 {
-    wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.ba8a56453ab67971.css');
-    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.35f8211d055e7306.js', true);
+    wp_enqueue_style('ng_styles', plugin_dir_url(__FILE__) . 'dist/styles.90e3cbd131f2289e.css');
+    wp_register_script('ng_main', plugin_dir_url(__FILE__) . 'dist/main.d5fa63cb263972bd.js', true);
     wp_register_script('ng_polyfills', plugin_dir_url(__FILE__) . 'dist/polyfills.4ac2f777b144016b.js', true);
     wp_register_script('ng_runtime', plugin_dir_url(__FILE__) . 'dist/runtime.64dc7fbd6906c728.js', true);
 }
@@ -105,7 +105,7 @@ function zen_calendar_settings_page()
 
     echo '<div>Welcome to admin page for "'
         . ZEN_CAL_PLUGIN_NAME . '" Version: ' . ZEN_CAL_PLUGIN_VERSION
-        . '<br> last updated at: <strong><!--build-time-->6.2.2025 12:54:57'
+        . '<br> last updated at: <strong><!--build-time-->6.2.2025 13:07:01'
         . ' </strong>'
         . '<br>Allowed host: <strong>' . $AllowedOrigin . '</strong>'
         . '</div><app-root useConfigInterface="true"></app-root>';
