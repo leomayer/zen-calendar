@@ -29,8 +29,6 @@ import localeEn from '@angular/common/locales/en';
 import localeDe from '@angular/common/locales/de';
 import { CalTimeConfigComponent } from './calendar-config/cal-time-config/cal-time-config.component';
 import { CalStatusComponent } from '@calConfig/cal-status/cal-status.component';
-import { FullcalendarComponent } from './fullcalendar/fullcalendar.component';
-import { FullCalendarModule } from '@fullcalendar/angular';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 /*
@@ -67,7 +65,6 @@ registerLocaleData(localeEn);
     MaterialDesignModule,
     BrowserModule,
     CalTimeConfigComponent,
-    FullCalendarModule,
     CalBasicComponent,
     CalShortCodeComponent,
     CalConfigComponent,
@@ -78,7 +75,6 @@ registerLocaleData(localeEn);
     LinkDetailsComponent,
     CalButtonDetailsComponent,
     CalStatusComponent,
-    FullcalendarComponent,
   ],
 })
 export class AppModule {}
