@@ -17,7 +17,11 @@
         matInput
         [matDatepicker]="picker1"
         [formControl]="usedFields.controls.frequStart"
-        [max]="usedFields.controls.frequEnd.value"
+        [max]="
+          usedFields.controls.frequType.value === FrequType.NONE
+            ? null
+            : usedFields.controls.frequEnd.value
+        "
       />
       <mat-datepicker-toggle
         matIconSuffix
@@ -33,6 +37,7 @@
         [matDatepicker]="picker2"
         [formControl]="usedFields.controls.frequEnd"
         [min]="usedFields.controls.frequStart.value"
+        [disabled]="usedFields.controls.frequType.value === FrequType.NONE"
       />
       <mat-datepicker-toggle
         matIconSuffix

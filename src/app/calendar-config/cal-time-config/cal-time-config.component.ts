@@ -36,6 +36,7 @@ import { CalConfigDetailComponent } from '@calConfig/cal-config-detail/cal-confi
   styleUrl: './cal-time-config.component.scss',
 })
 export class CalTimeConfigComponent {
+  readonly FrequType = FrequType;
   readonly calendarStore = inject(CalendarStore);
 
   usedFields = new FormGroup(new CalConfigTimeDetail());
@@ -76,6 +77,14 @@ export class CalTimeConfigComponent {
     this.usedFields.controls.startTimeUI.valueChanges.subscribe((value) => {
       const minuteVal = this.convertStringToMinutes(value ?? '00:00');
       this.usedFields.controls.eventStartTime.setValue(minuteVal);
+    });
+
+    this.usedFields.controls.frequType.valueChanges.subscribe((value) => {
+      if (value === FrequType.NONE) {
+        this.usedFields.controls.frequEnd.disable();
+      } else {
+        this.usedFields.controls.frequEnd.enable();
+      }
     });
 
     this.usedFields.controls.frequStart.setValue(this.timeConf.eventStartDate);
